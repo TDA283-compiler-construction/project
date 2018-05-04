@@ -1,0 +1,3 @@
+void main(){
+    String x;
+}
