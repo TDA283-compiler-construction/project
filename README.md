@@ -41,8 +41,10 @@ format" below.
 
 The test-suite accepts the following options:
 
-| `-b (LLVM|x86|x86_64)`              | Test your LLVM/x86/x86_64 backend. |
-| `-x <extension> [, extensions ...]` | Test one or more extensions. |
+| Option                              | Explanation                        |
+| ----------------------------------- | ---------------------------------- |
+| `-b (LLVM \| x86 \| x86_64)` | Test your LLVM/x86/x86_64 backend. |
+| `-x <extension> [, extensions ...]` | Test one or more extensions.       |
 
 As an example, the following tests the LLVM backend with extensions 'arrays1'
 and 'pointers' on the submission `partC-1.tar.gz`:
@@ -54,12 +56,14 @@ and 'pointers' on the submission `partC-1.tar.gz`:
 The test-suite will look for extensions in the directory `testsuite/extensions`.
 These are the available extensions:
 
-| arrays1     | Single-dimensional arrays |
-| arrays2     | Multi-dimensional arrays |
-| pointers    | Structs and pointers |
-| objects1    | Objects, first extension |
+| Extension   | Explanation                                 |
+| ----------- | ------------------------------------------- |
+| arrays1     | Single-dimensional arrays                   |
+| arrays2     | Multi-dimensional arrays                    |
+| pointers    | Structs and pointers                        |
+| objects1    | Objects, first extension                    |
 | objects2    | Objects, second extension (method overload) |
-| adv_structs | Additional struct tests. |
+| adv_structs | Additional struct tests                     |
 
 ## Submission format
 
@@ -74,20 +78,16 @@ with bzip, xz, as well as zip- and rar archives, and uncompressed tar-balls.
 
 Your submission archive should adhere to the following structure:
 
-|   doc/     |  Containing all documentation for the submission.          |
-|            |  (This is not vital for the test-suite to work).           |
-| ---------- | ---------------------------------------------------------- |
-|   lib/     |  Containing all runtime.ll or runtime.s files required     |
-|            |  by your compiler backend.                                 |
-| ---------- |----------------------------------------------------------- |
-|   src/     |  Containing the source code for your submission.           |
-| ---------- |----------------------------------------------------------- |
-|   Makefile |  A make file which builds your project. (Running `make` or |
-|            |  `make all` should be sufficient to build your project).   |
+| Item       | Explanation   |
+| ---------- | ------------- |
+|   doc/     |  Containing all documentation for the submission. (Not vital for the test-suite, but for your grade). |
+|   lib/     |  Containing all runtime.ll or runtime.s files required by your compiler backend. |
+|   src/     |  Containing the source code for your submission. |
+|   Makefile |  A make file which builds your project. (Running `make` or `make all` should be sufficient to build your project). |
 
 A common mistake seems to be to place these folders under some subdirectory
-(often conspicuously named 'root'). The test-suite will not run, should you do
-this.
+(often conspicuously named 'root'). The test-suite will not run properly if 
+you do this.
 
 ## Compiler requirements
 
