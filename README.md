@@ -89,7 +89,7 @@ A common misunderstanding seems to be that these items are to be placed in a sub
   `jlc_x86` for the native 32bit x86 backend, and `jlc_x86_64` for the 64-bit
   x86 backend.
 * Calling `jlc my_file.jl` to compile the input file `my_file.jl` should
-  resulti in the following files appearing *in the same directory as the
+  result in the following files appearing *in the same directory as the
   input file* `my_file.jl`:
   + `my_file.ll` containing LLVM source code (LLVM backend)
   + `my_file.s` containing assembly code in NASM syntax (native x86 backends)
