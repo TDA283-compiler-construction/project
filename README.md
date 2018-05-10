@@ -26,16 +26,15 @@ pointing the test program to the folder where your compiler executable exists:
 
     python3 tester.py [options] path/to/my/submission
 
-Note that this does *not* build the test-suite.
+Note that in this case, the test program will not attempt to build your submission.
 
 The second way is by pointing the test program to an archive containing your
 prepared submission:
 
     python3 tester.py [options] path/to/my-submission.tar.gz
 
-This unpacks the archive and builds the submission prior to running the test.
-The package should be created according to the instructions under "submission
-format" below.
+This will decompress the archive and build the submission before running the test program.
+The package should be structured according to the instructions under "submission format" below.
 
 ### Options
 
@@ -46,8 +45,8 @@ The test-suite accepts the following options:
 | `-b (LLVM \| x86 \| x86_64)` | Test your LLVM/x86/x86_64 backend. |
 | `-x <extension> [, extensions ...]` | Test one or more extensions.       |
 
-As an example, the following tests the LLVM backend with extensions 'arrays1'
-and 'pointers' on the submission `partC-1.tar.gz`:
+As an example, the following tests the LLVM backend with extensions `arrays1`
+and `pointers` on the submission `partC-1.tar.gz`:
 
     python3 tester.py -b LLVM -x arrays1 pointers partC-1.tar.gz
 
@@ -73,10 +72,7 @@ where `N` denotes the `N`th attempt at the submission.
     part(A|B|C)-N.tar.gz
 
 For example, your first submission of assignment B should be named
-`partB-1.tar.gz` according to this scheme. We also accept tar-balls compressed
-with bzip, xz, as well as zip- and rar archives, and uncompressed tar-balls.
-
-Your submission archive should adhere to the following structure:
+`partB-1.tar.gz` according to this scheme. Your submission archive should adhere to the following structure:
 
 | Item       | Explanation   |
 | ---------- | ------------- |
@@ -85,25 +81,22 @@ Your submission archive should adhere to the following structure:
 |   src/     |  Containing the source code for your submission. |
 |   Makefile |  A make file which builds your project. (Running `make` or `make all` should be sufficient to build your project). |
 
-A common mistake seems to be to place these folders under some subdirectory
-(often conspicuously named 'root'). The test-suite will not run properly if 
-you do this.
+A common misunderstanding seems to be that these items are to be placed in a subdirectory. The test-suite will fail if you do this.
 
 ## Compiler requirements
 
-* Your compiler executable should be named `jlc`  for the LLVM backend,
+* Your compiler executable should be named `jlc` for the LLVM backend,
   `jlc_x86` for the native 32bit x86 backend, and `jlc_x86_64` for the 64-bit
   x86 backend.
 * Calling `jlc my_file.jl` to compile the input file `my_file.jl` should
   resulti in the following files appearing *in the same directory as the
   input file* `my_file.jl`:
   + `my_file.ll` containing LLVM source code (LLVM backend)
-  + `my_file.s` containing assembly code (native x86 backends)
-  Note that for x86 backends the test-suite expects NASM syntax.
-
-- For correct programs your compiler should print `OK` to standard error and
+  + `my_file.s` containing assembly code in NASM syntax (native x86 backends)
+* For correct programs your compiler should print `OK` to standard error and
   terminate with exit code 0.
-- For incorrect programs, your compiler should print `ERROR` to standard error,
-  and print an informative error message on standard output. Finally, it should
-  terminate with a non-zero exit code.
+* For incorrect programs, your compiler should print a message containing `ERROR`
+  to standard error. It should also print a sufficiently informative error message 
+  on standard output describing the failure (although this is not tested).
+  Finally, it should terminate with a non-zero exit code.
 
