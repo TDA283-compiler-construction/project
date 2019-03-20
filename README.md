@@ -1,102 +1,94 @@
-# TDA283: Compiler Construction test suite
+# testing.py
 
-Test-suite for the course in Compiler Construction at the CSE dept.,
-Chalmers University of Technology.
-May, 2018.
-
-*Please note that this test-suite is a work in progress. Report any bugs you
-find.*
+Test-suite for the Javalette compiler project in the Compiler Construction
+course at the Department of Computer Science and Engineering, Chalmers
+University of Technology and Gothenburg University.
 
 ## Requirements
 
-The test-suite requires Python version 3 to run. We assume that you are using a
-UNIX-like operating system (e.g. macOS, Linux, BSD) and have access to the
-following tools:
-
-  * A reasonably recent version of the [LLVM toolchain](https://llvm.org) for
-    the LLVM backend. The test-suite assumes that `llvm-as`, `llvm-link` and
-    `llc` are on the path.
-  * A reasonably recent version of [nasm](https://www.nasm.us) for the native
-    x86 backends.
+testing.py requires Python 3.
 
 ## Instructions
 
-There are two ways to run the test-suite on your submission. The first is by
-pointing the test program to the folder where your compiler executable exists:
+The test-suite accepts a compressed tar-ball containing your submission.
+The tar-ball should be compressed with gzip, bzip2, or xz. The submission
+should be created according to 'SUBMISSION FORMAT' below (see also course
+web-page).
 
-    python3 tester.py [options] path/to/my/submission
+Example:
+> python3 testing.py path/to/partA-2.tar.gz --archive --llvm
 
-Note that in this case, the test program will not attempt to build your submission.
+The following command line options are available:
 
-The second way is by pointing the test program to an archive containing your
-prepared submission:
+| Option                        | Description                           |
+|-------------------------------|---------------------------------------|
+| `-h, --help`                  | Show help message.                    |
+| `-s`                          | Set compiler prefix (default is `jlc`)|
+| `    --llvm`                  | Test the LLVM backend                 |
+| `    --x86`                   | Test the 32-bit x86 backend           |
+| `    --x64`                   | Test the 64-bit x86 backend           |
+| `-x <ext> [ext ...]`          | Test one or more extensions           |
+| `    --archive`               | Treat submission as archive           |
+| `    --noclean`               | Do not clean up temporary files created by `--archive` |
 
-    python3 tester.py [options] path/to/my-submission.tar.gz
+As an example, the following tests the x86-32 backend with extensions
+`arrays1` and `pointers` on the submission `partC-1.tar.gz`:
+> python3 testing.py partC-1.tar.gz --archive --x86 -x arrays1 pointers
 
-This will decompress the archive and build the submission before running the test program.
-The package should be structured according to the instructions under "submission format" below.
+If neither of the options `--llvm`, `--x86` or `--x64` are present, only
+parsing and type checking is tested.
 
-### Options
+## Extensions
 
-The test-suite accepts the following options:
+Here is a list of the extensions supported:
 
-| Option                              | Explanation                        |
-| ----------------------------------- | ---------------------------------- |
-| `-b (LLVM \| x86 \| x86_64)` | Test your LLVM/x86/x86_64 backend. |
-| `-x <extension> [, extensions ...]` | Test one or more extensions.       |
-
-As an example, the following tests the LLVM backend with extensions `arrays1`
-and `pointers` on the submission `partC-1.tar.gz`:
-
-    python3 tester.py -b LLVM -x arrays1 pointers partC-1.tar.gz
-
-### Supported extensions
-
-The test-suite will look for extensions in the directory `testsuite/extensions`.
-These are the available extensions:
-
-| Extension   | Explanation                                 |
-| ----------- | ------------------------------------------- |
-| arrays1     | Single-dimensional arrays                   |
-| arrays2     | Multi-dimensional arrays                    |
-| pointers    | Structs and pointers                        |
-| objects1    | Objects, first extension                    |
-| objects2    | Objects, second extension (method overload) |
-| adv_structs | Additional struct tests                     |
+| Extension      | Description                                     |
+|----------------|-------------------------------------------------|
+| arrays1        | Single-dimensional arrays                       |
+| arrays2        | Multi-dimensional arrays                        |
+| pointers       | Structures and pointers                         |
+| objects1       | Objects, first extension                        |
+| objects2       | Objects, second extension (method overloading)  |
+| adv_structs    | Optional struct tests                           |
 
 ## Submission format
 
-We prefer if you name your submission according to the following pattern,
-where `N` denotes the `N`th attempt at the submission.
+### Naming
+
+Your Nth attempt at a submission should be a compressed tar-ball named according
+to this pattern:
 
     part(A|B|C)-N.tar.gz
 
-For example, your first submission of assignment B should be named
-`partB-1.tar.gz` according to this scheme. Your submission archive should adhere to the following structure:
+where (A|B|C) means one of A, B, or C. For example, your first attempt at
+assignment B should be named `partB-1.tar.gz`.
 
-| Item       | Explanation   |
-| ---------- | ------------- |
-|   doc/     |  Containing all documentation for the submission. (Not vital for the test-suite, but for your grade). |
-|   lib/     |  Containing all runtime.ll or runtime.s files required by your compiler backend. |
-|   src/     |  Containing the source code for your submission. |
-|   Makefile |  A make file which builds your project. (Running `make` or `make all` should be sufficient to build your project). |
+### Contents
 
-A common misunderstanding seems to be that these items are to be placed in a subdirectory. The test-suite will fail if you do this.
+The submission should contain the following directories and files, at the top
+level.
+
+| Item            | Description |
+|-----------------|-------------|
+| doc/ | All documentation for the submission (see course webpage). |
+| lib/ | The runtime.ll and/or runtime.s files required by your compiler backend(s). |
+| src/      All source-code for your submission. |
+| Makefile  A makefile that builds your compiler. Running `make` or `make all` should be sufficient to build your project, and `make clean` should remove all build artefacts. |
 
 ## Compiler requirements
 
-* Your compiler executable should be named `jlc` for the LLVM backend,
-  `jlc_x86` for the native 32bit x86 backend, and `jlc_x86_64` for the 64-bit
-  x86 backend.
-* Calling `jlc my_file.jl` to compile the input file `my_file.jl` should
-  result in the following files appearing *in the same directory as the
-  input file* `my_file.jl`:
-  + `my_file.ll` containing LLVM source code (LLVM backend)
-  + `my_file.s` containing assembly code in NASM syntax (native x86 backends)
-* For correct programs your compiler should print `OK` to standard error and
-  terminate with exit code 0.
-* For incorrect programs, your compiler should print a message containing `ERROR`
-  to standard error. It should also print a sufficiently informative error message 
-  on standard output describing the failure (although this is not tested).
-  Finally, it should terminate with a non-zero exit code.
+###   Naming
+
+Your compiler should be named `jlc` (without quotes) for the LLVM backend,
+`jlc_x86` for the 32-bit x86 backend, and `jlc_x64` for the 64-bit x86 backend.
+
+### Input/output format
+
+* Your compiler should read its input from standard input (stdin), and write
+  its output (LLVM, or x86 assembly) to standard out (stdout).
+* If your program succeeds (there are no errors), then it should print `OK` to
+   standard error (stderr), and terminate with exit code 0.
+* If your program does not succeed (there are some errors), it should print a
+  line containing the word `ERROR` to standard error (stderr), and terminate
+  with a non-zero exit code.
 
