@@ -16,7 +16,9 @@ should be created according to 'SUBMISSION FORMAT' below (see also course
 web-page).
 
 Example:
+```sh
 > python3 testing.py path/to/partA-2.tar.gz --archive --llvm
+```
 
 The following command line options are available:
 
@@ -33,7 +35,9 @@ The following command line options are available:
 
 As an example, the following tests the x86-32 backend with extensions
 `arrays1` and `pointers` on the submission `partC-1.tar.gz`:
+```sh
 > python3 testing.py partC-1.tar.gz --archive --x86 -x arrays1 pointers
+```
 
 If neither of the options `--llvm`, `--x86` or `--x64` are present, only
 parsing and type checking is tested.
@@ -72,8 +76,8 @@ level.
 |-----------------|-------------|
 | doc/ | All documentation for the submission (see course webpage). |
 | lib/ | The runtime.ll and/or runtime.s files required by your compiler backend(s). |
-| src/      All source-code for your submission. |
-| Makefile  A makefile that builds your compiler. Running `make` or `make all` should be sufficient to build your project, and `make clean` should remove all build artefacts. |
+| src/     | All source-code for your submission. |
+| Makefile | A makefile that builds your compiler. Running `make` or `make all` should be sufficient to build your project, and `make clean` should remove all build artefacts. |
 
 ## Compiler requirements
 
