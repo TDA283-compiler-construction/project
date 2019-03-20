@@ -26,15 +26,18 @@
 #         --llvm              Test the LLVM backend
 #         --x86               Test the 32-bit x86 backend
 #         --x64               Test the 64-bit x86 backend
-#     -x <ext> [, ext ...]    Test one or more extensions.
-#         --archive           Treat submission as an archive.
+#     -x <ext> [ext ...]      Test one or more extensions
+#         --archive           Treat submission as an archive
 #         --noclean           Do not clean up temporary files created by
-#                             --archive.
+#                             --archive
 #
 #   As an example, the following tests the x86-32 backend with extensions
 #   'arrays1' and 'pointers' on the submission partC-1.tar.gz:
 #
-#     > ./testing.py partC-1.tar.gz --x86 -x arrays1 pointers
+#     > ./testing.py partC-1.tar.gz --archive --x86 -x arrays1 pointers
+#
+#   If neither of the options '--llvm', '--x86' or '--x64' are present, only
+#   parsing and type checking is tested.
 #
 # EXTENSIONS
 #
