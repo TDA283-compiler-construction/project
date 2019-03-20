@@ -429,11 +429,11 @@ def check_build(path, prefix, backends):
         full_path = os.path.join(path, exec_name)
         if not os.path.isfile(full_path):
             raise TestingException(
-                    "Build did not produce executable " +
-                    exec_name + " for the " + suffix + " backend")
+                    "Build did not produce the executable \"" +
+                    exec_name + "\" required for the " + suffix + " backend")
         if not os.access(full_path, os.X_OK):
             raise TestingException(
-                    "The file " + exec_name + " is not an executable")
+                    "The file \"" + exec_name + "\" is not executable")
     print("Ok.")
 
     # Check that there is a runtime.ll (and optionally, runtime.s)
