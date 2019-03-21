@@ -6,7 +6,9 @@ University of Technology and Gothenburg University.
 
 ## Requirements
 
-testing.py requires Python 3.
+testing.py requires Python 3, `make` and `tar`. The test suite should work on
+Linux and macOS. If you are using Windows, see e.g.
+[Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10).
 
 ## Instructions
 
