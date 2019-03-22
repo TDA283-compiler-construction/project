@@ -539,12 +539,11 @@ def run_tests(path, backends, prefix, exts):
         print("Some tests failed:")
         for name, data in failures:
             print("---------- !!! " + name + ".jl failed !!! ----------\n")
-            print("- stderr expected:")
-            print(indent_with(4, data.stderr_expected))
-            print("- stderr actual:")
-            print(indent_with(4, data.stderr_actual))
-            if len(data.stdout_compiler) > 0:
-                print("- compiler stdout: " + data.stdout_compiler)
+            if data.stderr_expected != data.stderr_actual:
+                print("- stderr expected:")
+                print(indent_with(4, data.stderr_expected))
+                print("- stderr actual:")
+                print(indent_with(4, data.stderr_actual))
 
             if len(backends) > 0:
                 if len(data.stdout_expected) > 0:
