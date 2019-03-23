@@ -1,5 +1,5 @@
-TDA283 Compiler Construction
-============================
+TDA283 / DIT300 Compiler Construction
+=====================================
 
 These pages describe the project for the Compiler Construction course
 at Chalmers and Gothenburg University.
