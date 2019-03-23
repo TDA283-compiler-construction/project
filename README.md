@@ -1,6 +1,9 @@
 TDA283 Compiler Construction
 ============================
 
+These pages describe the project for the Compiler Construction course
+at Chalmers and Gothenburg University.
+
 [project/](project/):
 Description of the Javalette compiler project.
 
