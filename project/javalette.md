@@ -1,5 +1,5 @@
-The language Javalette
-========================
+The Javalette language
+======================
 
 Javalette is a simple imperative language. It is almost a subset of C
 (see below). It can also be easily translated to Java (see below).
@@ -279,4 +279,3 @@ Using a C compiler or Java compiler is a good way to understand what a program
 means even before you have written the full compiler. It can be useful to test
 the programs produced by your compiler with the result of the C- and/or Java
 compiler.
-

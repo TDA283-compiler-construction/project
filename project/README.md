@@ -1,12 +1,20 @@
 Project Overview
 ================
 
-* [Project summary](summary.md)
-  * [Submission deadlines](summary.md#submission-deadlines)
-  * [Extensions, credits and grades](summary.md#extensions,-credits-and-grades)
-  * [Collaboration and academic honesty](summary.md#collaboration-and-academic-honesty)
+These pages describe the project for the Compiler Construction course
+at Chalmers and Gothenburg University. The project has three parts:
+(Part A) a fronend for the Javalette language, (Part B) a backend with
+code generation for LLVM and (Part C) extensions to the compiler.
+
+The project is to be done in individually or in groups of two. A
+group's final grade is based on the number of extensions completed for
+Part C of the course.
+
+Pages
+-----
+
 * [Submission format](submission_format.md)
-* [The Language Javalette](javalette.md)
+* [The Javalette Language](javalette.md)
   * [Example programs](javalette.md#example-programs)
   * [Program structure](javalette.md#program-structure)
   * [Types](javalette.md#types)
@@ -30,3 +38,18 @@ Project Overview
 * [Extension hints](hints.md)
 * [Testing](testing.md)
 
+Collaboration and academic honesty
+----------------------------------
+
+As mentioned above, students word individually or in groups of two on
+this project. Students must develop their own code, and are *not*
+allowed to share code with other students or to get, or even look at,
+code developed by others. Having said that, we do encourage
+discussions among participants in the course about the project at a
+conceptual level, as long as everyone follows the simple and absolute
+rule _to not share code_.
+
+Students who get significant help from others must make a note of this
+and acknowledge (in their documentation file) those who helped.
+
+Don't be a cheater.
