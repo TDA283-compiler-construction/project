@@ -1,13 +1,26 @@
 Extensions
 ==========
 
-This section describes optional extensions that you may implement to learn more,
-get credits and thus a higher final grade. You may choose different combinations
-of the extensions.
+This section describes optional extensions that you may implement to
+learn more, get credits and thus a higher final grade. You may choose
+different combinations of the extensions.
 
-In this section we specify the requirements on the extensions. Some
-implementation hints are given in section [extension hints](extension_hints.md)
-and in the lecture notes.
+This page specifies the requirements on the extensions. Some
+implementation hints are given on a separate page for [extension
+hints](hints.md) and in the lecture notes.
+
+*Credits for extensions:* each of the standard extensions give one
+credit point. Extensions that are non-standard in this sense are the
+_native x86 code generation_ and some projects within the _further
+possibilities_ section.  The _native x86 code generation_ is special
+in that it gives two credits in itself, and an extra credit for each
+of the standard credits that are ported to the x86 code
+generator. Example: a student can collect 5 credits as follows:
+
+ - one-dimensional arrays for LLVM code generator (1 credui)
+ - multi-dimensional arrays for LLVM code generator (1 credit)
+ - native x86 code generation (2 credits)
+ - one-dimensional arrays for x86 code generator (1 credit)
 
 One-dimensional arrays and for loops
 ------------------------------------
@@ -85,8 +98,8 @@ elements. For this, we still have to rely on the `while` loop. The traditional
 
 Test files for this extension are in subdirectory `extensions/arrays1`.
 
-Multidimensional arrays
------------------------
+Multi-dimensional arrays
+------------------------
 
 In this extension you add arrays with an arbitrary number of indices.  Just as
 in Java, an array of type `int[][]` is a one-dimensional array, each of whose
@@ -392,5 +405,3 @@ defined. If you want to do one of these and get credit, you must discuss it with
   is available in Python.
 * Implement a backend for another architecture, such as ARM. It is important
   that you provide some way for the grader to test programs.
-
-
