@@ -38,19 +38,3 @@ lectures in the course will discuss these issues, but they will not be covered
 in depth. On the other hand, for most compiling purposes the road we take is the
 most effective. This leaves fine-tuning of optimization to LLVM tools, allowing
 many source languages and front-ends to profit from this effort.
-
-Collaboration and academic honesty
-----------------------------------
-
-As mentioned before, you work individually or in groups of two to three in this
-project. You must develop your own code, and you are *not* allowed to share your
-code with other students or to get, or even look at, code developed by them. On
-the other hand, we encourage discussions among participants in the course about
-the project. As long as you follow the simple and absolute rule not to share
-code, we have no objections to questions asked and answered at a conceptual
-level.
-
-If you do get significant help from some other participant, it is natural to
-acknowledge this in your documentation file.
-
-Don't be a cheater.

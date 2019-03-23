@@ -9,11 +9,11 @@ This page specifies the requirements on the extensions. Some
 implementation hints are given on a separate page for [extension
 hints](hints.md) and in the lecture notes.
 
-**Credits for extensions:** each of the standard extensions give one
+**Credits for extensions:** each of the standard extensions gives one
 credit point. Extensions that are non-standard in this sense are the
 _native x86 code generation_ and some projects within the _further
 possibilities_ section.  The _native x86 code generation_ is special
-in that it gives two credits in itself, and an extra credit for each
+in that it gives two credits in itself and an extra credit for each
 of the standard extensions that are ported to the x86 code
 generator. Example: a student can collect 5 credits as follows.
 
