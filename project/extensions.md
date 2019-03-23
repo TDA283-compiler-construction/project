@@ -17,7 +17,7 @@ in that it gives two credits in itself and an extra credit for each
 of the standard extensions that are ported to the x86 code
 generator. Example: a student can collect 5 credits as follows.
 
- - one-dimensional arrays for LLVM code generator (1 credui)
+ - one-dimensional arrays for LLVM code generator (1 credit)
  - multi-dimensional arrays for LLVM code generator (1 credit)
  - native x86 code generation (2 credits)
  - one-dimensional arrays for x86 code generator (1 credit)
