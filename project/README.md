@@ -2,9 +2,9 @@ Project Overview
 ================
 
 These pages describe the project for the Compiler Construction course
-at Chalmers and Gothenburg University. The project has three parts:
-(Part A) a fronend for the Javalette language, (Part B) a backend with
-code generation for LLVM and (Part C) extensions to the compiler.
+at Chalmers and Gothenburg University. The project has three parts: a
+fronend for the Javalette language (Part A), a backend with code
+generation for LLVM (Part B), and extensions to the compiler (Part C).
 
 The project is to be done in individually or in groups of two. A
 group's final grade is based on the number of extensions completed for
@@ -48,9 +48,8 @@ individual/group must develop their own code, and are _not allowed to
 share code with other students or to get, or even look at, code
 developed by others_. Having said that, we do encourage discussions
 among participants in the course about the project at a conceptual
-level.
-
-Students who get significant help from others must make a note of this
-and acknowledge (in their documentation file) those who helped.
+level. Students who get significant help from others must make a note
+of this and acknowledge (in their documentation file) those who
+helped.
 
 Don't be a cheater.
