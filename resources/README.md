@@ -1,5 +1,5 @@
-# Resources
------------
+Resources
+=========
 
 [Javalette.cf](Javalette.cf):
 Javalette BNFC grammar
