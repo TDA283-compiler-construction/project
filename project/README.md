@@ -8,7 +8,8 @@ code generation for LLVM and (Part C) extensions to the compiler.
 
 The project is to be done in individually or in groups of two. A
 group's final grade is based on the number of extensions completed for
-Part C of the course.
+Part C of the course, based on [a system of credits per implemented
+extension](extensions.md#credits).
 
 Pages
 -----
@@ -41,13 +42,13 @@ Pages
 Collaboration and academic honesty
 ----------------------------------
 
-As mentioned above, students word individually or in groups of two on
-this project. Students must develop their own code, and are *not*
-allowed to share code with other students or to get, or even look at,
-code developed by others. Having said that, we do encourage
-discussions among participants in the course about the project at a
-conceptual level, as long as everyone follows the simple and absolute
-rule _to not share code_.
+We take academic honesty seriously. As mentioned above, students word
+individually or in groups of two on this project. Each
+individual/group must develop their own code, and are _not allowed to
+share code with other students or to get, or even look at, code
+developed by others_. Having said that, we do encourage discussions
+among participants in the course about the project at a conceptual
+level.
 
 Students who get significant help from others must make a note of this
 and acknowledge (in their documentation file) those who helped.
