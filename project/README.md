@@ -23,7 +23,7 @@ Pages
   * [Lexical details](javalette.md#lexical-details)
   * [Primitive functions](javalette.md#primitive-functions)
   * [Parameter passing](javalette.md#parameter-passing)
-  * [Javalette, C, and Java](javalette.md#javalette,-c-and-java)
+  * [Javalette, C, and Java](javalette.md#javalette-c-and-java)
 * [Frontend](frontend.md)
 * [Code generation (LLVM)](code_generation.md)
 * [Extensions](extensions.md)
