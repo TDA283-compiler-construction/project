@@ -132,7 +132,7 @@ The following are the forms of statements in Javalette; we indicate syntax using
 BNFC notation, where we use `Ident`, `Exp` and `Stmt` to indicate a variable,
 expression and statement, respectively. Terminals are given within quotes. For
 simplicity, we sometimes deviate here from the actual provided [grammar
-file](/files/Javalette.cf).
+file](/resources/Javalette.cf).
 
 * *Empty statement*: `";"`
 * *Variable declarations*: `Type Ident ";"`
