@@ -144,9 +144,8 @@ def run_command(cmd, args, stdi=None, stdo=None):
             stdout=stdo if stdo != None else subprocess.PIPE,
             stderr=subprocess.PIPE)
     if child.returncode != 0:
-        raise TestingException(
-                cmd + " failed with:\n" +
-                child.stderr.decode("utf-8"))
+        err = child.stderr if stdi != None else child.stderr.decode("utf-8")
+        raise TestingException(cmd + " failed with:\n" + err)
 
 ##
 ## Assemble and link files with LLVM.
