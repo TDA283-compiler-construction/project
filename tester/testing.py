@@ -617,6 +617,9 @@ def main():
         print("\ntesting.py failed with:\n" +
                 indent_with(4, exc.msg),
                 file=sys.stderr)
+    except Exception as exc:
+        failure = True
+        print("\nUncaught exception " + type(exc).__name__, file=sys.stderr)
     finally:
         if not ns.noclean and ns.archive:
             print("Removing temporary files in: " + tmpdir)
