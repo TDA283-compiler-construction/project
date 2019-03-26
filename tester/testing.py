@@ -159,11 +159,10 @@ def link_llvm(path, source_str):
         with open(tmp, 'w+') as f:
             run_command("llvm-as", [], source_str, f)
         run_command("llvm-link", [tmp, runtime, "-o=main.bc"])
-        run_command("llc", ["-filetype=obj", "main.bc"])
-        run_command("cc", ["main.o"])
+        run_command("clang", ["main.bc"])
     finally:
         os.close(fd)
-        clean_files([tmp, "main.bc", "main.o"])
+        clean_files([tmp, "main.bc"])
 
 ##
 ## Assemble and link files with NASM for 32/64-bit x86.
