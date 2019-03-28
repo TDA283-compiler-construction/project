@@ -408,14 +408,10 @@ def check_build(path, prefix, backends):
     # Attempt to run 'make'.
     sys.stdout.write("- Running \"make\" in " + path + " ... ")
     sys.stdout.flush()
-    child = subprocess.run(
-            ["sh", "-exec", "make -C " + path],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE)
+    child = subprocess.run(["sh", "-exec", "make -C " + path])
     if not child.returncode == 0:
         print("Failed.")
-        raise TestingException("make failed with:\n" +
-                child.stderr.decode("utf-8"))
+        raise TestingException("make failed")
     print("Ok.")
 
     # Check that 'make' produced the desired executables.
