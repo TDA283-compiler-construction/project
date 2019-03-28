@@ -149,7 +149,8 @@ stored in files with suffix `.ll`. There are then several tools you might use:
   optimizations of bitcode.
 
 Note that some installations of LLVM require a version number after the tool
-name, for example `llvm-as-3.8` instead of `llvm-as`.
+name, for example `llvm-as-3.8` instead of `llvm-as`. However, note that we
+use LLVM 6.0.1.
 
 Here are the steps you can use to produce an executable file from within your
 compiler:
@@ -278,5 +279,3 @@ _main:
 _fstr:                          ## fstr
         .asciz  "%d\n"
 ```
-
-
