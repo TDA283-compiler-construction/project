@@ -12,12 +12,28 @@ RUN apt-get update && apt-get install -y \
     tmux \
     curl \
     git \
-    python3
+    python3 \
+    ghc \
+    flex \
+    bison \
+    unzip \
+    bubblewrap
+
 RUN curl -sSL https://get.haskellstack.org/ | sh
+
+RUN curl -sL \
+      https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh > \
+      install.sh && \
+      yes '' | sh install.sh && \
+      rm install.sh
 
 RUN useradd -ms /bin/bash user
 USER user
 WORKDIR /home/user
+
+RUN curl https://sh.rustup.rs -sSf > rustup.sh && \
+    sh rustup.sh -y && \
+    rm rustup.sh
 
 RUN git clone https://github.com/myreen/tda283
 
@@ -36,6 +52,7 @@ RUN mkdir -p subm
 WORKDIR /home/user/tda283/tester
 
 ENV PATH="/home/user/.local/bin:${PATH}"
+ENV PATH="/home/user/.cargo/bin:${PATH}"
 ENV CLASSPATH="/home/user/classpath/JLex:${CLASSPATH}"
 ENV CLASSPATH="/home/user/classpath/CUP/java-cup-11a-runtime.jar:${CLASSPATH}"
 ENV CLASSPATH="/home/user/classpath/CUP/java-cup-11a.jar:${CLASSPATH}"
@@ -48,5 +65,8 @@ RUN stack install \
     microlens-platform \
     mtl \
     process
+
+RUN opam init -a -y --disable-sandboxing --dot-profile=~/.bashrc
+RUN sh /home/user/.opam/opam-init/init.sh
 
 CMD /bin/bash
