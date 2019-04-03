@@ -424,7 +424,7 @@ def check_build(path, prefix, backends):
         if not os.path.isfile(full_path):
             raise TestingException(
                     "Build did not produce the executable \"" +
-                    exec_name + "\" required for the " + suffix + " backend")
+                    exec_name + "\"")
         if not os.access(full_path, os.X_OK):
             raise TestingException(
                     "The file \"" + exec_name + "\" is not executable")
