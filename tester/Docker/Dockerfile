@@ -3,7 +3,6 @@ FROM ubuntu:bionic
 RUN apt-get update && apt-get install -y \
     build-essential \
     default-jdk \
-    bnfc \
     nasm \
     llvm \
     clang \
@@ -63,11 +62,14 @@ RUN stack install \
     microlens-platform \
     mtl \
     process
+RUN stack install BNFC
 
 RUN opam init -a -y --disable-sandboxing --dot-profile=~/.bashrc
 RUN sh /home/user/.opam/opam-init/init.sh
 RUN opam install dune
 RUN opam install -y core alcotest
+
+ENV PATH="/home/user/.opam/default/bin:${PATH}"
 
 RUN git clone https://github.com/myreen/tda283
 WORKDIR /home/user/tda283/tester
