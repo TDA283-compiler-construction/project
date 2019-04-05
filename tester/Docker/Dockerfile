@@ -36,7 +36,6 @@ RUN curl https://sh.rustup.rs -sSf > rustup.sh && \
     $HOME/.cargo/bin/rustup toolchain install nightly && \
     rm rustup.sh
 
-RUN git clone https://github.com/myreen/tda283
 
 RUN mkdir -p classpath/JLex/JLex
 RUN cd classpath/JLex/JLex && \
@@ -49,8 +48,6 @@ RUN cd classpath/CUP && \
     curl -O http://www2.cs.tum.edu/projects/cup/releases/java-cup-11a.jar
 
 RUN mkdir -p subm
-
-WORKDIR /home/user/tda283/tester
 
 ENV PATH="/home/user/.local/bin:${PATH}"
 ENV PATH="/home/user/.cargo/bin:${PATH}"
@@ -69,5 +66,8 @@ RUN stack install \
 
 RUN opam init -a -y --disable-sandboxing --dot-profile=~/.bashrc
 RUN sh /home/user/.opam/opam-init/init.sh
+
+RUN git clone https://github.com/myreen/tda283
+WORKDIR /home/user/tda283/tester
 
 CMD /bin/bash
