@@ -102,6 +102,7 @@ import sys
 import re
 import platform
 import tempfile
+import traceback
 
 ##
 ## Configuration record.
@@ -614,7 +615,8 @@ def main():
                 file=sys.stderr)
     except Exception as exc:
         failure = True
-        print("\nUncaught exception " + type(exc).__name__, file=sys.stderr)
+        print("\nUncaught exception: " + type(exc).__name__, file=sys.stderr)
+        print(traceback.format_exc(), file=sys.stderr)
     finally:
         if not ns.noclean and ns.archive:
             print("Removing temporary files in: " + tmpdir)
