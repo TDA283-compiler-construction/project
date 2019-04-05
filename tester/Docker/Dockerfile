@@ -33,6 +33,7 @@ WORKDIR /home/user
 
 RUN curl https://sh.rustup.rs -sSf > rustup.sh && \
     sh rustup.sh -y && \
+    $HOME/.cargo/bin/rustup toolchain install nightly && \
     rm rustup.sh
 
 RUN git clone https://github.com/myreen/tda283
