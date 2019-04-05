@@ -66,6 +66,7 @@ RUN stack install \
 
 RUN opam init -a -y --disable-sandboxing --dot-profile=~/.bashrc
 RUN sh /home/user/.opam/opam-init/init.sh
+RUN opam install dune
 
 RUN git clone https://github.com/myreen/tda283
 WORKDIR /home/user/tda283/tester
