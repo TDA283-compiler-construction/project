@@ -8,7 +8,7 @@ INSTRUCTIONS
 
 1. Get Docker from e.g. https://www.docker.com/products/docker-desktop
 2. Run make to build Docker image (this will take a while).
-3. Run the test script with `sh runtest.sh`:
+3. Run the test script with `bash runtest.sh`:
 
 ```
 USAGE: runtest.sh <submission> [options]
