@@ -70,12 +70,8 @@ There are several assemblers for x86 available and even different syntax
 versions. We recommend that you use the NASM assembler and that you read Paul
 Carter's PC assembly [tutorial](/resources#documentation) before you start the
 project, unless you are already familiar with x86 architecture. We do not have
-strong requirements on code quality for your code generator; straightforward
-code generation is acceptable. In particular, you do not need to implement
-register allocation to improve your code. This will also have serious negative
-consequences for the performance of your code. Indeed, a preferrable way to get
-native code is to use a framework like LLVM, which provides an extensive
-infrastructure for code manipulation.
+strong requirements on code quality for your code generator. However, you must
+implement some form of quality improving optimisiation, e.g. a simple version
+of register allocation.
 
 An introduction to x86 assembler will be given in the lectures.
-
