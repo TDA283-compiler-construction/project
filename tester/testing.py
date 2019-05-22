@@ -483,6 +483,9 @@ def run_tests(path, backends, prefix, exts):
     build_list(test_files, "testsuite/bad", False)
     for ext in exts:
         build_list(test_files, "testsuite/extensions/" + ext, True)
+        bad_dir = "testsuite/extensions/" + ext + "/bad"
+        if os.path.isdir(bad_dir):
+            build_list(test_files, bad_dir, False)
     tests_ok    = 0
     tests_bad   = 0
     tests_total = len(test_files)
