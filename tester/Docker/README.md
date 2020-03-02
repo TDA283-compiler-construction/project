@@ -8,7 +8,7 @@ INSTRUCTIONS
 
 1. Get Docker from e.g. https://www.docker.com/products/docker-desktop
 2. Run make to build Docker image (this will take a while).
-3. Run the test script with `sh runtest.sh`:
+3. Run the test script with `bash runtest.sh`:
 
 ```
 USAGE: runtest.sh <submission> [options]
@@ -26,7 +26,7 @@ OPTIONS:
 
 Example:
 ```
-sh runtest.sh partC-1.tar.gz -l -Y -x arrays1 -x pointers
+bash runtest.sh partC-1.tar.gz -l -Y -x arrays1 -x pointers
 ```
 will test the submission `partC-1.tar.gz` with the LLVM backend, the x64 backend,
 and the extensions `arrays1` and `pointers`.

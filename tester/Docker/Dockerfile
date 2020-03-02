@@ -43,16 +43,16 @@ RUN cd classpath/JLex/JLex && \
 
 RUN mkdir -p classpath/CUP
 RUN cd classpath/CUP && \
-    curl -O http://www2.cs.tum.edu/projects/cup/releases/java-cup-11a-runtime.jar && \
-    curl -O http://www2.cs.tum.edu/projects/cup/releases/java-cup-11a.jar
+    curl -O http://www2.cs.tum.edu/projects/cup/releases/java-cup-bin-11b-20160615.tar.gz && \
+    tar -xvf java-cup-bin-11b-20160615.tar.gz
 
 RUN mkdir -p subm
 
 ENV PATH="/home/user/.local/bin:${PATH}"
 ENV PATH="/home/user/.cargo/bin:${PATH}"
 ENV CLASSPATH="/home/user/classpath/JLex:${CLASSPATH}"
-ENV CLASSPATH="/home/user/classpath/CUP/java-cup-11a-runtime.jar:${CLASSPATH}"
-ENV CLASSPATH="/home/user/classpath/CUP/java-cup-11a.jar:${CLASSPATH}"
+ENV CLASSPATH="/home/user/classpath/CUP/java-cup-11b-runtime.jar:${CLASSPATH}"
+ENV CLASSPATH="/home/user/classpath/CUP/java-cup-11b.jar:${CLASSPATH}"
 
 RUN stack install \
     array \
