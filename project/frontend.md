@@ -15,7 +15,8 @@ steps 1 and 2, convenient tools exist that do most of the work. You should be
 familiar with these theories and tools and we expect you to complete the front
 end during the first week of the course.
 
-We recommend that you use the BNF converter and either Alex and Happy (if you
+We recommend that you use the [BNF converter] ( https://bnfc.digitalgrammars.com/ )
+to build your lexer and parser. We also recommend you use Alex and Happy (if you
 decide to implement your compiler in Haskell) or JLex and Cup (if you use Java).
 We may also allow other implementation languages and tools, but we can not
 guarantee support, and you must discuss your choice with \$teacher\$ before you
