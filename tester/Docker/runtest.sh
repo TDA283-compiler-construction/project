@@ -10,6 +10,8 @@ function helpmsg {
   echo "  -x <ext>      test extension <ext>" >&2
   echo "                (pass many of these to test multiple extensions)"
   echo "  -n            keep container and temporary files" >&2
+  echo "  -i <image>    custom docker image" >&2
+  echo "                (default: tda283/tester:latest)" >&2
 }
 
 if [[ $# -eq 0 ]]; then
@@ -34,7 +36,10 @@ test_llvm=false
 test_x86=false
 test_x64=false
 
-while getopts ":hlyYx:an" opt; do
+# Default docker image, can be overridden with -i
+image="tda283/tester:latest"
+
+while getopts ":hlyYxi:an" opt; do
   case $opt in
     n)
       noclean="--noclean"
@@ -64,6 +69,9 @@ while getopts ":hlyYx:an" opt; do
     x)
       exts="$OPTARG $exts"
       ;;
+    i)
+      image="$OPTARG"
+      ;;
     \?)
       echo "Invalid option: -$OPTARG"
       helpmsg $0
@@ -80,14 +88,15 @@ echo "Running tests with:" >&2
 echo "  submission:    $submission" >&2
 echo "  backend(s):    $backends" >&2
 echo "  extensions(s): $exts" >&2
+echo "  image:         $image" >&2
 
 base=`basename $submission`
 name="tda283-test-$base"
 
 if [[ -z `docker ps -q -a -f name="$name"` ]]; then
-  cont=`docker run -m 4096M --name "$name" -td -h "$name" tda283/tester:latest`
+  cont=`docker run -m 4096M --name "$name" -td -h "$name" "$image"`
 else
-  cont=`docker run -m 4096M -td -h tda283-test tda283/tester:latest`
+  cont=`docker run -m 4096M -td -h tda283-test "$image"`
 fi
 
 if [[ $? -ne 0 ]]; then
