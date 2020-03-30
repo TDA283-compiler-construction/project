@@ -22,6 +22,8 @@ OPTIONS:
   -a            expect submission to be archive
   -n            pass --noclean if archive
                 (keeps temporary files, and keeps container alive)
+  -i <image>    custom docker image
+                (default: tda283/tester:latest)
 ```
 
 Example:
