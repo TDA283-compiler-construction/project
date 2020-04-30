@@ -113,7 +113,7 @@ elements. For this, we still have to rely on the `while` loop. The traditional
 
 The length of an array is of type int. The `new` syntax for creating a new
 array is an expression. It can take any (integer type) expression as the new
-length, and it can be used in other locations that initialisers.
+length, and it can be used in other locations than initialisers.
 
 The array type does not support any other operations. There is no need for an
 equality or less-than test for the array type, for instance.
