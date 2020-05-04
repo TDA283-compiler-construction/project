@@ -7,7 +7,7 @@ manipulating (e.g. optimizing) LLVM code and backends for various architectures.
 LLVM has a large user base and is actively developed. A lot of information and
 code to download can be found at the LLVM web site `http://www.llvm.org`. You
 must use the \$llvmversion$\ version in this course; the
-[testsuite](/resources#testsuite) has only guaranteed support forthis particular
+[testsuite](/tester) has only guaranteed support forthis particular
 version.
 
 Also LLVM code comes in two formats, a human-readable assembler format (stored
@@ -147,6 +147,8 @@ stored in files with suffix `.ll`. There are then several tools you might use:
   files using the flag `-filetype=obj`
 * The *analyzer/optimizer* `opt`, which can perform a wide range of code
   optimizations of bitcode.
+* The wrapper `clang` which uses various of the above tools together to provide
+  a similar interface to `GCC`.
 
 Note that some installations of LLVM require a version number after the tool
 name, for example `llvm-as-3.8` instead of `llvm-as`. However, note that we
@@ -165,16 +167,15 @@ compiler:
 * Generate a native object file using `llc`. By default `llc` will produce
   assembler output, but by using the flag `-filetype=obj` it will produce an
   object file. The invocation will look like this: `llc -filetype=obj main.bc`
-* Produce an executable. The LLVM toolchain does not have support for this. The
-  easiest way to produce an executable from an object file is to invoke a C
-  compiler, like so: `gcc main.o`. This will produce the executable file
-  `a.out`. If you want to change the name of the output, use the flag `-o`.
+* Finally, produce an executable. The simplest way to do this is with
+  `clang main.o`
 
-    Under the hood `gcc` calls the native linker `ld` but we do not recommend
-    that you do that, because it requires specifying extra libraries and
-    possibly adding paths. GCC solves all that for us. If you want to see how
-    GCC invokes the `ld` command use the `-v` flag when running GCC.
+A simpler alternative to the above steps is to let `clang` run the various
+LLVM tools, with `clang prog.ll runtime.bc`
 
+Also note that the [testing framework](/tester) will call LLVM link in the
+runtime library itself. For the purposes of assignment submission, your
+compiler need only produce an LLVM file.
 
 Optimizations
 -------------
