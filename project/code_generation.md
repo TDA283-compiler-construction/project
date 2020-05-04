@@ -173,9 +173,10 @@ compiler:
 A simpler alternative to the above steps is to let `clang` run the various
 LLVM tools, with `clang prog.ll runtime.bc`
 
-Also note that the [testing framework](/tester) will call LLVM link in the
-runtime library itself. For the purposes of assignment submission, your
-compiler need only produce an LLVM file.
+Also note that the [testing framework](/tester) will call LLVM itself, and
+will link in the runtime library as well. For the purposes of assignment
+submission, your compiler need only produce an LLVM file (the equivalent of
+`prog.ll` above).
 
 Optimizations
 -------------
