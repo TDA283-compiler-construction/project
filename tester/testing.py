@@ -490,6 +490,7 @@ def run_tests(path, backends, prefix, exts):
     tests_bad   = 0
     tests_total = len(test_files)
     failures    = []
+    exceptions  = []
 
     # If there is no backend then run the type checking.
     if backends == []:
@@ -518,12 +519,16 @@ def run_tests(path, backends, prefix, exts):
             exec_name = prefix + ('' if suffix == 'llvm' else '_' + suffix)
             full_name = os.path.join(path, exec_name)
             for filename, is_good in test_files:
-                is_ok, data = exec_test(full_name, filename, is_good, linker)
-                if is_ok:
-                    tests_ok += 1
-                else:
+                try:
+                    is_ok, data = exec_test(full_name, filename, is_good, linker)
+                    if is_ok:
+                        tests_ok += 1
+                    else:
+                        tests_bad += 1
+                        failures.append((filename, data))
+                except TestingException as exc:
                     tests_bad += 1
-                    failures.append((filename, data))
+                    exceptions.append((filename, exc.msg))
                 sys.stdout.write(
                         status_msg(suffix, tests_ok, tests_bad, tests_total))
             print("")
@@ -533,7 +538,7 @@ def run_tests(path, backends, prefix, exts):
     success = tests_ok == tests_total
     if success:
         print("All tests succeeded.")
-    else:
+    if failures:
         print("Some tests failed:")
         for name, data in failures:
             print("---------- !!! " + name + ".jl failed !!! ----------\n")
@@ -550,6 +555,12 @@ def run_tests(path, backends, prefix, exts):
                     print("- stdout actual:")
                     print(indent_with(4, data.stdout_actual))
             print("")
+    if exceptions:
+        print("Some tests caused build failures:")
+        for name, msg in exceptions:
+            print("---------- !!! " + name + ".jl failed !!! ----------\n")
+            print(indent_with(4, msg))
+            print()
 
 ##
 ## Do some initialization (parse arguments, etc) and
