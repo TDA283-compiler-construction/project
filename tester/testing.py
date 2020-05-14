@@ -215,19 +215,26 @@ def run_compiler(exe, src_file, is_good):
                 "here is the errno: " + str(exc.errno) + ": " +
                 exc.strerror)
 
+    returncode_info = None
     if is_good:
         stderr_expected = "OK"
         check = lambda s: s == stderr_expected and child.returncode == 0
+        if child.returncode != 0:
+            returncode_info = ("compiler return code: %d, 0 expected"
+                    % child.returncode)
     else:
         stderr_expected = "ERROR"
         check = lambda s: stderr_expected in s and child.returncode != 0
+        if child.returncode == 0:
+            returncode_info = "compiler return code: 0, nonzero expected"
 
     return check(stderr), Struct(
             stderr_actual = stderr,
             stderr_expected = stderr_expected,
             stdout_expected = "",
             stdout_actual = "",
-            stdout_compiler = stdout)
+            stdout_compiler = stdout,
+            returncode_info = returncode_info)
 
 ##
 ## Execute one test.
@@ -284,7 +291,8 @@ def exec_test(exe, filename, is_good, linker):
             stderr_actual = data.stderr_actual,
             stdout_expected = stdout_expected,
             stdout_actual = stdout_actual,
-            stdout_compiler = data.stdout_compiler)
+            stdout_compiler = data.stdout_compiler,
+            returncode_info = data.returncode_info)
 
 ##
 ## Build list of files for the test-cases in 'do_tests'.
@@ -547,6 +555,10 @@ def run_tests(path, backends, prefix, exts):
                 print(indent_with(4, data.stderr_expected))
                 print("- stderr actual:")
                 print(indent_with(4, data.stderr_actual))
+
+            if data.returncode_info:
+                print("- compiler return code info:")
+                print("    " + data.returncode_info)
 
             if len(backends) > 0:
                 if len(data.stdout_expected) > 0:
