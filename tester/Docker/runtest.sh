@@ -41,7 +41,7 @@ test_x64=false
 # Default docker image, can be overridden with -i
 image="tda283/tester:latest"
 
-while getopts ":hlyYxi:an" opt; do
+while getopts ":hlyYx:i:an" opt; do
   case $opt in
     a)
       archive="--archive"
