@@ -206,9 +206,12 @@ def run_compiler(exe, src_file, is_good):
                 [exe],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                stdin=infile)
+                stdin=infile,
+                timeout=5)
         stdout = child.stdout.decode("utf-8")
         stderr = child.stderr.decode("utf-8").strip()
+    except subprocess.TimeoutExpired as exc:
+        raise TestingException(str(exc))
     except OSError as exc:
         raise TestingException(
                 "Unable to execute " + exe + " for some reason, " +
@@ -277,8 +280,11 @@ def exec_test(exe, filename, is_good, linker):
                 ["./a.out"],
                 stdin=infile if infile != None else subprocess.PIPE,
                 stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE)
+                stderr=subprocess.PIPE,
+                timeout=2.5)
         stdout_actual = child.stdout.decode("utf-8")
+    except subprocess.TimeoutExpired as exc:
+        raise TestingException(str(exc))
     except OSError as exc:
         raise TestingException(
                 "Unable to execute ./a.out for some reason, " +
