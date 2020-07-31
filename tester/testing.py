@@ -355,8 +355,6 @@ def init_argparser():
 def check_archive(path, target):
     filename_pat = re.compile(
             '^part(A|B|C)-[1-9][0-9]*\.(tgz|tar\.(gz|bz2|xz))$')
-
-    _, ext = os.path.splitext(path)
     _, fname = os.path.split(path)
 
     # Check that filename is OK.
@@ -364,26 +362,16 @@ def check_archive(path, target):
         raise TestingException(
                 "Archive is not named according to submission guidelines")
 
-    # Check archive extension
-    if ext == ".tar":
-        cmd, opt, epi = "tar", "xf", "-C"
-    elif ext == ".gz":
-        cmd, opt, epi = "tar", "xzf", "-C"
-    elif ext == ".bz2":
-        cmd, opt, epi = "tar", "xjf", "-C"
-    else:
-        cmd, opt, epi = "tar", "xJf", "-C"
-
     # Create target directory if it does not exist, and attempt to
     # unpack.
     sys.stdout.write("- Unpacking " + fname + " to \"" + target + "\" ... ")
     sys.stdout.flush()
     if not os.path.exists(target): # TODO redundant; Python created the file
         os.makedirs(target)
-    child = subprocess.run(
-            [cmd, opt, path, epi, target],
-            stderr=subprocess.PIPE)
-    if not child.returncode == 0:
+    try:
+        shutil.unpack_archive(path, target)
+        print("Ok.")
+    except ValueError as exc:
         print("Failed.")
         raise TestingException("Unpacking failed with:\n" +
                 child.stderr.decode("utf-8"))
