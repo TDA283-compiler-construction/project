@@ -97,6 +97,7 @@
 
 import argparse
 import os
+import shutil
 import subprocess
 import sys
 import re
@@ -407,9 +408,10 @@ def check_contents(path):
 ##
 def check_build(path, prefix, backends):
     # Attempt to run 'make'.
+    make_cmd = shutil.which('make')
     sys.stdout.write("- Running \"make\" in " + path + " ... ")
     sys.stdout.flush()
-    child = subprocess.run(["sh", "-exec", "make -C " + path])
+    child = subprocess.run([make_cmd, "-C", path])
     if not child.returncode == 0:
         print("Failed.")
         raise TestingException("make failed")
