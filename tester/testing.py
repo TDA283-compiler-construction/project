@@ -306,7 +306,7 @@ def init_argparser():
     parser.add_argument(
             "submission",
             metavar="<submission>",
-            help="path to submission archive")
+            help="path to submission (directory or archive)")
     parser.add_argument(
             "-v", "--version",
             action="version",
