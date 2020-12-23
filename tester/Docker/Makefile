@@ -12,13 +12,13 @@ build: Dockerfile
 	docker build -m 4096M -t $(NS)/$(IMAGE):$(VERSION) -f $< .
 
 rust: Dockerfile-rust
-	docker build -m 4096M -t $(NS)/$(IMAGE)-rust:$(VERSION) -f $< .
+	docker build -m 4096M -t $(NS)/$(IMAGE):rust -f $< .
 
 ocaml: Dockerfile-ocaml
-	docker build -m 4096M -t $(NS)/$(IMAGE)-ocaml:$(VERSION) -f $< .
+	docker build -m 4096M -t $(NS)/$(IMAGE):ocaml -f $< .
 
 riscv: Dockerfile-riscv
-	docker build -m 4096M -t $(NS)/$(IMAGE)-riscv:$(VERSION) -f $< .
+	docker build -m 4096M -t $(NS)/$(IMAGE):riscv -f $< .
 
 shell:
 	docker run -m 4096M --rm --name $(CONTAINER_NAME)-$(CONTAINER_INSTANCE) \
