@@ -6,7 +6,7 @@ University of Technology and Gothenburg University.
 
 ## Requirements
 
-testing.py requires Python 3, `make` and `tar`. The test suite should work on
+testing.py requires Python 3 and `make`. The test suite should work on
 Linux and macOS. If you are using Windows, see e.g.
 [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10).
 
@@ -19,7 +19,7 @@ web-page).
 
 Example:
 ```sh
-> python3 testing.py path/to/partA-2.tar.gz --archive --llvm
+> python3 testing.py path/to/partA-2.tar.gz --llvm
 ```
 
 The following command line options are available:
@@ -31,17 +31,17 @@ The following command line options are available:
 | `    --llvm`                  | Test the LLVM backend                 |
 | `    --x86`                   | Test the 32-bit x86 backend           |
 | `    --x64`                   | Test the 64-bit x86 backend           |
+| `    --riscv`                 | Test the RISC-V backend               |
 | `-x <ext> [ext ...]`          | Test one or more extensions           |
-| `    --archive`               | Treat submission as archive           |
-| `    --noclean`               | Do not clean up temporary files created by `--archive` |
+| `    --noclean`               | Do not clean up temporary files       |
 
 As an example, the following tests the x86-32 backend with extensions
 `arrays1` and `pointers` on the submission `partC-1.tar.gz`:
 ```sh
-> python3 testing.py partC-1.tar.gz --archive --x86 -x arrays1 pointers
+> python3 testing.py partC-1.tar.gz --x86 -x arrays1 pointers
 ```
 
-If neither of the options `--llvm`, `--x86` or `--x64` are present, only
+If neither of the options `--llvm`, `--x86`, `--x64`, or `--riscv` are present, only
 parsing and type checking is tested.
 
 ## Extensions
@@ -86,12 +86,13 @@ level.
 ###   Naming
 
 Your compiler should be named `jlc` (without quotes) for the LLVM backend,
-`jlc_x86` for the 32-bit x86 backend, and `jlc_x64` for the 64-bit x86 backend.
+`jlc_x86` for the 32-bit x86 backend, `jlc_x64` for the 64-bit x86 backend,
+ and `jlc_riscv` for the RISC-V backend.
 
 ### Input/output format
 
 * Your compiler should read its input from standard input (stdin), and write
-  its output (LLVM, or x86 assembly) to standard out (stdout).
+  its output (LLVM, or assembly) to standard out (stdout).
 * If your program succeeds (there are no errors), then it should print `OK` to
    standard error (stderr), and terminate with exit code 0.
 * If your program does not succeed (there are some errors), it should print a
