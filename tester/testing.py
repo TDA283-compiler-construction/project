@@ -358,7 +358,7 @@ def check_archive(path, target):
 
     # Create target directory if it does not exist, and attempt to
     # unpack.
-    sys.stdout.write("- Unpacking " + fname + " to \"" + target + "\" ... ")
+    sys.stdout.write("- Unpacking " + fname + " to " + target + " ... ")
     sys.stdout.flush()
     if not os.path.exists(target): # TODO redundant; Python created the file
         os.makedirs(target)
@@ -369,7 +369,6 @@ def check_archive(path, target):
         print("Failed.")
         raise TestingException("Unpacking failed with:\n" +
                 child.stderr.decode("utf-8"))
-    print("Ok.")
 
 ##
 ## Check submission contents.
@@ -391,12 +390,16 @@ def check_contents(path):
 def check_build(path, prefix, backends):
     # Attempt to run 'make'.
     make_cmd = shutil.which('make')
-    sys.stdout.write("- Running \"make\" in " + path + " ... ")
+    sys.stdout.write("- Running make in " + path + " ... ")
     sys.stdout.flush()
-    child = subprocess.run([make_cmd, "-C", path])
+    child = subprocess.run(
+            [make_cmd, "-C", path],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
     if not child.returncode == 0:
         print("Failed.")
-        raise TestingException("make failed")
+        err = child.stderr.decode("utf-8")
+        raise TestingException("make failed with:\n" ++ err)
     print("Ok.")
 
     # Check that 'make' produced the desired executables.
