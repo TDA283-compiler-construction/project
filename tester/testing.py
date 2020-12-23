@@ -602,10 +602,7 @@ def main():
     finally:
         if not ns.noclean and os.path.isdir(tmpdir):
             print("Removing temporary files in: " + tmpdir)
-            child = subprocess.run(
-                    ["rm", "-rf", tmpdir],
-                    stdout=subprocess.PIPE,
-                    stderr=subprocess.PIPE)
+            shutil.rmtree(tmpdir)
         clean_files(['a.out'])
         if failure:
             sys.exit(1)
