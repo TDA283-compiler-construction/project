@@ -26,7 +26,7 @@ OPTIONS:
 
 Example:
 ```
-bash runtest.sh partC-1.tar.gz -l -Y -x arrays1 -x pointers
+bash runtest.sh -l -Y -x arrays1 -x pointers -- partC-1.tar.gz
 ```
 will test the submission `partC-1.tar.gz` with the LLVM backend, the x64 backend,
 and the extensions `arrays1` and `pointers`.
