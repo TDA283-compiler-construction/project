@@ -4,7 +4,7 @@ VERSION ?= latest
 CONTAINER_NAME ?= tester
 CONTAINER_INSTANCE ?= default
 
-.PHONY: build shell dist
+.PHONY: build shell dist rust ocaml riscv
 
 default: build
 
@@ -16,6 +16,9 @@ rust: Dockerfile-rust
 
 ocaml: Dockerfile-ocaml
 	docker build -m 4096M -t $(NS)/$(IMAGE)-ocaml:$(VERSION) -f $< .
+
+riscv: Dockerfile-riscv
+	docker build -m 4096M -t $(NS)/$(IMAGE)-riscv:$(VERSION) -f $< .
 
 shell:
 	docker run -m 4096M --rm --name $(CONTAINER_NAME)-$(CONTAINER_INSTANCE) \
