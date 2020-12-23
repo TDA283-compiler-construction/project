@@ -39,7 +39,7 @@ test_x64=false
 # Default docker image, can be overridden with -i
 image="tda283/tester:latest"
 
-while getopts ":hlyYxi:an" opt; do
+while getopts ":hlyYxi:n" opt; do
   case $opt in
     n)
       noclean="--noclean"
