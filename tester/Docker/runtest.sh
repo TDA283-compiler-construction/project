@@ -7,6 +7,7 @@ function helpmsg {
   echo "  -l            test LLVM backend" >&2
   echo "  -y            test x86-32 backend" >&2
   echo "  -Y            test x86-64 backend" >&2
+  echo "  -v            test risc-v backend" >&2
   echo "  -x <ext>      test extension <ext>" >&2
   echo "                (pass many of these to test multiple extensions)"
   echo "  -n            keep container and temporary files" >&2
@@ -22,11 +23,12 @@ fi
 test_llvm=false
 test_x86=false
 test_x64=false
+test_riscv=false
 
 # Default docker image, can be overridden with -i
 image="tda283/tester:latest"
 
-while getopts ":hlyYxi:n" opt; do
+while getopts ":hlyYvxi:n" opt; do
   case $opt in
     n)
       noclean="--noclean"
@@ -51,6 +53,12 @@ while getopts ":hlyYxi:n" opt; do
       if [[ "$test_x64" = false ]]; then
         backends="--x64 $backends"
         test_x64=true
+      fi
+      ;;
+    v)
+      if [[ "$test_riscv" = false ]]; then
+        backends="--riscv $banckends"
+        test_riscv=true
       fi
       ;;
     x)

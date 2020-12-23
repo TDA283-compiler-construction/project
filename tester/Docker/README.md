@@ -27,6 +27,7 @@ OPTIONS:
   -l            test LLVM backend
   -y            test x86-32 backend
   -Y            test x86-64 backend
+  -v            test risc-v backend
   -x <ext>      test extension <ext>
                 (pass many of these to test multiple extensions)
   -n            keep container and temporary files
