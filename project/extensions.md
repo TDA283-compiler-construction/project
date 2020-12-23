@@ -69,9 +69,6 @@ int[] sum (int[] a, int[] b) {
 }
 ```
 
-Array parameters are passed by value, that is the reference is copied into the
-parameter.
-
 One new form of expressions is added, namely indexing, as shown in the example.
 Indexed expressions may also occur as L-values, i.e., as left hand sides of
 assignment statements. An array can be filled with values by assigning each
@@ -80,6 +77,22 @@ in C or Java:
 
 ```java
 c = a;
+```
+
+Arrays can be passed as parameters to functions, and returned from functions.
+When passed or returned, or assigned to a variable as above, it is a reference
+that is copied, not the contents of the array. The following function returns
+3.
+
+```java
+int return3 (void) {
+  int[] arr = new int [1];
+  int[] arr2 = new int [2];
+
+  arr2 = arr;
+  arr2[0] = 3;
+  return arr[0];
+}
 ```
 
 The extension also includes implementation of a simple form of `foreach`-loop to
@@ -97,6 +110,13 @@ This form of loop is very convenient when you want to iterate over an array and
 access the elements, but it is not useful when you need to assign values to the
 elements. For this, we still have to rely on the `while` loop. The traditional
 `for`-loop would be attractive here, but we cannot implement everything.
+
+The length of an array is of type int. The `new` syntax for creating a new
+array is an expression. It can take any (integer type) expression as the new
+length, and it can be used in other locations than initialisers.
+
+The array type does not support any other operations. There is no need for an
+equality or less-than test for the array type, for instance.
 
 Test files for this extension are in subdirectory `extensions/arrays1`.
 

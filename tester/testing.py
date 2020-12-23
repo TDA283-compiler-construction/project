@@ -26,6 +26,7 @@
 #         --llvm              Test the LLVM backend
 #         --x86               Test the 32-bit x86 backend
 #         --x64               Test the 64-bit x86 backend
+#         --riscv             Test the RISC-V backend
 #     -x <ext> [ext ...]      Test one or more extensions
 #         --noclean           Do not clean up temporary files
 #
@@ -35,8 +36,8 @@
 #
 #     > ./testing.py partC-1.tar.gz --x86 -x arrays1 pointers
 #
-#   If neither of the options '--llvm', '--x86' or '--x64' are present, only
-#   parsing and type checking is tested.
+#   If neither of the options '--llvm', '--x86', '--x64', or '--riscv'
+#   are present, only parsing and type checking is tested.
 #
 # EXTENSIONS
 #
@@ -79,13 +80,13 @@
 #   Naming
 #   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #   Your compiler should be named `jlc` (without quotes) for the LLVM backend,
-#   `jlc_x86` for the 32-bit x86 backend, and `jlc_x64` for the 64-bit x86
-#   backend.
+#   `jlc_x86` for the 32-bit x86 backend, `jlc_x64` for the 64-bit x86 backend,
+#   and `jlc_riscv` for the RISC-V backend.
 #
 #   Input/output format
 #   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #   * Your compiler should read its input from standard input (stdin), and
-#     write its output (LLVM, or x86 assembly) to standard out (stdout).
+#     write its output (LLVM, or assembly) to standard out (stdout).
 #   * If your program succeeds (there are no errors), then it should print
 #     `OK` (without quotes) to standard error (stderr), and terminate with
 #     exit code 0.
@@ -103,6 +104,7 @@ import re
 import platform
 import tempfile
 import traceback
+from shutil import which
 
 ##
 ## Configuration record.
@@ -191,6 +193,26 @@ def link_x86(path, source_str, is_x64, is_macho):
         clean_files([tmp_s, tmp_o])
 
 ##
+## Assemble and link files with GCC for RISCV64.
+##
+def link_riscv(path, source_str):
+    fds, tmp_s = tempfile.mkstemp(
+            prefix='test_riscv_', suffix='.s', dir=os.getcwd())
+    fdo, tmp_o = tempfile.mkstemp(
+            prefix='test_riscv_', suffix='.o', dir=os.getcwd())
+    runtime = os.path.join(path, 'lib', 'runtime-riscv.o')
+
+    try:
+        with open(tmp_s, 'w+') as f:
+            f.write(source_str)
+        run_command('riscv64-none-elf-gcc', ['-c', tmp_s, '-o' + tmp_o])
+        run_command('riscv64-none-elf-gcc', [tmp_o, runtime])
+    finally:
+        os.close(fds)
+        os.close(fdo)
+        clean_files([tmp_s, tmp_o])
+
+##
 ## Compile a Javalette source file with the Javalette compiler.
 ##   exe       is the compiler executable
 ##   src_file  is the Javalette source file (with extension .jl)
@@ -215,19 +237,26 @@ def run_compiler(exe, src_file, is_good):
                 "here is the errno: " + str(exc.errno) + ": " +
                 exc.strerror)
 
+    returncode_info = None
     if is_good:
         stderr_expected = "OK"
         check = lambda s: s == stderr_expected and child.returncode == 0
+        if child.returncode != 0:
+            returncode_info = ("compiler return code: %d, 0 expected"
+                    % child.returncode)
     else:
         stderr_expected = "ERROR"
         check = lambda s: stderr_expected in s and child.returncode != 0
+        if child.returncode == 0:
+            returncode_info = "compiler return code: 0, nonzero expected"
 
     return check(stderr), Struct(
             stderr_actual = stderr,
             stderr_expected = stderr_expected,
             stdout_expected = "",
             stdout_actual = "",
-            stdout_compiler = stdout)
+            stdout_compiler = stdout,
+            returncode_info = returncode_info)
 
 ##
 ## Execute one test.
@@ -238,7 +267,7 @@ def run_compiler(exe, src_file, is_good):
 ##   linker    is the linker for whatever particular backend we're using
 ##             (or None, if we're only type checking)
 ##
-def exec_test(exe, filename, is_good, linker):
+def exec_test(exe, filename, is_good, linker, runner):
     input_file  = filename + ".input"
     output_file = filename + ".output"
     source_file = filename + ".jl"
@@ -266,8 +295,9 @@ def exec_test(exe, filename, is_good, linker):
 
     # Attempt to run the program.
     try:
+        command = runner + ['./a.out'] if runner else ['./a.out']
         child = subprocess.run(
-                ["./a.out"],
+                command,
                 stdin=infile if infile != None else subprocess.PIPE,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE)
@@ -284,7 +314,8 @@ def exec_test(exe, filename, is_good, linker):
             stderr_actual = data.stderr_actual,
             stdout_expected = stdout_expected,
             stdout_actual = stdout_actual,
-            stdout_compiler = data.stdout_compiler)
+            stdout_compiler = data.stdout_compiler,
+            returncode_info = data.returncode_info)
 
 ##
 ## Build list of files for the test-cases in 'do_tests'.
@@ -327,6 +358,10 @@ def init_argparser():
             "--x64",
             action="store_true",
             help="test 64-bit x86 backend")
+    parser.add_argument(
+            "--riscv",
+            action="store_true",
+            help="test RISC-V backend")
     parser.add_argument(
             "-x",
             metavar="<ext>",
@@ -431,6 +466,12 @@ def check_build(path, prefix, backends):
                 raise TestingException(
                         "\"runtime.ll\" is missing from \"lib\"")
             run_command('llvm-as', [runtime + '.ll', '-o=' + runtime + '.bc'])
+        if suff == 'riscv':
+            if not os.path.isfile(runtime + '-riscv.s'):
+                print("Failed.")
+                raise TestingException(
+                        "\"runtime-riscv.s\" is missing from \"lib\"")
+            run_command('riscv64-none-elf-gcc', ['-c', runtime + '-riscv.s', '-o' + runtime + '-riscv.o'])
         elif suff == 'x86' or suff == 'x64':
             if not os.path.isfile(runtime + '.s'):
                 print("Failed.")
@@ -477,12 +518,13 @@ def run_tests(path, backends, prefix, exts):
     tests_bad   = 0
     tests_total = len(test_files)
     failures    = []
+    exceptions  = []
 
     # If there is no backend then run the type checking.
     if backends == []:
         full_name = os.path.join(path, prefix)
         for filename, is_good in test_files:
-            is_ok, data = exec_test(full_name, filename, is_good, None)
+            is_ok, data = exec_test(full_name, filename, is_good, None, None)
             if is_ok:
                 tests_ok += 1
             else:
@@ -498,19 +540,29 @@ def run_tests(path, backends, prefix, exts):
             # Pick the right assembler/linker.
             if suffix == "llvm":
                 linker = lambda s: link_llvm(path, s)
+                runner = None
+            elif suffix == "riscv":
+                linker = lambda s: link_riscv(path, s)
+                runner = ['spike', which('pk')]
             elif suffix == "x86":
                 linker = lambda s: link_x86(path, s, False, link_macho)
+                runner = None
             else :
                 linker = lambda s: link_x86(path, s, True, link_macho)
+                runner = None
             exec_name = prefix + ('' if suffix == 'llvm' else '_' + suffix)
             full_name = os.path.join(path, exec_name)
             for filename, is_good in test_files:
-                is_ok, data = exec_test(full_name, filename, is_good, linker)
-                if is_ok:
-                    tests_ok += 1
-                else:
+                try:
+                    is_ok, data = exec_test(full_name, filename, is_good, linker, runner)
+                    if is_ok:
+                        tests_ok += 1
+                    else:
+                        tests_bad += 1
+                        failures.append((filename, data))
+                except TestingException as exc:
                     tests_bad += 1
-                    failures.append((filename, data))
+                    exceptions.append((filename, exc.msg))
                 sys.stdout.write(
                         status_msg(suffix, tests_ok, tests_bad, tests_total))
             print("")
@@ -520,7 +572,7 @@ def run_tests(path, backends, prefix, exts):
     success = tests_ok == tests_total
     if success:
         print("All tests succeeded.")
-    else:
+    if failures:
         print("Some tests failed:")
         for name, data in failures:
             print("---------- !!! " + name + ".jl failed !!! ----------\n")
@@ -530,6 +582,10 @@ def run_tests(path, backends, prefix, exts):
                 print("- stderr actual:")
                 print(indent_with(4, data.stderr_actual))
 
+            if data.returncode_info:
+                print("- compiler return code info:")
+                print("    " + data.returncode_info)
+
             if len(backends) > 0:
                 if len(data.stdout_expected) > 0:
                     print("- stdout expected:")
@@ -537,6 +593,12 @@ def run_tests(path, backends, prefix, exts):
                     print("- stdout actual:")
                     print(indent_with(4, data.stdout_actual))
             print("")
+    if exceptions:
+        print("Some tests caused build failures:")
+        for name, msg in exceptions:
+            print("---------- !!! " + name + ".jl failed !!! ----------\n")
+            print(indent_with(4, msg))
+            print()
 
 ##
 ## Do some initialization (parse arguments, etc) and
@@ -574,6 +636,8 @@ def main():
         backends.append("x86")
     if ns.x64:
         backends.append("x64")
+    if ns.riscv:
+        backends.append("riscv")
 
     did_unpack = False
     failure = False

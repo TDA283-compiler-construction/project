@@ -10,7 +10,7 @@ the array elements must be accessed by indexing.
 
 LLVM provides support for built-in arrays, but these are not automatically
 heap-allocated. Instead, explicit pointers must be used. Thus, an array will
-have the LLVM type `{i32, [0 x t] *}`, where `t` is the LLVM type of the
+have the LLVM type `{i32, [0 x t]}`, where `t` is the LLVM type of the
 elements. The first `i32` component holds the length; the second the array
 elements themselves. The number of elements in the array is here indicated to
 be 0; it is thus your responsibility to make sure to allocate enough memory. For

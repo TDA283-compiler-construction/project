@@ -1,7 +1,7 @@
 Project Overview
 ================
 
-The project has three parts: a fronend for the Javalette language
+The project has three parts: a frontend for the Javalette language
 (Part A), a backend with code generation for LLVM (Part B), and
 extensions to the compiler (Part C).
 

@@ -1,8 +1,8 @@
 TDA283 / DIT300 Compiler Construction
 =====================================
 
-These pages describe the project for the [Compiler Construction
-course](https://chalmers.instructure.com/courses/4103/assignments/syllabus)
+These pages describe the project for the [Compiler Construction course](
+  https://chalmers.instructure.com/courses/9332/assignments/syllabus)
 at Chalmers and Gothenburg University.
 
 [project/](project/):
