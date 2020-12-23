@@ -4,10 +4,12 @@ VERSION ?= latest
 CONTAINER_NAME ?= tester
 CONTAINER_INSTANCE ?= default
 
-.PHONY: shell build
+.PHONY: build shell dist
+
+default: build
 
 build: Dockerfile
-	docker build -m 4096M -t $(NS)/$(IMAGE):$(VERSION) -f Dockerfile .
+	docker build -m 4096M -t $(NS)/$(IMAGE):$(VERSION) -f $< .
 
 shell:
 	docker run -m 4096M --rm --name $(CONTAINER_NAME)-$(CONTAINER_INSTANCE) \
@@ -15,7 +17,6 @@ shell:
 
 dist: tda283-docker.tar.gz
 
-tda283-docker.tar.gz: Makefile Dockerfile runtest.sh README.md
+tda283-docker.tar.gz: Makefile Dockerfile* runtest.sh README.md
 	tar cvzf $@ $^
 
-default: build
