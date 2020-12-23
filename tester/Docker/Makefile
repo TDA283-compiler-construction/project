@@ -11,6 +11,12 @@ default: build
 build: Dockerfile
 	docker build -m 4096M -t $(NS)/$(IMAGE):$(VERSION) -f $< .
 
+rust: Dockerfile-rust
+	docker build -m 4096M -t $(NS)/$(IMAGE)-rust:$(VERSION) -f $< .
+
+ocaml: Dockerfile-ocaml
+	docker build -m 4096M -t $(NS)/$(IMAGE)-ocaml:$(VERSION) -f $< .
+
 shell:
 	docker run -m 4096M --rm --name $(CONTAINER_NAME)-$(CONTAINER_INSTANCE) \
 	  -i -t $(NS)/$(IMAGE):$(VERSION) /bin/bash
