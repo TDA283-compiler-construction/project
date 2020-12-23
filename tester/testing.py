@@ -17,7 +17,7 @@
 #   web-page).
 #
 #   Example:
-#     > ./testing.py path/to/partA-2.tar.gz --archive --llvm
+#     > ./testing.py path/to/partA-2.tar.gz --llvm
 #
 #   The following command line options are available:
 #
@@ -27,14 +27,13 @@
 #         --x86               Test the 32-bit x86 backend
 #         --x64               Test the 64-bit x86 backend
 #     -x <ext> [ext ...]      Test one or more extensions
-#         --archive           Treat submission as an archive
-#         --noclean           Do not clean up temporary files created by
-#                             --archive
+#         --noclean           Do not clean up temporary files
+#
 #
 #   As an example, the following tests the x86-32 backend with extensions
 #   'arrays1' and 'pointers' on the submission partC-1.tar.gz:
 #
-#     > ./testing.py partC-1.tar.gz --archive --x86 -x arrays1 pointers
+#     > ./testing.py partC-1.tar.gz --x86 -x arrays1 pointers
 #
 #   If neither of the options '--llvm', '--x86' or '--x64' are present, only
 #   parsing and type checking is tested.
@@ -335,14 +334,9 @@ def init_argparser():
             default=[],
             help="test extensions (one or several)")
     parser.add_argument(
-            "--archive",
-            action="store_true",
-            help="treat submission as archive")
-    parser.add_argument(
             "--noclean",
             action="store_true",
-            help="do not clean up temporary files " +
-                 "(only useful with --archive)")
+            help="do not clean up temporary files ")
     parser.add_argument(
             "--list",
             action="store_true",
@@ -563,15 +557,10 @@ def main():
             print("Not a valid extension: " + ext, file=sys.stderr)
             sys.exit(1)
 
-    # Check submission path.
+    # Check submission path exists.
     path = ns.submission
-    if ns.archive and not os.path.isfile(path):
-        print("Not a file: " + path, file=sys.stderr)
-        print("(--archive flag was passed)", file=sys.stderr)
-        sys.exit(1)
-
-    if not ns.archive and not os.path.isdir(path):
-        print("Not a directory: " + path, file=sys.stderr)
+    if not os.path.exists(path):
+        print("Path does not exist: " + path, file=sys.stderr)
         sys.exit(1)
 
     # Pick up backends.
@@ -587,8 +576,8 @@ def main():
     failure = False
     tmpdir = ''
     try:
-        # If the --archive flag was passed, try to unpack the archive.
-        if ns.archive:
+        # If the path points to a file, treat as archive and try to unpack.
+        if os.path.isfile(path):
             tmpdir = tempfile.mkdtemp(prefix='testing_', dir=os.getcwd())
             check_archive(path, tmpdir)
             did_unpack = True
@@ -611,7 +600,7 @@ def main():
         print("\nUncaught exception: " + type(exc).__name__, file=sys.stderr)
         print(traceback.format_exc(), file=sys.stderr)
     finally:
-        if not ns.noclean and ns.archive:
+        if not ns.noclean and os.path.isdir(tmpdir):
             print("Removing temporary files in: " + tmpdir)
             child = subprocess.run(
                     ["rm", "-rf", tmpdir],
