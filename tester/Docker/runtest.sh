@@ -8,10 +8,8 @@ function helpmsg {
   echo "  -y            test x86-32 backend" >&2
   echo "  -Y            test x86-64 backend" >&2
   echo "  -x <ext>      test extension <ext>" >&2
-  echo "                (pass many of these for multiple extensions)"
-  echo "  -a            expect submission to be archive" >&2
-  echo "  -n            pass --noclean if archive" >&2
-  echo "                (keeps temporary files, and keeps container alive)" >&2
+  echo "                (pass many of these to test multiple extensions)"
+  echo "  -n            keep container and temporary files" >&2
 }
 
 if [[ $# -eq 0 ]]; then
@@ -38,9 +36,6 @@ test_x64=false
 
 while getopts ":hlyYx:an" opt; do
   case $opt in
-    a)
-      archive="--archive"
-      ;;
     n)
       noclean="--noclean"
       ;;
@@ -108,7 +103,6 @@ docker exec -u root "$cont" chown -R user /home/user/subm
 docker exec -u user "$cont" python3 testing.py /home/user/subm/$base \
                                                $backends \
                                                $exts \
-                                               $archive \
                                                $noclean
 
 if [[ "$noclean" == "" ]]; then
