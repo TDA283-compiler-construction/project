@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function helpmsg {
-  echo "USAGE: $1 <submission> [options]" >&2
+  echo "USAGE: $1 [options] [--] <submission>" >&2
   echo "OPTIONS:" >&2
   echo "  -h            this message" >&2
   echo "  -l            test LLVM backend" >&2
@@ -18,19 +18,6 @@ if [[ $# -eq 0 ]]; then
   helpmsg $0
   exit 1
 fi
-
-submission="$1"
-
-if [[ ! -d "$submission" ]]; then
-  if [[ ! -f "$submission" ]]; then
-    echo "$1 is not a file or directory" >&2
-    exit 1
-  fi
-fi
-
-shift 1
-
-OPTIND=1
 
 test_llvm=false
 test_x86=false
@@ -80,6 +67,17 @@ while getopts ":hlyYxi:n" opt; do
   esac
 done
 
+shift $(($OPTIND - 1))
+
+submission="$1"
+
+if [[ ! -d "$submission" ]]; then
+  if [[ ! -f "$submission" ]]; then
+    echo "$1 is not a file or directory" >&2
+    exit 1
+  fi
+fi
+
 if [[ -n "$exts" ]]; then
   exts="-x $exts"
 fi
@@ -100,7 +98,7 @@ else
 fi
 
 if [[ $? -ne 0 ]]; then
-  echo "Failed to create contained" >&2
+  echo "Failed to create container" >&2
 fi
 
 name=`docker ps --filter id="$cont" --format '{{.Names}}'`

@@ -11,7 +11,7 @@ INSTRUCTIONS
 3. Run the test script with `bash runtest.sh`:
 
 ```
-USAGE: runtest.sh <submission> [options]
+USAGE: runtest.sh [options] [--] <submission>
 OPTIONS:
   -h            this message
   -l            test LLVM backend

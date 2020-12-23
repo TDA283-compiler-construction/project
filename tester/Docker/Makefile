@@ -4,10 +4,21 @@ VERSION ?= latest
 CONTAINER_NAME ?= tester
 CONTAINER_INSTANCE ?= default
 
-.PHONY: shell build
+.PHONY: build shell dist rust ocaml riscv
+
+default: build
 
 build: Dockerfile
-	docker build -m 4096M -t $(NS)/$(IMAGE):$(VERSION) -f Dockerfile .
+	docker build -m 4096M -t $(NS)/$(IMAGE):$(VERSION) -f $< .
+
+rust: Dockerfile-rust
+	docker build -m 4096M -t $(NS)/$(IMAGE)-rust:$(VERSION) -f $< .
+
+ocaml: Dockerfile-ocaml
+	docker build -m 4096M -t $(NS)/$(IMAGE)-ocaml:$(VERSION) -f $< .
+
+riscv: Dockerfile-riscv
+	docker build -m 4096M -t $(NS)/$(IMAGE)-riscv:$(VERSION) -f $< .
 
 shell:
 	docker run -m 4096M --rm --name $(CONTAINER_NAME)-$(CONTAINER_INSTANCE) \
@@ -15,7 +26,6 @@ shell:
 
 dist: tda283-docker.tar.gz
 
-tda283-docker.tar.gz: Makefile Dockerfile runtest.sh README.md
+tda283-docker.tar.gz: Makefile Dockerfile* runtest.sh README.md
 	tar cvzf $@ $^
 
-default: build

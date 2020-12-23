@@ -1,0 +1,21 @@
+# vim: ft=dockerfile
+FROM tda283/tester
+
+USER root
+
+RUN curl -sL \
+      https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh > \
+      install.sh && \
+      yes '' | sh install.sh && \
+      rm install.sh
+
+USER user
+
+RUN opam init -a -y --disable-sandboxing --dot-profile=~/.bashrc
+RUN sh /home/user/.opam/opam-init/init.sh
+RUN opam install dune
+RUN opam install -y core alcotest
+
+ENV PATH="/home/user/.opam/default/bin:${PATH}"
+WORKDIR /home/user/tda283/tester
+CMD /bin/bash
