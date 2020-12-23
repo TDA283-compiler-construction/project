@@ -18,10 +18,8 @@ OPTIONS:
   -y            test x86-32 backend
   -Y            test x86-64 backend
   -x <ext>      test extension <ext>
-                (pass many of these for multiple extensions)
-  -a            expect submission to be archive
-  -n            pass --noclean if archive
-                (keeps temporary files, and keeps container alive)
+                (pass many of these to test multiple extensions)
+  -n            keep container and temporary files
   -i <image>    custom docker image
                 (default: tda283/tester:latest)
 ```

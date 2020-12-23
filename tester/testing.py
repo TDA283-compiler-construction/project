@@ -17,7 +17,7 @@
 #   web-page).
 #
 #   Example:
-#     > ./testing.py path/to/partA-2.tar.gz --archive --llvm
+#     > ./testing.py path/to/partA-2.tar.gz --llvm
 #
 #   The following command line options are available:
 #
@@ -28,14 +28,13 @@
 #         --x64               Test the 64-bit x86 backend
 #         --riscv             Test the RISC-V backend
 #     -x <ext> [ext ...]      Test one or more extensions
-#         --archive           Treat submission as an archive
-#         --noclean           Do not clean up temporary files created by
-#                             --archive
+#         --noclean           Do not clean up temporary files
+#
 #
 #   As an example, the following tests the x86-32 backend with extensions
 #   'arrays1' and 'pointers' on the submission partC-1.tar.gz:
 #
-#     > ./testing.py partC-1.tar.gz --archive --x86 -x arrays1 pointers
+#     > ./testing.py partC-1.tar.gz --x86 -x arrays1 pointers
 #
 #   If neither of the options '--llvm', '--x86', '--x64', or '--riscv'
 #   are present, only parsing and type checking is tested.
@@ -98,6 +97,7 @@
 
 import argparse
 import os
+import shutil
 import subprocess
 import sys
 import re
@@ -336,7 +336,7 @@ def init_argparser():
     parser.add_argument(
             "submission",
             metavar="<submission>",
-            help="path to submission archive")
+            help="path to submission (directory or archive)")
     parser.add_argument(
             "-v", "--version",
             action="version",
@@ -369,14 +369,9 @@ def init_argparser():
             default=[],
             help="test extensions (one or several)")
     parser.add_argument(
-            "--archive",
-            action="store_true",
-            help="treat submission as archive")
-    parser.add_argument(
             "--noclean",
             action="store_true",
-            help="do not clean up temporary files " +
-                 "(only useful with --archive)")
+            help="do not clean up temporary files ")
     parser.add_argument(
             "--list",
             action="store_true",
@@ -389,8 +384,6 @@ def init_argparser():
 def check_archive(path, target):
     filename_pat = re.compile(
             '^part(A|B|C)-[1-9][0-9]*\.(tgz|tar\.(gz|bz2|xz))$')
-
-    _, ext = os.path.splitext(path)
     _, fname = os.path.split(path)
 
     # Check that filename is OK.
@@ -398,30 +391,19 @@ def check_archive(path, target):
         raise TestingException(
                 "Archive is not named according to submission guidelines")
 
-    # Check archive extension
-    if ext == ".tar":
-        cmd, opt, epi = "tar", "xf", "-C"
-    elif ext == ".gz":
-        cmd, opt, epi = "tar", "xzf", "-C"
-    elif ext == ".bz2":
-        cmd, opt, epi = "tar", "xjf", "-C"
-    else:
-        cmd, opt, epi = "tar", "xJf", "-C"
-
     # Create target directory if it does not exist, and attempt to
     # unpack.
-    sys.stdout.write("- Unpacking " + fname + " to \"" + target + "\" ... ")
+    sys.stdout.write("- Unpacking " + fname + " to " + target + " ... ")
     sys.stdout.flush()
     if not os.path.exists(target): # TODO redundant; Python created the file
         os.makedirs(target)
-    child = subprocess.run(
-            [cmd, opt, path, epi, target],
-            stderr=subprocess.PIPE)
-    if not child.returncode == 0:
+    try:
+        shutil.unpack_archive(path, target)
+        print("Ok.")
+    except ValueError as exc:
         print("Failed.")
         raise TestingException("Unpacking failed with:\n" +
                 child.stderr.decode("utf-8"))
-    print("Ok.")
 
 ##
 ## Check submission contents.
@@ -442,12 +424,17 @@ def check_contents(path):
 ##
 def check_build(path, prefix, backends):
     # Attempt to run 'make'.
-    sys.stdout.write("- Running \"make\" in " + path + " ... ")
+    make_cmd = shutil.which('make')
+    sys.stdout.write("- Running make in " + path + " ... ")
     sys.stdout.flush()
-    child = subprocess.run(["sh", "-exec", "make -C " + path])
+    child = subprocess.run(
+            [make_cmd, "-C", path],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
     if not child.returncode == 0:
         print("Failed.")
-        raise TestingException("make failed")
+        err = child.stderr.decode("utf-8")
+        raise TestingException("make failed with:\n" ++ err)
     print("Ok.")
 
     # Check that 'make' produced the desired executables.
@@ -635,15 +622,10 @@ def main():
             print("Not a valid extension: " + ext, file=sys.stderr)
             sys.exit(1)
 
-    # Check submission path.
+    # Check submission path exists.
     path = ns.submission
-    if ns.archive and not os.path.isfile(path):
-        print("Not a file: " + path, file=sys.stderr)
-        print("(--archive flag was passed)", file=sys.stderr)
-        sys.exit(1)
-
-    if not ns.archive and not os.path.isdir(path):
-        print("Not a directory: " + path, file=sys.stderr)
+    if not os.path.exists(path):
+        print("Path does not exist: " + path, file=sys.stderr)
         sys.exit(1)
 
     # Pick up backends.
@@ -661,8 +643,8 @@ def main():
     failure = False
     tmpdir = ''
     try:
-        # If the --archive flag was passed, try to unpack the archive.
-        if ns.archive:
+        # If the path points to a file, treat as archive and try to unpack.
+        if os.path.isfile(path):
             tmpdir = tempfile.mkdtemp(prefix='testing_', dir=os.getcwd())
             check_archive(path, tmpdir)
             did_unpack = True
@@ -685,12 +667,9 @@ def main():
         print("\nUncaught exception: " + type(exc).__name__, file=sys.stderr)
         print(traceback.format_exc(), file=sys.stderr)
     finally:
-        if not ns.noclean and ns.archive:
+        if not ns.noclean and os.path.isdir(tmpdir):
             print("Removing temporary files in: " + tmpdir)
-            child = subprocess.run(
-                    ["rm", "-rf", tmpdir],
-                    stdout=subprocess.PIPE,
-                    stderr=subprocess.PIPE)
+            shutil.rmtree(tmpdir)
         clean_files(['a.out'])
         if failure:
             sys.exit(1)
