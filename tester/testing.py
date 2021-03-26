@@ -434,7 +434,7 @@ def check_build(path, prefix, backends):
     if not child.returncode == 0:
         print("Failed.")
         err = child.stderr.decode("utf-8")
-        raise TestingException("make failed with:\n" ++ err)
+        raise TestingException("make failed with:\n" + err)
     print("Ok.")
 
     # Check that 'make' produced the desired executables.
