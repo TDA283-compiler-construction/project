@@ -7,7 +7,7 @@ Using `docker pull`
 -------------------
 
 1. Get Docker (see above).
-2. Run `docker pull tda283/testing:latest` to get the testing image with the base setup (Haskell and Java). (See [here](https://hub.docker.com/repository/docker/tda283/tester/tags) for some other options.)
+2. Run `docker pull tda283/tester:latest` to get the testing image with the base setup (Haskell and Java). (See [here](https://hub.docker.com/repository/docker/tda283/tester/tags) for some other options.)
 3. Run the test script with `./runtest.sh` (see below).
 
 Build from source
