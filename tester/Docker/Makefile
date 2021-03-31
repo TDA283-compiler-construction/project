@@ -23,6 +23,9 @@ riscv: Dockerfile-riscv
 zig: Dockerfile-zig
 	docker build -m 4096M -t $(NS)/$(IMAGE):zig -f $< .
 
+python: Dockerfile-python
+	docker build -m 4096M -t $(NS)/$(IMAGE):python -f $< .
+
 shell:
 	docker run -m 4096M --rm --name $(CONTAINER_NAME)-$(CONTAINER_INSTANCE) \
 	  -i -t $(NS)/$(IMAGE):$(VERSION) /bin/bash

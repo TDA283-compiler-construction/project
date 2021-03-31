@@ -1,0 +1,5 @@
+FROM tda283/tester
+
+USER root
+RUN apt install -y python3-pip python3-venv
+USER user
