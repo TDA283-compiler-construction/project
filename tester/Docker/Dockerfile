@@ -26,7 +26,7 @@ USER user
 WORKDIR /home/user
 
 RUN cabal update
-RUN cabal install BNFC-2.8.4 alex happy
+RUN cabal install BNFC-2.9.1 alex happy
 RUN stack update
 
 RUN mkdir -p classpath/JLex/JLex
