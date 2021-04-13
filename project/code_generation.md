@@ -73,7 +73,7 @@ An example
 
 The following LLVM code demonstrates some of the language features in LLVM. It
 also serves as an example of what kind of code a Javalette compiler could
-generate for the `fact` function described [here](#example_programs).
+generate for the `fact` function described [here](javalette.md#example-programs).
 
 ```llvm
 define i32 @main() {
