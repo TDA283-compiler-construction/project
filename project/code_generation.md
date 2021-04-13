@@ -5,10 +5,7 @@ LLVM (Low Level Virtual Machine) is both an intermediate representation language
 and a compiler infrastructure, i.e. a collection of software components for
 manipulating (e.g. optimizing) LLVM code and backends for various architectures.
 LLVM has a large user base and is actively developed. A lot of information and
-code to download can be found at the LLVM web site `http://www.llvm.org`. You
-must use the \$llvmversion$\ version in this course; the
-[testsuite](/tester) has only guaranteed support forthis particular
-version.
+code to download can be found at the LLVM web site `http://www.llvm.org`.
 
 Also LLVM code comes in two formats, a human-readable assembler format (stored
 in `.ll` files) and a binary bitcode format (stored in`.bc` files). Your
@@ -151,8 +148,7 @@ stored in files with suffix `.ll`. There are then several tools you might use:
   a similar interface to `GCC`.
 
 Note that some installations of LLVM require a version number after the tool
-name, for example `llvm-as-3.8` instead of `llvm-as`. However, note that we
-use LLVM 6.0.1.
+name, for example `llvm-as-3.8` instead of `llvm-as`.
 
 Here are the steps you can use to produce an executable file from within your
 compiler:
@@ -181,7 +177,7 @@ submission, your compiler need only produce an LLVM file (the equivalent of
 Optimizations
 -------------
 
-To wet your appetite, let us see how the LLVM code can be optimized:
+To whet your appetite, let us see how the LLVM code can be optimized:
 
 ```
 > cat myfile.ll | llvm-as | opt -std-compile-opts | llvm-dis
