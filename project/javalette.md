@@ -99,9 +99,7 @@ conservative, i.e. reject as incorrect certain functions that actually would
 always return a value.  A typical case could be to reject a function ending with
 an `if`-statement where only one branch returns, without considering the
 possibility that the test expression might always evaluate to the same value,
-avoiding the branch without `return`. However, your check must correctly decide
-the control flow when the test expression is the literal `true` or the literal
-`false`.  A function, whose return type is `void`, may, on the other hand, omit
+avoiding the branch without `return`. A function, whose return type is `void`, may, on the other hand, omit
 the `return` statement completely.
 
 Functions can be *mutually recursive*, i.e., call each other. There is no
