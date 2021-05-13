@@ -28,7 +28,7 @@ test_riscv=false
 # Default docker image, can be overridden with -i
 image="tda283/tester:latest"
 
-while getopts ":hlyYvxi:n" opt; do
+while getopts ":hlyYvx:i:n" opt; do
   case $opt in
     n)
       noclean="--noclean"
