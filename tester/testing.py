@@ -488,9 +488,10 @@ def check_build(path, prefix, backends):
     print("Ok.")
 
 ## Status message.
-def status_msg(title, ok, bad, tot):
-    msg = '\r  {:5s} ok: {:d}, failed: {:d}, [{:d}/{:d}]'
-    return msg.format(title, ok, bad, ok + bad, tot)
+def status_msg(filename, curr, tot):
+    msg = '[{:3d}/{:3d}] {:25s} ... '
+    sys.stdout.write(msg.format(curr, tot, filename))
+    sys.stdout.flush()
 
 ##
 ## Run tests. For each backend, test all regular tests, and all extensions.
@@ -524,14 +525,15 @@ def run_tests(path, backends, prefix, exts):
     if backends == []:
         full_name = os.path.join(path, prefix)
         for filename, is_good in test_files:
+            status_msg(filename, tests_ok + tests_bad + 1, tests_total)
             is_ok, data = exec_test(full_name, filename, is_good, None, None)
             if is_ok:
                 tests_ok += 1
+                print('OK')
             else:
                 tests_bad += 1
                 failures.append((filename, data))
-            sys.stdout.write(
-                    status_msg('typecheck', tests_ok, tests_bad, tests_total))
+                print('FAILED')
     else:
         link_macho = platform.system() == 'Darwin'
         for suffix in backends:
@@ -553,20 +555,22 @@ def run_tests(path, backends, prefix, exts):
             exec_name = prefix + ('' if suffix == 'llvm' else '_' + suffix)
             full_name = os.path.join(path, exec_name)
             for filename, is_good in test_files:
+                status_msg(filename, tests_ok + tests_bad + 1, tests_total)
                 try:
                     is_ok, data = exec_test(full_name, filename, is_good, linker, runner)
                     if is_ok:
                         tests_ok += 1
+                        print('OK')
                     else:
                         tests_bad += 1
                         failures.append((filename, data))
+                        print('FAILED')
                 except TestingException as exc:
                     tests_bad += 1
                     exceptions.append((filename, exc.msg))
-                sys.stdout.write(
-                        status_msg(suffix, tests_ok, tests_bad, tests_total))
-            print("")
-    print("")
+                    print('FAILED')
+            print()
+    print()
 
     # Show results.
     success = tests_ok == tests_total
