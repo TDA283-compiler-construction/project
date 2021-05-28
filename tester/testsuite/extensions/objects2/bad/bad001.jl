@@ -11,3 +11,7 @@ class Car extends Vehicle {
 		return 10.0;
 	}
 }
+	
+int main() {
+	return 0;	
+}
