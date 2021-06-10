@@ -4,7 +4,7 @@ FROM ubuntu:groovy
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y \
-    tzdata build-essential default-jdk nasm llvm clang emacs-nox vim-nox tmux \
+    tzdata build-essential default-jdk nasm llvm llvm-dev clang emacs-nox vim-nox tmux \
     curl git python3 ghc cabal-install haskell-stack flex bison unzip \
     bubblewrap locales
 
