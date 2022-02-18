@@ -7,7 +7,8 @@ struct Point2 {
 	int y;
 };
 
-void main() {
+int main() {
 	Point point = new Point2;
 	point->z = 1;
+	return 0;
 }
