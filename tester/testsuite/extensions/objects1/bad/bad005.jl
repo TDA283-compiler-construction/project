@@ -1,5 +1,6 @@
 /* new undeclared class */
 
-void main() {
+int main() {
 	new Point;
+	return 0;
 }

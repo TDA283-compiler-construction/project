@@ -1,6 +1,7 @@
 /* index not of integer type */
 
-void main() {
+int main() {
 	int[] array = new int[10];
 	printInt(array["x"]);
+	return 0;
 }
