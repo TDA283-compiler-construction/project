@@ -7,8 +7,3 @@
       x--;  // Only for variables of type int
       return 0;
     }
-
-// return type must be int
-void main() {
-    return 0;
-}
