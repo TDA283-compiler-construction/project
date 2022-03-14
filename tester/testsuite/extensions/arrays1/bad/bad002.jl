@@ -1,5 +1,6 @@
 /* length not of integer type */
 
-void main() {
+int main() {
 	int[] array = new int["x"];
+	return 0;
 }

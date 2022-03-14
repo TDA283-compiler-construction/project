@@ -140,8 +140,8 @@ array. For a two-dimensional rectangular array such as `matrix`, the number of
 elements in the two dimensions are `matrix.length` and `matrix[0].length`,
 respectively.
 
-Dynamic data structures
------------------------
+Dynamic data structures (pointers)
+----------------------------------
 
 In this extension you will implement a simple form of dynamic data structures,
 which is enough to implement lists and trees.  The source language extensions
@@ -371,13 +371,13 @@ Native x86 code generation
 This extension is to produce native assembler code for a real machine,
 preferrably x86. We may accept code generators for other architectures, but
 *you* need to think of how we can test your extension. Before you attempt to
-write a backend for another architecture, discuss your choice with \$teacher\$
+write a backend for another architecture, discuss your choice with the lecturer
 and explain the testing procedure.
 
 Note that this extension gives you *two* credits, but it is not enough to just
 implement a naïve code generator. You must also implement some sort of
 optimization, such as register allocation or peephole optimization. Talk to
-\$teacher\$ about which optimization(s) to implement before attempting the x86
+the lecturer about which optimization(s) to implement before attempting the x86
 code generator. The x86 code generation extension acts also as a kind of
 multiplier, that is, implementing another extension, for example arrays, will
 give you two credits instead of one. This fair because you need to generate
@@ -391,7 +391,7 @@ Javalette extension. This is to do a more thorough study of the LLVM framework
 and write a report of 4-5 pages. More precisely the task is as follows.
 
 Look at the list of available optimization passes and choose at least three of
-these for further study. Mail \$teacher\$ to agree that your choice is suitable
+these for further study. Email the lecturer to agree that your choice is suitable
 (do this *before* you start to work on the extension!).
 
 For each pass you must:
@@ -414,16 +414,19 @@ Further possibilities
 
 We are willing to give credits also to other extensions, which are not as well
 defined. If you want to do one of these and get credit, you must discuss it with
-\$teacher\$ in advance. Here are some possibilities:
+the lecturer in advance. Here are some possibilities:
 
-* Allow functions to be statically nested.
-* Implement higher order functions, using either closures or
+* Implement an optimisation such as common-subexpression elimination, dead-code
+  elimination, or loop-invaraint code motion as a Javelette-to-Javalette code
+  transformation.
+* Implement higher-order functions, using either closures or
   defunctionalization.
+* Provide a predefined type of lists with list comprehensions, similar to what
+  is available in Python.
+* Allow functions to be statically nested.
 * A simple module system. Details on module systems will be provided in the
   lectures.
 * Implement exceptions, which can be thrown and caught.
 * Implement some form of garbage collection.
-* Provide a predefined type of lists with list comprehensions, similar to what
-  is available in Python.
-* Implement a backend for another architecture, such as ARM. It is important
+* Implement a backend for another architecture, such as RISC-V. It is important
   that you provide some way for the grader to test programs.

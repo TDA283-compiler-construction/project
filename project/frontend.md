@@ -15,15 +15,15 @@ steps 1 and 2, convenient tools exist that do most of the work. You should be
 familiar with these theories and tools and we expect you to complete the front
 end during the first week of the course.
 
-We recommend that you use the [BNF converter] ( https://bnfc.digitalgrammars.com/ )
+We recommend that you use the [BNF converter](https://bnfc.digitalgrammars.com/)
 to build your lexer and parser. We also recommend you use Alex and Happy (if you
 decide to implement your compiler in Haskell) or JLex and Cup (if you use Java).
 We may also allow other implementation languages and tools, but we can not
-guarantee support, and you must discuss your choice with \$teacher\$ before you
+guarantee support, and you must discuss your choice with the lecturer before you
 start. This is to make sure that we will be able to run your compiler and that
 you will not use inferior tools.
 
-We provide a BNFC source file [`Javalette.cf`](/files/Javalette.cf) that you may
+We provide a BNFC source file [Javalette.cf](/files/Javalette.cf) that you may
 use. If you already have a BNFC file for a similar language that you want to
 reuse you may do so, but you must make sure that you modify it to pass the test
 suite for this course.
@@ -43,4 +43,3 @@ code generation.
 
 To do this, you can add one further form of expression to your BNFC source,
 namely a type-annotated expression.
-
