@@ -140,8 +140,8 @@ array. For a two-dimensional rectangular array such as `matrix`, the number of
 elements in the two dimensions are `matrix.length` and `matrix[0].length`,
 respectively.
 
-Dynamic data structures
------------------------
+Dynamic data structures (pointers)
+----------------------------------
 
 In this extension you will implement a simple form of dynamic data structures,
 which is enough to implement lists and trees.  The source language extensions
@@ -416,14 +416,17 @@ We are willing to give credits also to other extensions, which are not as well
 defined. If you want to do one of these and get credit, you must discuss it with
 the lecturer in advance. Here are some possibilities:
 
-* Allow functions to be statically nested.
-* Implement higher order functions, using either closures or
+* Implement an optimisation such as common-subexpression elimination, dead-code
+  elimination, or loop-invaraint code motion as a Javelette-to-Javalette code
+  transformation.
+* Implement higher-order functions, using either closures or
   defunctionalization.
+* Provide a predefined type of lists with list comprehensions, similar to what
+  is available in Python.
+* Allow functions to be statically nested.
 * A simple module system. Details on module systems will be provided in the
   lectures.
 * Implement exceptions, which can be thrown and caught.
 * Implement some form of garbage collection.
-* Provide a predefined type of lists with list comprehensions, similar to what
-  is available in Python.
-* Implement a backend for another architecture, such as ARM. It is important
+* Implement a backend for another architecture, such as RISC-V. It is important
   that you provide some way for the grader to test programs.

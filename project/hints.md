@@ -1,6 +1,10 @@
 Hints for the extensions
 ========================
 
+The two simplest extensions are:
+the one-dimensional arrays extension and
+the dynamic structures (i.e. the pointers) extension.
+
 One-dimensional arrays
 ----------------------
 
@@ -38,8 +42,8 @@ This extension involves more work than the previous one. In particular, you must
 understand the `getelementpointer` instruction fully and you must generate code
 to iteratively allocate heap memory for subarrays.
 
-Structures and object-orientation.
-----------------------------------
+Structures/pointers and object-orientation
+------------------------------------------
 
 Techniques to do these extensions are discussed in the lectures.
 
