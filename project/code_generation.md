@@ -1,11 +1,22 @@
 Code generation: LLVM
 =====================
 
-LLVM (Low Level Virtual Machine) is both an intermediate representation language
-and a compiler infrastructure, i.e. a collection of software components for
-manipulating (e.g. optimizing) LLVM code and backends for various architectures.
-LLVM has a large user base and is actively developed. A lot of information and
-code to download can be found at [the LLVM web site](http://www.llvm.org).
+Once the [front end](frontend.md) is complete, your next task is to
+implement code generation for LLVM, i.e. your task is to make your
+compiler generate LLVM code for the given Javalette source code.
+
+LLVM
+----
+
+LLVM (Low Level Virtual Machine) is both an intermediate
+representation language and a compiler infrastructure, i.e. a
+collection of software components for manipulating (e.g. optimizing)
+LLVM code and backends for various architectures.  LLVM has a large
+user base and is actively developed. A lot of information and code to
+download can be found at the LLVM web site `http://www.llvm.org`. Make
+sure your LLVM version is compatible with the one used in the testing
+[Docker](/tester/Docker) has only guaranteed support for this
+particular version.
 
 Also LLVM code comes in two formats, a human-readable assembler format (stored
 in `.ll` files) and a binary bitcode format (stored in`.bc` files). Your
