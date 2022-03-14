@@ -84,7 +84,7 @@ An example
 
 The following LLVM code demonstrates some of the language features in LLVM. It
 also serves as an example of what kind of code a Javalette compiler could
-generate for the `fact` function described [here](#example_programs).
+generate for the `fact` function described [here](javalette.md#example-programs).
 
 ```llvm
 define i32 @main() {
@@ -159,8 +159,7 @@ stored in files with suffix `.ll`. There are then several tools you might use:
   a similar interface to `GCC`.
 
 Note that some installations of LLVM require a version number after the tool
-name, for example `llvm-as-3.8` instead of `llvm-as`. However, note that we
-use LLVM 6.0.1.
+name, for example `llvm-as-3.8` instead of `llvm-as`.
 
 Here are the steps you can use to produce an executable file from within your
 compiler:
@@ -189,7 +188,7 @@ submission, your compiler need only produce an LLVM file (the equivalent of
 Optimizations
 -------------
 
-To wet your appetite, let us see how the LLVM code can be optimized:
+To whet your appetite, let us see how the LLVM code can be optimized:
 
 ```
 > cat myfile.ll | llvm-as | opt -std-compile-opts | llvm-dis

@@ -1,14 +1,24 @@
 TDA283 COMPILER CONSTRUCTION TESTER
 ===================================
 
-For testing student submissions within a container.
+For testing student submissions within a container. Requires [Docker](https://www.docker.com/products/docker-desktop).
 
-INSTRUCTIONS
-------------
+Using `docker pull`
+-------------------
 
-1. Get Docker from e.g. https://www.docker.com/products/docker-desktop
-2. Run make to build Docker image (this will take a while).
-3. Run the test script with `bash runtest.sh`:
+1. Get Docker (see above).
+2. Run `docker pull tda283/tester:latest` to get the testing image with the base setup (Haskell and Java). (See [here](https://hub.docker.com/repository/docker/tda283/tester/tags) for some other options.)
+3. Run the test script with `./runtest.sh` (see below).
+
+Build from source
+-----------------
+
+1. Get Docker (see above).
+2. Run `make base` to build the base Docker image (this will take a while). (Optionally, build the other images (e.g. `base-riscv`, ...).)
+3. Run the test script with `./runtest.sh` (see below).
+
+Usage: `runtest.sh`
+-------------------
 
 ```
 USAGE: runtest.sh [options] [--] <submission>
@@ -17,6 +27,7 @@ OPTIONS:
   -l            test LLVM backend
   -y            test x86-32 backend
   -Y            test x86-64 backend
+  -v            test risc-v backend
   -x <ext>      test extension <ext>
                 (pass many of these to test multiple extensions)
   -n            keep container and temporary files
@@ -26,7 +37,7 @@ OPTIONS:
 
 Example:
 ```
-bash runtest.sh partC-1.tar.gz -l -Y -x arrays1 -x pointers
+bash runtest.sh -l -Y -x arrays1 -x pointers -- partC-1.tar.gz
 ```
 will test the submission `partC-1.tar.gz` with the LLVM backend, the x64 backend,
 and the extensions `arrays1` and `pointers`.
