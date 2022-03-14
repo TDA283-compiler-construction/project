@@ -19,7 +19,7 @@ We recommend that you use the [BNF converter] ( https://bnfc.digitalgrammars.com
 to build your lexer and parser. We also recommend you use Alex and Happy (if you
 decide to implement your compiler in Haskell) or JLex and Cup (if you use Java).
 We may also allow other implementation languages and tools, but we can not
-guarantee support, and you must discuss your choice with \$teacher\$ before you
+guarantee support, and you must discuss your choice with the lecturer before you
 start. This is to make sure that we will be able to run your compiler and that
 you will not use inferior tools.
 
@@ -43,4 +43,3 @@ code generation.
 
 To do this, you can add one further form of expression to your BNFC source,
 namely a type-annotated expression.
-

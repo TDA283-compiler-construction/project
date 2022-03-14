@@ -371,13 +371,13 @@ Native x86 code generation
 This extension is to produce native assembler code for a real machine,
 preferrably x86. We may accept code generators for other architectures, but
 *you* need to think of how we can test your extension. Before you attempt to
-write a backend for another architecture, discuss your choice with \$teacher\$
+write a backend for another architecture, discuss your choice with the lecturer
 and explain the testing procedure.
 
 Note that this extension gives you *two* credits, but it is not enough to just
 implement a naïve code generator. You must also implement some sort of
 optimization, such as register allocation or peephole optimization. Talk to
-\$teacher\$ about which optimization(s) to implement before attempting the x86
+the lecturer about which optimization(s) to implement before attempting the x86
 code generator. The x86 code generation extension acts also as a kind of
 multiplier, that is, implementing another extension, for example arrays, will
 give you two credits instead of one. This fair because you need to generate
@@ -391,7 +391,7 @@ Javalette extension. This is to do a more thorough study of the LLVM framework
 and write a report of 4-5 pages. More precisely the task is as follows.
 
 Look at the list of available optimization passes and choose at least three of
-these for further study. Mail \$teacher\$ to agree that your choice is suitable
+these for further study. Email the lecturer to agree that your choice is suitable
 (do this *before* you start to work on the extension!).
 
 For each pass you must:
@@ -414,7 +414,7 @@ Further possibilities
 
 We are willing to give credits also to other extensions, which are not as well
 defined. If you want to do one of these and get credit, you must discuss it with
-\$teacher\$ in advance. Here are some possibilities:
+the lecturer in advance. Here are some possibilities:
 
 * Allow functions to be statically nested.
 * Implement higher order functions, using either closures or
