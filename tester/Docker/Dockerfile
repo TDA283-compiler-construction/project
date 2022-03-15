@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y \
     tzdata build-essential default-jdk nasm llvm llvm-dev clang emacs-nox vim-nox tmux \
     curl git python3 flex bison unzip \
-    libnuma-dev bubblewrap locales
+    libnuma-dev bubblewrap locales libgmp-dev
 
 # Set up locale. See:
 # https://stackoverflow.com/questions/28405902/how-to-set-the-locale-inside-a-debian-ubuntu-docker-container
