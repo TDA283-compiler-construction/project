@@ -1,16 +1,14 @@
 # vim: ft=dockerfile
 FROM tda283/tester
 
-ARG os="linux"
-ARG arch="x86_64"
-ARG version="0.8.0-dev.1548+0d96a284e"
-
-ARG dir="zig-$os-$arch-$version"
-ARG file="$dir.tar.xz"
-
 WORKDIR /home/user/
-RUN echo $file && curl -O "https://ziglang.org/builds/$file" && tar -xf "$file" && rm "$file"
-ENV PATH="/home/user/$dir/:${PATH}"
+
+RUN dir="zig-linux-$(uname -m)-0.10.0-dev.1322+c757f1979" && \
+    file="$dir.tar.xz" && \
+    curl -O "https://ziglang.org/builds/$file" && \
+    tar -xf "$file" && rm "$file" && \
+    mv "$dir" zig
+ENV PATH="/home/user/zig/:${PATH}"
 
 WORKDIR /home/user/tda283/tester
 CMD /bin/bash
