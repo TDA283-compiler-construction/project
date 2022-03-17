@@ -1,12 +1,12 @@
-FROM ubuntu:groovy
+FROM ubuntu:impish
 
 # For deferring setting up tzdata, avoiding interaction
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y \
     tzdata build-essential default-jdk nasm llvm llvm-dev clang emacs-nox vim-nox tmux \
-    curl git python3 ghc cabal-install haskell-stack flex bison unzip \
-    bubblewrap locales
+    curl git python3 flex bison unzip \
+    libnuma-dev bubblewrap locales libgmp-dev
 
 # Set up locale. See:
 # https://stackoverflow.com/questions/28405902/how-to-set-the-locale-inside-a-debian-ubuntu-docker-container
@@ -18,15 +18,22 @@ ENV LC_ALL en_US.UTF-8
 RUN ln -f -s /usr/share/zoneinfo/Europe/Stockholm /etc/localtime
 RUN dpkg-reconfigure tzdata
 
-RUN stack upgrade --binary-only
-RUN install -c -m 0755 /root/.local/bin/stack /usr/bin/stack
+RUN curl -OL "https://downloads.haskell.org/~ghcup/$(uname -m)-linux-ghcup"
+RUN install -c -m 0755 "$(uname -m)-linux-ghcup" /usr/bin/ghcup
 
 RUN useradd -ms /bin/bash user
 USER user
 WORKDIR /home/user
 
+RUN ghcup install ghc
+RUN ghcup set ghc
+RUN ghcup install cabal
+RUN ghcup install stack
+
+ENV PATH="/home/user/.ghcup/bin:$PATH"
+
 RUN cabal update
-RUN cabal install BNFC-2.9.1 alex happy
+RUN cabal install BNFC-2.9.4 alex happy
 RUN stack update
 
 RUN mkdir -p classpath/JLex/JLex
