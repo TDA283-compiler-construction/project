@@ -3,18 +3,18 @@ TDA283 COMPILER CONSTRUCTION TESTER
 
 For testing student submissions within a container. Requires [Docker](https://www.docker.com/products/docker-desktop).
 
+Build from source (preferred)
+-----------------------------
+
+1. Get Docker (see above).
+2. Run `make base` to build the base Docker image (this will take a while). (Optionally, build the other images; e.g., `make riscv`, ...)
+3. Run the test script with `./runtest.sh` (see below).
+
 Using `docker pull`
 -------------------
 
 1. Get Docker (see above).
 2. Run `docker pull tda283/tester:latest` to get the testing image with the base setup (Haskell and Java). (See [here](https://hub.docker.com/repository/docker/tda283/tester/tags) for some other options.)
-3. Run the test script with `./runtest.sh` (see below).
-
-Build from source
------------------
-
-1. Get Docker (see above).
-2. Run `make base` to build the base Docker image (this will take a while). (Optionally, build the other images (e.g. `base-riscv`, ...).)
 3. Run the test script with `./runtest.sh` (see below).
 
 Usage: `runtest.sh`
