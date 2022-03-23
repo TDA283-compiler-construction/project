@@ -26,6 +26,9 @@ zig: Dockerfile-zig
 python: Dockerfile-python
 	docker build -m 8192M -t $(NS)/$(IMAGE):python -f $< .
 
+agda: Dockerfile-agda
+	docker build -m 8192M -t $(NS)/$(IMAGE):agda -f $< .
+
 shell:
 	docker run -m 4096M --rm --name $(CONTAINER_NAME)-$(CONTAINER_INSTANCE) \
 	  -i -t $(NS)/$(IMAGE):$(VERSION) /bin/bash

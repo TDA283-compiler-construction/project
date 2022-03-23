@@ -1,0 +1,11 @@
+# vim: ft=dockerfile
+FROM tda283/tester
+
+USER root
+
+RUN apt install -y zlib1g-dev libncurses5-dev agda agda-stdlib
+
+USER user
+
+WORKDIR /home/user/tda283/tester
+CMD /bin/bash
