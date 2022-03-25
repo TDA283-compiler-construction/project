@@ -3,9 +3,13 @@ FROM tda283/tester
 
 USER root
 
-RUN apt install -y zlib1g-dev libncurses5-dev agda agda-stdlib
+RUN apt install -y zlib1g-dev libncurses5-dev agda
 
 USER user
+
+RUN curl -Lo ~/agda-stdlib.tar.gz https://github.com/agda/agda-stdlib/archive/v1.6.tar.gz
+RUN cd ~ && tar -xzf agda-stdlib.tar.gz && rm agda-stdlib.tar.gz
+RUN mkdir ~/.agda && echo "~/agda-stdlib-1.6/standard-library.agda-lib" >> ~/.agda/libraries
 
 WORKDIR /home/user/tda283/tester
 CMD /bin/bash
