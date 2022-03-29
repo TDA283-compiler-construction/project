@@ -17,9 +17,6 @@ rust: Dockerfile-rust
 ocaml: Dockerfile-ocaml
 	docker build -m 8192M -t $(NS)/$(IMAGE):ocaml -f $< .
 
-riscv: Dockerfile-riscv
-	docker build -m 8192M -t $(NS)/$(IMAGE):riscv -f $< .
-
 zig: Dockerfile-zig
 	docker build -m 8192M -t $(NS)/$(IMAGE):zig -f $< .
 
