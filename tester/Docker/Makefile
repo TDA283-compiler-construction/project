@@ -12,7 +12,7 @@ build: Dockerfile
 	docker build -m 8192M -t $(NS)/$(IMAGE):$(VERSION) -f $< .
 
 ghc9: Dockerfile-ghc9
-	docker build -m 8192M -t $(NS)/$(IMAGE):$(VERSION) -f $< .
+	docker build -m 8192M -t $(NS)/$(IMAGE):ghc9 -f $< .
 
 rust: Dockerfile-rust
 	docker build -m 8192M -t $(NS)/$(IMAGE):rust -f $< .
