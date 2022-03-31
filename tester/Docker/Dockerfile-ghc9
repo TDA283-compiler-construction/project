@@ -1,0 +1,10 @@
+# vim: ft=dockerfile
+FROM tda283/tester
+
+WORKDIR /home/user
+
+RUN ghcup install ghc 9.2.2
+RUN ghcup set ghc 9.2.2
+
+WORKDIR /home/user/tda283/tester
+CMD /bin/bash

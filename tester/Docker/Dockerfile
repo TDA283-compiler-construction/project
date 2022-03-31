@@ -25,8 +25,8 @@ RUN useradd -ms /bin/bash user
 USER user
 WORKDIR /home/user
 
-RUN ghcup install ghc-9.2.2
-RUN ghcup set ghc 9.2.2
+RUN ghcup install ghc
+RUN ghcup set ghc
 RUN ghcup install cabal
 RUN ghcup install stack
 
