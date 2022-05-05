@@ -400,10 +400,9 @@ def check_archive(path, target):
     try:
         shutil.unpack_archive(path, target)
         print("Ok.")
-    except ValueError as exc:
+    except shutil.ReadError as exc:
         print("Failed.")
-        raise TestingException("Unpacking failed with:\n" +
-                child.stderr.decode("utf-8"))
+        raise TestingException("Unpacking failed with" + str(exc))
 
 ##
 ## Check submission contents.
