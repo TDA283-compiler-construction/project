@@ -6,7 +6,7 @@ struct A {
 };
 
 int main () {
-    printInt(new A->a);
-    new A->b = new A;
+    printInt((new A)->a);
+    (new A)->b = new A;
     return 0;
 }
