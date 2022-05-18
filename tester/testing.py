@@ -186,7 +186,7 @@ def link_x86(path, source_str, is_x64, is_macho):
         with open(tmp_s, 'w+') as f:
             f.write(source_str)
         run_command("nasm", ["-f " + arch, tmp_s, "-o " + tmp_o])
-        run_command("clang", [tmp_o, runtime])
+        run_command("clang", ["-no-pie", tmp_o, runtime])
     finally:
         os.close(fds)
         os.close(fdo)
