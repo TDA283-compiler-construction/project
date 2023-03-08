@@ -24,8 +24,8 @@ generator. Example: a student can collect 5 credits as follows.
 
 The course homepage explains how credits translate into course grades.
 
-One-dimensional arrays and for loops
-------------------------------------
+One-dimensional arrays and for loops (arrays1)
+----------------------------------------------
 
 The basic Javalette language has no heap-allocated data, so memory management
 consists only of managing the run-time stack. In this extension you will add
@@ -35,7 +35,7 @@ this in the front end and in the respective back end.
 Arrays are Java-like: variables of array type contain a reference to the actual
 array, which is allocated on the heap. Arrays are explicitly created using a
 `new` construct and variables of array type have an attribute, `length`, which
-is accessed using dot notation.
+is accessed using dot notation. The semantics follows Java arrays.
 
 Some examples of array declarations in the extension are
 
@@ -120,8 +120,8 @@ equality or less-than test for the array type, for instance.
 
 Test files for this extension are in subdirectory `extensions/arrays1`.
 
-Multi-dimensional arrays
-------------------------
+Multi-dimensional arrays (arrays2)
+----------------------------------
 
 In this extension you add arrays with an arbitrary number of indices.  Just as
 in Java, an array of type `int[][]` is a one-dimensional array, each of whose
@@ -227,8 +227,8 @@ int length (list xs) {
 This and a few other test programs can be found in the `extensions/pointers`
 subdirectory of the test suite.
 
-Object-orientation
-------------------
+Object-orientation (objects1)
+-----------------------------
 
 This extension adds classes and objects to basic Javalette. From a language
 design point of view, it is not clear that you would want both this and the
@@ -351,8 +351,8 @@ The source language extensions, from basic Javalette, are
         in contrast to Java, has free functions that are not methods of any
         class.
 
-Object orientation with dynamic dispatch
-----------------------------------------
+Object orientation with dynamic dispatch (objects2)
+---------------------------------------------------
 
 The restriction not to allow method override is of course severe. In this
 extension the restriction is removed and subclassing with inheritance and method
@@ -364,6 +364,37 @@ the methods of the class. These class descriptor are linked together in a list,
 where a class descriptor has a link to the descriptor of its superclass. This
 list is searched at runtime for the proper method to execute. All this is
 discussed more during the lectures.
+
+Higher-order functions (functions)
+----------------------------------
+
+This extension adds non-polymorphic function values to Javalette. Functions
+become first class, i.e., functions can take functions as arguments and return
+functions as results. Javalette remains call-by-value.
+
+```java
+int apply(fn(int) -> int f, int x) {
+  return f(x);
+}
+
+fn(int) -> int compose(fn(int) -> int f, fn(int) -> int g) {
+  return \(int x) -> int: f(g(x));
+}
+
+int main() {
+  fn(int) -> int inc = \(int x) -> int: x + 1;
+  fn(int) -> int times2 = \(int x) -> int: x * 2;
+
+  printInt(apply(compose(inc, times2), 3));
+  printInt(apply(compose(times2, inc), 3));
+
+  return 0;
+}
+```
+
+It is recommended that this extension is done after the `pointers` extension.
+The best way to implement function values is via closures, which are discussed
+in the later lectures.
 
 Native x86 code generation
 --------------------------
