@@ -382,7 +382,9 @@ fn(int) -> int compose(fn(int) -> int f, fn(int) -> int g) {
 }
 
 int main() {
-  fn(int) -> int inc = \(int x) -> int: x + 1;
+  int inc(int x) {
+    return x + 1;
+  }
   fn(int) -> int times2 = \(int x) -> int: x * 2;
 
   printInt(apply(compose(inc, times2), 3));
@@ -391,6 +393,11 @@ int main() {
   return 0;
 }
 ```
+
+This language extension adds:
+- function definitions as non-top-level definitions e.g. `inc` above
+- function types e.g. `fn(int) -> int`
+- lambda expression e.g. `\(int x) -> int: x * 2`
 
 It is recommended that this extension is done after the `pointers` extension.
 The best way to implement function values is via closures, which are discussed
@@ -450,8 +457,6 @@ the lecturer in advance. Here are some possibilities:
 * Implement an optimisation such as common-subexpression elimination, dead-code
   elimination, or loop-invaraint code motion as a Javelette-to-Javalette code
   transformation.
-* Implement higher-order functions, using either closures or
-  defunctionalization.
 * Provide a predefined type of lists with list comprehensions, similar to what
   is available in Python.
 * Allow functions to be statically nested.
