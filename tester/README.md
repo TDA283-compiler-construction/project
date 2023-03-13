@@ -55,7 +55,8 @@ Here is a list of the extensions supported:
 | pointers       | Structures and pointers                         |
 | objects1       | Objects, first extension                        |
 | objects2       | Objects, second extension (method overloading)  |
-| adv_structs    | Optional struct tests                           |
+| advstructs     | Optional struct tests                           |
+| functions      | Higher order functions                          |
 
 ## Submission format
 

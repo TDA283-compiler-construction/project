@@ -48,7 +48,8 @@
 #   * pointers     Structures and pointers
 #   * objects1     Objects, first extension
 #   * objects2     Objects, second extension (method overloading)
-#   * adv_structs  Optional structure tests
+#   * advstructs  Optional structure tests
+#   * functions    Higher order functions
 #
 # SUBMISSION FORMAT
 #
@@ -509,11 +510,14 @@ def run_tests(path, backends, prefix, exts):
     test_files = []
     build_list(test_files, "testsuite/good", True)
     build_list(test_files, "testsuite/bad", False)
-    for ext in exts:
-        build_list(test_files, "testsuite/extensions/" + ext, True)
-        bad_dir = "testsuite/extensions/" + ext + "/bad"
-        if os.path.isdir(bad_dir):
-            build_list(test_files, bad_dir, False)
+    ext_dir = "testsuite/extensions/"
+    for dirname in [dirname for dirname in os.listdir(ext_dir) if os.path.isdir(os.path.join(ext_dir, dirname))]:
+        ext_dir_parts = dirname.split('_')
+        if set(ext_dir_parts).issubset(exts):
+            build_list(test_files, "testsuite/extensions/" + dirname, True)
+            bad_dir = "testsuite/extensions/" + dirname + "/bad"
+            if os.path.isdir(bad_dir):
+                build_list(test_files, bad_dir, False)
     tests_ok    = 0
     tests_bad   = 0
     tests_total = len(test_files)
