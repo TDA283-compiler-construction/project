@@ -37,9 +37,9 @@ OPTIONS:
 
 Example:
 ```
-bash runtest.sh -l -Y -x arrays1 -x pointers -- partC-1.tar.gz
+bash runtest.sh -l -Y -x arrays1 -x pointers -- path/to/submission
 ```
-will test the submission `partC-1.tar.gz` with the LLVM backend, the x64 backend,
+will test the submission located in `path/to/submission` with the LLVM backend, the x64 backend,
 and the extensions `arrays1` and `pointers`.
 
 Optionally, add `-n` to keep the container alive after testing is completed.

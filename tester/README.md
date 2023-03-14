@@ -12,14 +12,14 @@ Linux and macOS. If you are using Windows, see e.g.
 
 ## Instructions
 
-The test-suite accepts a compressed tar-ball containing your submission.
-The tar-ball should be compressed with gzip, bzip2, or xz. The submission
-should be created according to 'SUBMISSION FORMAT' below (see also course
+The test-suite accepts a directory containing your submission.
+Alternatively, the test-suite accepts a tar-ball compressed with gzip, bzip2, or xz containing your submission.
+The submission should be created according to 'SUBMISSION FORMAT' below (see also course
 web-page).
 
 Example:
 ```sh
-> python3 testing.py path/to/partA-2.tar.gz --llvm
+> python3 testing.py path/to/submission --llvm
 ```
 
 The following command line options are available:
@@ -36,9 +36,9 @@ The following command line options are available:
 | `    --noclean`               | Do not clean up temporary files       |
 
 As an example, the following tests the x86-32 backend with extensions
-`arrays1` and `pointers` on the submission `partC-1.tar.gz`:
+`arrays1` and `pointers` on the submission `path/to/submission`:
 ```sh
-> python3 testing.py partC-1.tar.gz --x86 -x arrays1 pointers
+> python3 testing.py path/to/submission --x86 -x arrays1 pointers
 ```
 
 If neither of the options `--llvm`, `--x86`, `--x64`, or `--riscv` are present, only
@@ -60,20 +60,10 @@ Here is a list of the extensions supported:
 
 ## Submission format
 
-### Naming
-
-Your Nth attempt at a submission should be a compressed tar-ball named according
-to this pattern:
-
-    part(A|B|C)-N.tar.gz
-
-where (A|B|C) means one of A, B, or C. For example, your first attempt at
-assignment B should be named `partB-1.tar.gz`.
-
 ### Contents
 
 The submission should contain the following directories and files, at the top
-level.
+level, and nothing else.
 
 | Item            | Description |
 |-----------------|-------------|
@@ -99,4 +89,3 @@ Your compiler should be named `jlc` (without quotes) for the LLVM backend,
 * If your program does not succeed (there are some errors), it should print a
   line containing the word `ERROR` to standard error (stderr), and terminate
   with a non-zero exit code.
-
