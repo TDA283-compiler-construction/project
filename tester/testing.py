@@ -380,17 +380,10 @@ def init_argparser():
     return parser
 
 ##
-## Check archive (check naming and attempt to unpack).
+## Check archive (attempt to unpack).
 ##
 def check_archive(path, target):
-    filename_pat = re.compile(
-            '^part(A|B|C)-[1-9][0-9]*\.(tgz|tar\.(gz|bz2|xz))$')
     _, fname = os.path.split(path)
-
-    # Check that filename is OK.
-    if not filename_pat.match(fname):
-        raise TestingException(
-                "Archive is not named according to submission guidelines")
 
     # Create target directory if it does not exist, and attempt to
     # unpack.
@@ -685,4 +678,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
