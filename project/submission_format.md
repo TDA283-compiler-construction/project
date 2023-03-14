@@ -1,7 +1,7 @@
 Submission format
 =================
 
-Your submission should contain the following directories and files: 
+Your submission should contain the following directories and files:
 * Subdirectories `src`, `lib`, `doc`.
 * A `Makefile` for building your compiler.
 
@@ -27,21 +27,6 @@ Submission contents
     * A list of shift/reduce conficts in your parser, if you have such conflicts, and an analysis of them.
     * For submission C, an explicit list of extensions implemented.
     * If applicable, a list of features *not* implemented and the reason why.
-
-Packaging and naming
---------------------
-
-When you have prepared everything, you create a compressed tar ball:
-
-```
-> tar -czf partA-1.tar.gz doc lib src Makefile
-```
-
-The submission should be named according to the scheme
-
-    part(A|B|C)-N.tar.gz
-
-where `(A|B|C)` is one of A, B, or C depending on the assignment, and N is your Nth attempt at the assignment.
 
 Testing your submission
 -----------------------
