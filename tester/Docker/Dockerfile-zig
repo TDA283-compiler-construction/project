@@ -3,7 +3,7 @@ FROM tda283/tester
 
 WORKDIR /home/user/
 
-RUN dir="zig-linux-$(uname -m)-0.10.0-dev.1322+c757f1979" && \
+RUN dir="zig-linux-$(uname -m)-0.11.0-dev.1914+14590e956" && \
     file="$dir.tar.xz" && \
     curl -O "https://ziglang.org/builds/$file" && \
     tar -xf "$file" && rm "$file" && \

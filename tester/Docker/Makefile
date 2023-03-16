@@ -11,9 +11,6 @@ default: build
 build: Dockerfile
 	docker build -m 8192M -t $(NS)/$(IMAGE):$(VERSION) -f $< .
 
-ghc9: Dockerfile-ghc9
-	docker build -m 8192M -t $(NS)/$(IMAGE):ghc9 -f $< .
-
 rust: Dockerfile-rust
 	docker build -m 8192M -t $(NS)/$(IMAGE):rust -f $< .
 
@@ -37,4 +34,3 @@ dist: tda283-docker.tar.gz
 
 tda283-docker.tar.gz: Makefile Dockerfile* runtest.sh README.md
 	tar cvzf $@ $^
-

@@ -1,4 +1,4 @@
-FROM ubuntu:impish
+FROM ubuntu:jammy
 
 # For deferring setting up tzdata, avoiding interaction
 ENV DEBIAN_FRONTEND=noninteractive
