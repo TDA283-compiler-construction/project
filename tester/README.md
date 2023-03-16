@@ -13,7 +13,8 @@ Linux and macOS. If you are using Windows, see e.g.
 ## Instructions
 
 The test-suite accepts a directory containing your submission.
-Alternatively, the test-suite accepts a tar-ball compressed with gzip, bzip2, or xz containing your submission.
+Alternatively, the test-suite accepts a tar-ball compressed with gzip, bzip2, or xz
+containing your submission.
 The submission should be created according to 'SUBMISSION FORMAT' below (see also course
 web-page).
 
