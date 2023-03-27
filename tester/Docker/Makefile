@@ -26,6 +26,12 @@ python: Dockerfile-python
 agda: Dockerfile-agda
 	docker build -m 8192M -t $(NS)/$(IMAGE):agda -f $< .
 
+kotlin: Dockerfile-kotlin
+	docker build -m 8192M -t $(NS)/$(IMAGE):kotlin -f $< .
+
+racket: Dockerfile-racket
+	docker build -m 8192M -t $(NS)/$(IMAGE):racket -f $< .
+
 shell:
 	docker run -m 4096M --rm --name $(CONTAINER_NAME)-$(CONTAINER_INSTANCE) \
 	  -i -t $(NS)/$(IMAGE):$(VERSION) /bin/bash

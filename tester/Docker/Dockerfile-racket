@@ -1,0 +1,14 @@
+# vim: ft=dockerfile
+FROM tda283/tester
+
+WORKDIR /home/user/
+
+RUN file="racket-8.8-x86_64-linux-cs.sh" && \
+    curl -LO "https://download.racket-lang.org/installers/8.8/$file" && \
+    echo "" >> config && echo "4" >> config && \
+    cat config | sh "$file"
+
+ENV PATH="/home/user/racket/bin:${PATH}"
+
+WORKDIR /home/user/tda283/tester
+CMD /bin/bash
