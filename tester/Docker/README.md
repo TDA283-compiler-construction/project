@@ -7,7 +7,7 @@ Build from source (preferred)
 -----------------------------
 
 1. Get Docker (see above).
-2. Run `make base` to build the base Docker image (this will take a while). (Optionally, build the other images; e.g., `make riscv`, ...)
+2. Run `make` to build the base Docker image (this will take a while). (Optionally, build the other images; e.g., `make riscv`, ...)
 3. Run the test script with `./runtest.sh` (see below).
 
 Using `docker pull`
