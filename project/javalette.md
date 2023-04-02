@@ -211,7 +211,7 @@ sequence of letters, digits, and underscores.
 * *Reserved words*: These include `while`,
   `if`, `else` and `return`.
 
-Comments in Javalette are enclosed between `/\*` and `\*/` or extend from `//`
+Comments in Javalette are enclosed between `/*` and `*/` or extend from `//`
 to the end of line, or from `#` to the end of line (to treat C preprocessor
 directives as comments).
 
