@@ -4,9 +4,10 @@ FROM ubuntu:jammy
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y \
-    tzdata build-essential default-jdk nasm llvm llvm-dev clang emacs-nox vim-nox tmux \
+    tzdata build-essential default-jdk nasm emacs-nox vim-nox tmux \
     curl git python3 flex bison unzip \
     libnuma-dev bubblewrap locales libgmp-dev
+RUN apt-get install -y libncurses5
 
 # Set up locale. See:
 # https://stackoverflow.com/questions/28405902/how-to-set-the-locale-inside-a-debian-ubuntu-docker-container
@@ -24,6 +25,11 @@ RUN install -c -m 0755 "$(uname -m)-linux-ghcup" /usr/bin/ghcup
 RUN useradd -ms /bin/bash user
 USER user
 WORKDIR /home/user
+
+RUN curl -OL "https://github.com/llvm/llvm-project/releases/download/llvmorg-16.0.0/clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz"
+RUN tar -xf "clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz"
+RUN rm "clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz"
+ENV PATH="/home/user/clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04/bin:$PATH"
 
 RUN ghcup install ghc
 RUN ghcup set ghc
