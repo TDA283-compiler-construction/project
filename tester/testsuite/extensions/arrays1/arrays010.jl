@@ -3,7 +3,12 @@ int[] foo() {
   return new int[5];
 }
 
+int bar() {
+  printString("new index");
+  return 0;
+}
+
 int main() {
-  foo()[0]++;
+  foo()[bar()]++;
   return 0;
 }
