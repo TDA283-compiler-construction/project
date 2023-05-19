@@ -9,6 +9,11 @@ RUN apt-get update && apt-get install -y \
     libnuma-dev bubblewrap locales libgmp-dev
 RUN apt-get install -y libncurses5
 
+# Setup node and wabt for testing wasm backend
+RUN curl -sL https://deb.nodesource.com/setup_20.x -o /tmp/nodesource_setup.sh
+RUN bash /tmp/nodesource_setup.sh
+RUN apt-get install nodejs wabt
+
 # Set up locale. See:
 # https://stackoverflow.com/questions/28405902/how-to-set-the-locale-inside-a-debian-ubuntu-docker-container
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
