@@ -8,3 +8,7 @@ class Point2 extends Point1 {
 
 class Point3 extends Point2 extends Point1 {
 }
+
+int main() {
+    return 1;
+}

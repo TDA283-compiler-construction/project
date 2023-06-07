@@ -4,3 +4,7 @@ class Car extends Vehicle {
 	void drive() {
 	}
 }
+
+int main() {
+    return 1;
+}
