@@ -1,7 +1,7 @@
 int main() {
     int[][] xss = new int[f()][g()];
 
-    for(int xs : xss[f()])
+    for(int x : xss[f()-1])
         printString("loop");
 
     return 0;
