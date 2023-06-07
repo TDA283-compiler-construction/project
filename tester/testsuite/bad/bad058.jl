@@ -1,7 +1,7 @@
 double printInt() {
-   return 1;
+   return 1.0;
 }
 int main() {
-   printInt(1.0);
+   double x = printInt();
    return 1;
 }
