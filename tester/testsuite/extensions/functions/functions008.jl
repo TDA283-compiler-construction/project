@@ -1,8 +1,8 @@
 int main() {
   int x = 5;
-  int double(int x) {
+  int dbl(int x) {
     return x + x;
   }
-  printInt(double(x));
+  printInt(dbl(x));
   return 0;
 }
