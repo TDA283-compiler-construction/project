@@ -39,7 +39,7 @@ int main() {
 
     int i = 0;
     while(i < a.get().length) {
-        printInt(getIndex(i));
+        printInt(a.getIndex(i));
         i++;
     }
 
