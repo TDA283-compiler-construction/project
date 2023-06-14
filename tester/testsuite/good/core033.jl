@@ -11,6 +11,7 @@ int main() {
     if(0.4 >= 0.3 && yes()) {
         printInt(4);
     }
+    return 0;
 }
 
 boolean no() {
