@@ -5,11 +5,11 @@ struct Counter {
 typedef struct Counter* Counter;
 
 void inc(Counter c) {
-    c->n++;
+    (c->n)++;
 }
 
 void dec(Counter c) {
-    c->n--;
+    (c->n)--;
 }
 
 void show(Counter c) {

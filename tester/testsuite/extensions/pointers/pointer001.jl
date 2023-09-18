@@ -5,8 +5,8 @@ struct A {
 typedef struct A* A;
 
 int main() {
-    a()->x++;
-    a()->x--;
+    (a()->x)++;
+    (a()->x)--;
 
     return 0;
 }
