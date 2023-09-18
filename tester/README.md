@@ -33,6 +33,7 @@ The following command line options are available:
 | `    --x86`                   | Test the 32-bit x86 backend           |
 | `    --x64`                   | Test the 64-bit x86 backend           |
 | `    --riscv`                 | Test the RISC-V backend               |
+| `    --wasm`                  | Test the WASM JS backend              |
 | `-x <ext> [ext ...]`          | Test one or more extensions           |
 | `    --noclean`               | Do not clean up temporary files       |
 

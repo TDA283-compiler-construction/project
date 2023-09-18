@@ -3,6 +3,7 @@
 int main() {
   -foo();
   !foo();
+  return 1;
 }
 
 void foo() {

@@ -2,6 +2,6 @@
 
 int main() {
 	int[] array = new int[10];
-	printInt(array["x"]);
+	printInt(array[1.0]);
 	return 0;
 }
