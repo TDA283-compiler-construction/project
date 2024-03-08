@@ -3,8 +3,8 @@ FROM tda283/tester
 
 WORKDIR /home/user/
 
-RUN file="racket-8.8-x86_64-linux-cs.sh" && \
-    curl -LO "https://download.racket-lang.org/installers/8.8/$file" && \
+RUN file="racket-8.12-x86_64-linux-cs.sh" && \
+    curl -LO "https://download.racket-lang.org/installers/8.12/$file" && \
     echo "" >> config && echo "4" >> config && \
     cat config | sh "$file"
 

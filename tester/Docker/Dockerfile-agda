@@ -9,9 +9,9 @@ USER user
 
 RUN cabal install Agda
 
-RUN curl -Lo ~/agda-stdlib.tar.gz https://github.com/agda/agda-stdlib/archive/v1.7.2.tar.gz
+RUN curl -Lo ~/agda-stdlib.tar.gz https://github.com/agda/agda-stdlib/archive/refs/tags/v2.0.tar.gz
 RUN cd ~ && tar -xzf agda-stdlib.tar.gz && rm agda-stdlib.tar.gz
-RUN mkdir ~/.agda && echo "~/agda-stdlib-1.7.2/standard-library.agda-lib" >> ~/.agda/libraries
+RUN mkdir ~/.agda && echo "~/agda-stdlib-2.0/standard-library.agda-lib" >> ~/.agda/libraries
 
 WORKDIR /home/user/tda283/tester
 CMD /bin/bash

@@ -31,10 +31,10 @@ RUN useradd -ms /bin/bash user
 USER user
 WORKDIR /home/user
 
-RUN curl -OL "https://github.com/llvm/llvm-project/releases/download/llvmorg-16.0.0/clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz"
-RUN tar -xf "clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz"
-RUN rm "clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz"
-ENV PATH="/home/user/clang+llvm-16.0.0-x86_64-linux-gnu-ubuntu-18.04/bin:$PATH"
+RUN curl -OL "https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.6/clang+llvm-17.0.6-x86_64-linux-gnu-ubuntu-22.04.tar.xz"
+RUN tar -xf "clang+llvm-17.0.6-x86_64-linux-gnu-ubuntu-22.04.tar.xz"
+RUN rm "clang+llvm-17.0.6-x86_64-linux-gnu-ubuntu-22.04.tar.xz"
+ENV PATH="/home/user/clang+llvm-17.0.6-x86_64-linux-gnu-ubuntu-22.04/bin:$PATH"
 
 RUN ghcup install ghc
 RUN ghcup set ghc
@@ -44,7 +44,7 @@ RUN ghcup install stack
 ENV PATH="/home/user/.ghcup/bin:$PATH"
 
 RUN cabal update
-RUN cabal install BNFC-2.9.4 alex happy
+RUN cabal install BNFC alex happy
 RUN stack update
 
 RUN mkdir -p classpath/JLex/JLex
@@ -65,7 +65,7 @@ ENV CLASSPATH="/home/user/classpath/JLex:${CLASSPATH}"
 ENV CLASSPATH="/home/user/classpath/CUP/java-cup-11b-runtime.jar:${CLASSPATH}"
 ENV CLASSPATH="/home/user/classpath/CUP/java-cup-11b.jar:${CLASSPATH}"
 
-RUN git clone https://github.com/myreen/tda283
-WORKDIR /home/user/tda283/tester
+RUN git clone https://github.com/TDA283-compiler-construction/project.git
+WORKDIR /home/user/project/tester
 
 CMD /bin/bash
