@@ -3,8 +3,8 @@ FROM tda283/tester
 
 WORKDIR /home/user/
 
-RUN file="kotlin-compiler-1.8.10" && \
-    curl -LO "https://github.com/JetBrains/kotlin/releases/download/v1.8.10/$file.zip" && \
+RUN file="kotlin-compiler-1.9.23" && \
+    curl -LO "https://github.com/JetBrains/kotlin/releases/download/v1.9.23/$file.zip" && \
     unzip -d "$file" "$file.zip" && rm "$file.zip" && \
     mv "$file" kotlin
 ENV PATH="/home/user/kotlin/kotlinc/bin:${PATH}"
