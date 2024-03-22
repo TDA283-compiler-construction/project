@@ -21,7 +21,7 @@ guarantee support, and you must discuss your choice with the lecturer before you
 start. This is to make sure that we will be able to run your compiler and that
 you will not use inferior tools.
 
-We provide a BNFC source file [Javalette.cf](/files/Javalette.cf) that you may
+We provide a BNFC source file [Javalette.cf](/resources/Javalette.cf) that you may
 use. If you already have a BNFC file for a similar language that you want to
 reuse you may do so, but you must make sure that you modify it to pass the test
 suite for this course.
