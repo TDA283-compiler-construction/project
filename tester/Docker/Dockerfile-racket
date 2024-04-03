@@ -10,5 +10,5 @@ RUN file="racket-8.12-x86_64-linux-cs.sh" && \
 
 ENV PATH="/home/user/racket/bin:${PATH}"
 
-WORKDIR /home/user/tda283/tester
+WORKDIR /home/user/project/tester
 CMD /bin/bash
