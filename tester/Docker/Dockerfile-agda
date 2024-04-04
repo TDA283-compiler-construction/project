@@ -13,5 +13,5 @@ RUN curl -Lo ~/agda-stdlib.tar.gz https://github.com/agda/agda-stdlib/archive/re
 RUN cd ~ && tar -xzf agda-stdlib.tar.gz && rm agda-stdlib.tar.gz
 RUN mkdir ~/.agda && echo "~/agda-stdlib-2.0/standard-library.agda-lib" >> ~/.agda/libraries
 
-WORKDIR /home/user/tda283/tester
+WORKDIR /home/user/project/tester
 CMD /bin/bash

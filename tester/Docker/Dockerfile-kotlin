@@ -9,5 +9,5 @@ RUN file="kotlin-compiler-1.9.23" && \
     mv "$file" kotlin
 ENV PATH="/home/user/kotlin/kotlinc/bin:${PATH}"
 
-WORKDIR /home/user/tda283/tester
+WORKDIR /home/user/project/tester
 CMD /bin/bash

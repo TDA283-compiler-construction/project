@@ -10,5 +10,5 @@ RUN dir="zig-linux-$(uname -m)-0.11.0-dev.1914+14590e956" && \
     mv "$dir" zig
 ENV PATH="/home/user/zig/:${PATH}"
 
-WORKDIR /home/user/tda283/tester
+WORKDIR /home/user/project/tester
 CMD /bin/bash

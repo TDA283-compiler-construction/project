@@ -8,5 +8,5 @@ RUN curl https://sh.rustup.rs -sSf > rustup.sh && \
     rm rustup.sh
 
 ENV PATH="/home/user/.cargo/bin:${PATH}"
-WORKDIR /home/user/tda283/tester
+WORKDIR /home/user/project/tester
 CMD /bin/bash
