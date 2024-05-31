@@ -24,6 +24,7 @@
 #     -h, --help              Show help message.
 #     -s                      Set compiler prefix (default is 'jlc')
 #         --llvm              Test the LLVM backend
+#         --aarch64           Test the AArch64 (ARM64) backend
 #         --x86               Test the 32-bit x86 backend
 #         --x64               Test the 64-bit x86 backend
 #         --riscv             Test the RISC-V backend
@@ -83,7 +84,7 @@
 #   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #   Your compiler should be named `jlc` (without quotes) for the LLVM backend,
 #   `jlc_x86` for the 32-bit x86 backend, `jlc_x64` for the 64-bit x86 backend,
-#   and `jlc_riscv` for the RISC-V backend.
+#   `jlc_riscv` for the RISC-V backend and `jlc_aarch64` for the AArch64 backend.
 #
 #   Input/output format
 #   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -164,6 +165,21 @@ def link_llvm(path, source_str):
             run_command("llvm-as", [], source_str, f)
         run_command("llvm-link", [tmp, runtime, "-o=main.bc"])
         run_command("clang", ["main.bc"])
+    finally:
+        os.close(fd)
+        clean_files([tmp, "main.bc"])
+
+##
+## Assemble and link files with for aarch64 (ARM) using the LLVM internal assembler
+## Links binaries using the system linker (ld)
+##
+def link_aarch64(path, source_str):
+    fd, tmp = tempfile.mkstemp(
+            prefix='test_aarch64_', suffix='.bc', dir=os.getcwd())
+    try:
+        with open(tmp, 'w+') as f:
+            run_command("llvm-mc", ["--arch=aarch64", "--filetype=obj"], source_str, f)
+        run_command("ld", [tmp, "-lc", "-o", "a.out"])
     finally:
         os.close(fd)
         clean_files([tmp, "main.bc"])
@@ -367,6 +383,10 @@ def init_argparser():
             action="store_true",
             help="test LLVM backend")
     parser.add_argument(
+            "--aarch64",
+            action="store_true",
+            help="test AArch64 backend")
+    parser.add_argument(
             "--x86",
             action="store_true",
             help="test 32-bit x86 backend")
@@ -558,6 +578,9 @@ def run_tests(path, backends, prefix, exts):
             if suffix == "llvm":
                 linker = lambda s: link_llvm(path, s)
                 runner = None
+            elif suffix == "aarch64":
+                linker = lambda s: link_aarch64(path, s)
+                runner = None
             elif suffix == "riscv":
                 linker = lambda s: link_riscv(path, s)
                 runner = ['spike', which('pk')]
@@ -654,6 +677,8 @@ def main():
     backends = []
     if ns.llvm:
         backends.append("llvm")
+    if ns.aarch64:
+        backends.append("aarch64")
     if ns.x86:
         backends.append("x86")
     if ns.wasm:
