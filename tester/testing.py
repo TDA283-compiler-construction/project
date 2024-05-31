@@ -31,6 +31,8 @@
 #         --wasm              Test the WASM JS backend
 #     -x <ext> [ext ...]      Test one or more extensions
 #         --noclean           Do not clean up temporary files
+#         --args="..."        Extra arguments to pass to the jlc executable
+#         --n-times <n>       Number of times to run the test suite (useful for non-determinisic compilers)
 #
 #
 #   As an example, the following tests the x86-32 backend with extensions
@@ -101,12 +103,14 @@
 import argparse
 import os
 import shutil
+import shlex
 import subprocess
 import sys
 import re
 import platform
 import tempfile
 import traceback
+import time
 from shutil import which
 
 ##
@@ -253,11 +257,11 @@ def link_wasm(path, source_str):
 ##
 ## Note: The Javalette compiler should take its input on stdin.
 ##
-def run_compiler(exe, src_file, is_good):
+def run_compiler(exe, src_file, is_good, extra_args):
     try:
         infile = open(src_file)
         child = subprocess.run(
-                [exe],
+                [exe, *extra_args],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 stdin=infile)
@@ -299,18 +303,20 @@ def run_compiler(exe, src_file, is_good):
 ##   linker    is the linker for whatever particular backend we're using
 ##             (or None, if we're only type checking)
 ##
-def exec_test(exe, filename, is_good, linker, runner):
+def exec_test(exe, filename, is_good, linker, runner, extra_args):
     input_file  = filename + ".input"
     output_file = filename + ".output"
     source_file = filename + ".jl"
 
     # Try to run the compiler on the source file.
-    compiler_success, data = run_compiler(exe, source_file, is_good)
+    t_comp_start = time.time()
+    compiler_success, data = run_compiler(exe, source_file, is_good, extra_args)
+    time_comp = time.time() - t_comp_start
 
     # If compilation failed, or if the test is expected to fail,
     # or if we're only running the type checker, then quit here.
     if not compiler_success or not is_good or linker == None:
-        return compiler_success, data
+        return compiler_success, time_comp, data
 
     # Assemble and link executable from the output produced by
     # the compiler.
@@ -341,7 +347,7 @@ def exec_test(exe, filename, is_good, linker, runner):
                 exc.strerror)
 
     success = stdout_actual == stdout_expected
-    return success, Struct(
+    return success, time_comp, Struct(
             stderr_expected = data.stderr_expected,
             stderr_actual = data.stderr_actual,
             stdout_expected = stdout_expected,
@@ -412,6 +418,14 @@ def init_argparser():
             "--noclean",
             action="store_true",
             help="do not clean up temporary files ")
+    parser.add_argument(
+            "--args",
+            help="extra arguments to pass to the jlc executable")
+    parser.add_argument(
+            "--n-times",
+            type=int,
+            default=1,
+            help="number of times to run the test suite")
     parser.add_argument(
             "--list",
             action="store_true",
@@ -520,22 +534,30 @@ def check_build(path, prefix, backends):
     print("Ok.")
 
 ## Status message.
-def status_msg(filename, curr, tot):
-    msg = '[{:3d}/{:3d}] {:25s} ... '
-    sys.stdout.write(msg.format(curr, tot, filename))
-    sys.stdout.flush()
+def status_msg(backend, filename, curr, tot, n, n_times):
+    if n_times == 1:
+        msg = '[{:>8s}, {:3d}/{:3d}] {:35s} ... '
+        sys.stdout.write(msg.format(backend, curr, tot, filename))
+        sys.stdout.flush()
+    else:
+        msg = '[{:>8s}, {:1d}/{:1d}, {:3d}/{:3d}] {:35s} ... '
+        sys.stdout.write(msg.format(backend, n, n_times, curr, tot, filename))
+        sys.stdout.flush()
 
 ##
 ## Run tests. For each backend, test all regular tests, and all extensions.
 ## If the list of backends is empty, only run type-checking.
 ##
-def run_tests(path, backends, prefix, exts):
+def run_tests(path, backends, prefix, exts, extra_args, n_times):
     # Print banner.
     print("About to run tests with these settings:")
     print("  Prefix:     " + prefix)
     print("  Backends:   " +
             ("None (type checking only)" if backends == [] else str(backends)))
     print("  Extensions: " + ("None" if exts == [] else str(exts)))
+    print("  Extra arguments: " + " ".join(map(repr, extra_args)))
+    if n_times != 1:
+        print("  " + str(n_times) + " runs")
     print("")
 
     # Build a list of test cases based on the chosen extensions.
@@ -552,28 +574,27 @@ def run_tests(path, backends, prefix, exts):
                 build_list(test_files, bad_dir, False)
     tests_ok    = 0
     tests_bad   = 0
-    tests_total = len(test_files)
+    tests_total = len(backends) * n_times * len(test_files)
     failures    = []
     exceptions  = []
 
     # If there is no backend then run the type checking.
     if backends == []:
         full_name = os.path.join(path, prefix)
-        for filename, is_good in test_files:
-            status_msg(filename, tests_ok + tests_bad + 1, tests_total)
-            is_ok, data = exec_test(full_name, filename, is_good, None, None)
-            if is_ok:
-                tests_ok += 1
-                print('OK')
-            else:
-                tests_bad += 1
-                failures.append((filename, data))
-                print('FAILED')
+        for n in range(n_times):
+            for i, (filename, is_good) in enumerate(test_files):
+                status_msg("frontend", filename.replace("testsuite/", ""), i, len(test_files), n+1, n_times)
+                is_ok, time_comp, data = exec_test(full_name, filename, is_good, None, None, extra_args)
+                if is_ok:
+                    tests_ok += 1
+                    print('OK in %.3g ms' % (time_comp * 1000))
+                else:
+                    tests_bad += 1
+                    failures.append((None, filename, data))
+                    print('FAILED')
     else:
         link_macho = platform.system() == 'Darwin'
         for suffix in backends:
-            tests_ok    = 0
-            tests_bad   = 0
             # Pick the right assembler/linker.
             if suffix == "llvm":
                 linker = lambda s: link_llvm(path, s)
@@ -595,21 +616,22 @@ def run_tests(path, backends, prefix, exts):
                 runner = None
             exec_name = prefix + ('' if suffix == 'llvm' else '_' + suffix)
             full_name = os.path.join(path, exec_name)
-            for filename, is_good in test_files:
-                status_msg(filename, tests_ok + tests_bad + 1, tests_total)
-                try:
-                    is_ok, data = exec_test(full_name, filename, is_good, linker, runner)
-                    if is_ok:
-                        tests_ok += 1
-                        print('OK')
-                    else:
+            for n in range(n_times):
+                for i, (filename, is_good) in enumerate(test_files):
+                    status_msg(suffix, filename.replace("testsuite/", ""), i + 1, len(test_files), n+1, n_times)
+                    try:
+                        is_ok, time_comp, data = exec_test(full_name, filename, is_good, linker, runner, extra_args)
+                        if is_ok:
+                            tests_ok += 1
+                            print('OK in %.3g ms' % (time_comp * 1000))
+                        else:
+                            tests_bad += 1
+                            failures.append((suffix, filename, data))
+                            print('FAILED')
+                    except TestingException as exc:
                         tests_bad += 1
-                        failures.append((filename, data))
+                        exceptions.append((suffix, filename, exc.msg))
                         print('FAILED')
-                except TestingException as exc:
-                    tests_bad += 1
-                    exceptions.append((filename, exc.msg))
-                    print('FAILED')
             print()
     print()
 
@@ -619,8 +641,11 @@ def run_tests(path, backends, prefix, exts):
         print("All tests succeeded.")
     if failures:
         print("Some tests failed:")
-        for name, data in failures:
-            print("---------- !!! " + name + ".jl failed !!! ----------\n")
+        for backend, name, data in failures:
+            if backend is None:
+                print("---------- !!! " + name + ".jl failed !!! ----------\n")
+            else:
+                print("---------- !!! " + name + ".jl failed on backend " + backend + " !!! ----------\n")
             if data.stderr_expected != data.stderr_actual:
                 print("- stderr expected:")
                 print(indent_with(4, data.stderr_expected))
@@ -640,8 +665,11 @@ def run_tests(path, backends, prefix, exts):
             print("")
     if exceptions:
         print("Some tests caused build failures:")
-        for name, msg in exceptions:
-            print("---------- !!! " + name + ".jl failed !!! ----------\n")
+        for backend, name, msg in exceptions:
+            if backend is None:
+                print("---------- !!! " + name + ".jl failed !!! ----------\n")
+            else:
+                print("---------- !!! " + name + ".jl failed on backend " + backend + " !!! ----------\n")
             print(indent_with(4, msg))
             print()
 
@@ -704,7 +732,7 @@ def main():
                                           # executables were produced.
 
         # Run tests.
-        run_tests(path, backends, ns.s, ns.x)
+        run_tests(path, backends, ns.s, ns.x, shlex.split(ns.args or ""), ns.n_times)
 
     except TestingException as exc:
         failure = True
