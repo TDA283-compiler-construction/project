@@ -25,7 +25,6 @@ WORKDIR /home/user/riscv-isa-sim/build
 RUN ../configure --prefix=/opt/riscv
 RUN make
 RUN make install
-# RUN (cd riscv-isa-sim && mkdir build && cd build && ../configure --prefix=/opt/riscv && make && make install)
 
 WORKDIR /home/user/
 
