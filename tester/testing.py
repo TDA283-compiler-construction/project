@@ -223,8 +223,8 @@ def link_riscv(path, source_str):
     try:
         with open(tmp_s, 'w+') as f:
             f.write(source_str)
-        run_command('riscv64-none-elf-gcc', ['-c', tmp_s, '-o' + tmp_o])
-        run_command('riscv64-none-elf-gcc', [tmp_o, runtime])
+        run_command('riscv64-unknown-linux-gnu-gcc', ['-c', tmp_s, '-o' + tmp_o, '-static'])
+        run_command('riscv64-unknown-linux-gnu-gcc', [tmp_o, runtime, '-static'])
     finally:
         os.close(fds)
         os.close(fdo)
@@ -503,7 +503,7 @@ def check_build(path, prefix, backends):
                 print("Failed.")
                 raise TestingException(
                         "\"runtime-riscv.s\" is missing from \"lib\"")
-            run_command('riscv64-none-elf-gcc', ['-c', runtime + '-riscv.s', '-o' + runtime + '-riscv.o'])
+            run_command('riscv64-unknown-linux-gnu-gcc', ['-c', runtime + '-riscv.s', '-o' + runtime + '-riscv.o', '-static'])
         elif suff == 'x86' or suff == 'x64':
             if not os.path.isfile(runtime + '.s'):
                 print("Failed.")
@@ -583,7 +583,7 @@ def run_tests(path, backends, prefix, exts):
                 runner = None
             elif suffix == "riscv":
                 linker = lambda s: link_riscv(path, s)
-                runner = ['spike', which('pk')]
+                runner = ['qemu-riscv64']
             elif suffix == "wasm":
                 linker = lambda s: link_wasm(path, s)
                 runner = ['node', os.path.join(path, 'lib', 'runtime-wasm.js')]

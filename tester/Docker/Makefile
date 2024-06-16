@@ -32,6 +32,9 @@ kotlin: Dockerfile-kotlin
 racket: Dockerfile-racket
 	docker build -m 8192M -t $(NS)/$(IMAGE):racket -f $< .
 
+riscv: Dockerfile-riscv
+	docker build -m 8192M -t $(NS)/$(IMAGE):riscv -f $< .
+
 shell:
 	docker run -m 4096M --rm --name $(CONTAINER_NAME)-$(CONTAINER_INSTANCE) \
 	  -i -t $(NS)/$(IMAGE):$(VERSION) /bin/bash
