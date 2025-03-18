@@ -11,8 +11,8 @@ hints](hints.md) and in the lecture notes.
 
 **Credits for extensions:** each of the standard extensions gives one
 credit point. Extensions that are non-standard in this sense are the
-_native x86 code generation_ and some projects within the _further
-possibilities_ section.  The _native x86 code generation_ is special
+_native x86 code generation_, the _garbage collector_ and some projects within the _further
+possibilities_ section.  The _native x86 code generation_ is also special
 in that it gives two credits in itself and an extra credit for each
 of the standard extensions that are ported to the x86 code
 generator. Example: a student can collect 5 credits as follows.
@@ -427,6 +427,11 @@ Garbage collection
 This extension gives you *two* credits but for it to be useful you must have 
 also implemented at least one of the extensions for dynamic data mangement, e.g. pointers or objects 1.
 
+1. Extend the LLVM generator
+2. Implement a runtime library
+
+No [Boehm Collector](https://en.wikipedia.org/wiki/Boehm_garbage_collector)
+
 Useful links:
 [Garbage collection in Python](https://github.com/python/cpython/blob/main/InternalDocs/garbage_collector.md)
 [Garbage collection in LLVM](https://llvm.org/docs/GarbageCollection.html)
@@ -469,10 +474,8 @@ the lecturer in advance. Here are some possibilities:
   transformation.
 * Provide a predefined type of lists with list comprehensions, similar to what
   is available in Python.
-* Allow functions to be statically nested.
 * A simple module system. Details on module systems will be provided in the
   lectures.
 * Implement exceptions, which can be thrown and caught.
-* Implement some form of garbage collection.
 * Implement a backend for another architecture, such as RISC-V. It is important
   that you provide some way for the grader to test programs.
