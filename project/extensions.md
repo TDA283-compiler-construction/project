@@ -421,6 +421,16 @@ multiplier, that is, implementing another extension, for example arrays, will
 give you two credits instead of one. This fair because you need to generate
 code for both LLVM and x86.
 
+Garbage collection
+------------------
+
+This extension gives you *two* credits but for it to be useful you must have 
+also implemented at least one of the extensions for dynamic data mangement, e.g. pointers or objects 1.
+
+Useful links:
+[Garbage collection in Python](https://github.com/python/cpython/blob/main/InternalDocs/garbage_collector.md)
+[Garbage collection in LLVM](https://llvm.org/docs/GarbageCollection.html)
+
 Study of LLVM optimization
 --------------------------
 
