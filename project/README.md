@@ -34,6 +34,7 @@ Pages
   * [OOP II](extensions.md#object-orientation-with-dynamic-dispatch-objects2)
   * [Higher-order functions](extensions.md#higher-order-functions-functions)
   * [x86 generation](extensions.md#native-x86-code-generation)
+  * [Garbage collection](extensions.md#garbage-collection)
   * [Optimization study](extensions.md#study-of-llvm-optimization)
   * [Other extensions](extensions.md#further-possibilities)
 * [Extension hints](hints.md)
