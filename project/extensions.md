@@ -424,17 +424,23 @@ code for both LLVM and x86.
 Garbage collection
 ------------------
 
-This extension gives you *two* credits but for it to be useful you must have 
-also implemented at least one of the extensions for dynamic data mangement, e.g. pointers or objects 1.
+This extension gives you *two* credits, but for it to be useful you must have
+also implemented at least one of the extensions with dynamic data mangement, e.g. pointers or objects 1.
+The garbage collector must be accurate in order to claim the points. If you just use
+the conservative [Boehm Collector](https://en.wikipedia.org/wiki/Boehm_garbage_collector)
+then no points will be awarded.
 
-1. Extend the LLVM generator
-2. Implement a runtime library
+The extension consists of two parts:
+1. You need to extend the LLVM generator to emit additional code needed to support the garbage collector.
+2. After that you need to extend the runtime library to include the actual garbage collector.
 
-No [Boehm Collector](https://en.wikipedia.org/wiki/Boehm_garbage_collector)
+There are many ways to implement a garbage collector and more information will be given in the lectures.
+The following two links will be useful:
 
-Useful links:
-[Garbage collection in Python](https://github.com/python/cpython/blob/main/InternalDocs/garbage_collector.md)
-[Garbage collection in LLVM](https://llvm.org/docs/GarbageCollection.html)
+1. If you want to implement a garbage collector with reference counting then you can read [here](https://github.com/python/cpython/blob/main/InternalDocs/garbage_collector.md) about how Python does it.
+3. LLVM has its own documentation about how to integrate a garbage collector. You can read 
+[here](https://llvm.org/docs/GarbageCollection.html). We recommend the Shadow Stack strategy.
+It is less efficient but easier to implement.
 
 Study of LLVM optimization
 --------------------------
