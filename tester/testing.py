@@ -27,6 +27,7 @@
 #         --x86               Test the 32-bit x86 backend
 #         --x64               Test the 64-bit x86 backend
 #         --riscv             Test the RISC-V backend
+#         --wasm              Test the WASM JS backend
 #     -x <ext> [ext ...]      Test one or more extensions
 #         --noclean           Do not clean up temporary files
 #
@@ -214,6 +215,20 @@ def link_riscv(path, source_str):
         clean_files([tmp_s, tmp_o])
 
 ##
+## Assemble and link files with WABT for WASM.
+##
+def link_wasm(path, source_str):
+    fds, tmp_wat = tempfile.mkstemp(
+            prefix='test_wasm', suffix='.wat', dir=os.getcwd())
+    try:
+        with open(tmp_wat, 'w+') as f:
+            f.write(source_str)
+        run_command('wat2wasm', [tmp_wat, '-o', 'a.out'])
+    finally:
+        os.close(fds)
+        clean_files([tmp_wat])
+
+##
 ## Compile a Javalette source file with the Javalette compiler.
 ##   exe       is the compiler executable
 ##   src_file  is the Javalette source file (with extension .jl)
@@ -363,6 +378,10 @@ def init_argparser():
             "--riscv",
             action="store_true",
             help="test RISC-V backend")
+    parser.add_argument(
+            "--wasm",
+            action="store_true",
+            help="test WASM JS backend")
     parser.add_argument(
             "-x",
             metavar="<ext>",
@@ -542,6 +561,9 @@ def run_tests(path, backends, prefix, exts):
             elif suffix == "riscv":
                 linker = lambda s: link_riscv(path, s)
                 runner = ['spike', which('pk')]
+            elif suffix == "wasm":
+                linker = lambda s: link_wasm(path, s)
+                runner = ['node', os.path.join(path, 'lib', 'runtime-wasm.js')]
             elif suffix == "x86":
                 linker = lambda s: link_x86(path, s, False, link_macho)
                 runner = None
@@ -634,6 +656,8 @@ def main():
         backends.append("llvm")
     if ns.x86:
         backends.append("x86")
+    if ns.wasm:
+        backends.append("wasm")
     if ns.x64:
         backends.append("x64")
     if ns.riscv:

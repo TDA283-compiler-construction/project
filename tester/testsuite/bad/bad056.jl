@@ -1,8 +1,8 @@
 int main() {
-    // Arithmetic operations with cross-types
+    // Modulo operator on doubles
     double x;
     double y;
-    x%y;
+    printDouble(x%y);
 
     return 0;
 }

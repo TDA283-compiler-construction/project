@@ -1,6 +1,6 @@
 /* new undeclared class */
 
 int main() {
-	new Point;
+	Point p = new Point;
 	return 0;
 }
