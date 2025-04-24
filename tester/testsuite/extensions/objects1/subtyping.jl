@@ -1,4 +1,9 @@
-class Animal { double weight; }
+class Animal {
+    double weight;
+
+    void setWeight(double w) { weight = w; }
+    double getWeight() { return weight; }
+}
 
 class Dog extends Animal { boolean good; }
 class Cat extends Animal { int age; }
@@ -30,7 +35,7 @@ class Stack {
 }
 
 void pushBigger(Stack s, Animal x, Animal y) {
-  if (x.weight > y.weight) {
+  if (x.getWeight() > y.getWeight()) {
     s.push(x);
   } else {
     s.push(y);
@@ -42,21 +47,21 @@ int main() {
   Stack s = new Stack;
 
   Dog d1 = new Dog;
-  d1.weight = 10.0;
+  d1.setWeight(10.0);
 
   Cat c1 = new Cat;
-  c1.weight = 5.0;
+  c1.setWeight(5.0);
 
   pushBigger(s, d1, c1);
 
   Dog d2 = new Dog;
-  d2.weight = 8.0;
+  d2.setWeight(8.0);
 
   s.push(d2);
 
   while (!s.isEmpty()) {
     Animal a = s.top();
-    printDouble(a.weight);
+    printDouble(a.getWeight());
     s.pop();
   }
   return 0;
