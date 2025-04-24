@@ -3,9 +3,12 @@ FROM ubuntu:jammy
 # For deferring setting up tzdata, avoiding interaction
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get install -y \
-    tzdata build-essential default-jdk nasm emacs-nox vim-nox tmux \
-    curl git python3 flex bison unzip \
+RUN apt-get update
+RUN apt-get install -y \
+    tzdata build-essential nasm emacs-nox vim-nox tmux
+RUN apt-get install -y \
+    openjdk-21-jdk curl git python3 flex bison unzip
+RUN apt-get install -y \
     libnuma-dev bubblewrap locales libgmp-dev
 RUN apt-get install -y libncurses5
 
@@ -17,9 +20,9 @@ RUN apt-get install nodejs wabt
 # Set up locale. See:
 # https://stackoverflow.com/questions/28405902/how-to-set-the-locale-inside-a-debian-ubuntu-docker-container
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US:en
+ENV LC_ALL=en_US.UTF-8
 # Set up tzdata.
 RUN ln -f -s /usr/share/zoneinfo/Europe/Stockholm /etc/localtime
 RUN dpkg-reconfigure tzdata

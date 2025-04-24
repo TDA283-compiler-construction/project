@@ -442,6 +442,10 @@ The following two links will be useful:
 [here](https://llvm.org/docs/GarbageCollection.html). We recommend the Shadow Stack strategy.
 It is less efficient but easier to implement.
 
+The minimal implementation should provide a function called performGC() which activates the garbage collector.
+The implementation should also have a debug mode which prints which objects are traversed and which objects
+are released after the collection.
+
 Study of LLVM optimization
 --------------------------
 
