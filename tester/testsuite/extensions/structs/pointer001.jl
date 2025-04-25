@@ -1,13 +1,10 @@
 struct A {
     int x;
-};
-
-typedef struct A* A;
+}
 
 int main() {
-    (a()->x)++;
-    (a()->x)--;
-
+    (a().x)++;
+    (a().x)--;
     return 0;
 }
 

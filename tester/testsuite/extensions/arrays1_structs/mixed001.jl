@@ -1,8 +1,7 @@
 // Our struct to use in the array
-struct Foo_t{
+struct Foo {
   int bar;
-};
-typedef struct Foo_t * Foo;
+}
   
 int main(){
   // Init struct array
@@ -11,15 +10,15 @@ int main(){
   // Init all values (default value is null)
   int i = 0;
   while(i < foos.length){
-    foos[i] = new Foo_t;
-    foos[i]->bar = i;
+    foos[i] = new Foo;
+    foos[i].bar = i;
     i++;
   }
 
   // Print all values
   printInt(foos.length);
   for(Foo foo : foos){
-     printInt(foo->bar);
+     printInt(foo.bar);
   }
   return 0;
 }

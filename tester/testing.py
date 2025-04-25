@@ -34,9 +34,9 @@
 #
 #
 #   As an example, the following tests the x86-32 backend with extensions
-#   'arrays1' and 'pointers' on the submission partC-1.tar.gz:
+#   'arrays1' and 'structs' on the submission partC-1.tar.gz:
 #
-#     > ./testing.py partC-1.tar.gz --x86 -x arrays1 pointers
+#     > ./testing.py partC-1.tar.gz --x86 -x arrays1 structs
 #
 #   If neither of the options '--llvm', '--x86', '--x64', or '--riscv'
 #   are present, only parsing and type checking is tested.
@@ -47,7 +47,7 @@
 #
 #   * arrays1      Single-dimensional arrays
 #   * arrays2      Multi-dimensional arrays
-#   * pointers     Structures and pointers
+#   * structs      Structures
 #   * objects1     Objects, first extension
 #   * objects2     Objects, second extension (method overloading)
 #   * advstructs  Optional structure tests

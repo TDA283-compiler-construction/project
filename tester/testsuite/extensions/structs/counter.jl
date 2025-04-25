@@ -1,19 +1,17 @@
 struct Counter {
     int n;
-};
-
-typedef struct Counter* Counter;
+}
 
 void inc(Counter c) {
-    (c->n)++;
+    (c.n)++;
 }
 
 void dec(Counter c) {
-    (c->n)--;
+    (c.n)--;
 }
 
 void show(Counter c) {
-    printInt(c->n);
+    printInt(c.n);
 }
 
 int main() {

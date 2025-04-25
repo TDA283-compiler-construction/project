@@ -5,17 +5,15 @@ struct Triangle
     int a;
     int b;
     int c;
-};
+}
 
-typedef struct Triangle * PTriangle;
-
-int square(PTriangle t)
+int square(Triangle t)
 {
-    int a = t->a, b = t->b, c = t->c;
+    int a = t.a, b = t.b, c = t.c;
     return (a + b + c)*(a + b - c)*(a - b + c)*(-a + b + c);
 }
 
-void sort_by_square(PTriangle[] a)
+void sort_by_square(Triangle[] a)
 {
     int i = 0;
     while (i < a.length ){
@@ -23,7 +21,7 @@ void sort_by_square(PTriangle[] a)
         while ( j < a.length ) {
             if (square(a[i]) > square(a[j]))
             {
-                PTriangle temp = a[i];
+                Triangle temp = a[i];
                 a[i] = a[j];
                 a[j] = temp;
             }
@@ -38,26 +36,26 @@ int main()
 {
     int n;
     n = readInt();
-    PTriangle[] a = new PTriangle[n];
+    Triangle[] a = new Triangle[n];
 
     int i = 0;
     while( i < a.length ) {
         a[i] = new Triangle;
-        PTriangle pt = a[i];
+        Triangle t = a[i];
 
-        pt->a = readInt();
-        pt->b = readInt();
-        pt->c = readInt();
+        t.a = readInt();
+        t.b = readInt();
+        t.c = readInt();
 
         i++;
     }
     
     sort_by_square(a);
 
-    for (PTriangle pt : a) {
-        printInt(pt->a);
-        printInt(pt->b);
-        printInt(pt->c);    
+    for (Triangle t : a) {
+        printInt(t.a);
+        printInt(t.b);
+        printInt(t.c);    
     }
     
     return 0;

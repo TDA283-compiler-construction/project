@@ -140,7 +140,7 @@ array. For a two-dimensional rectangular array such as `matrix`, the number of
 elements in the two dimensions are `matrix.length` and `matrix[0].length`,
 respectively.
 
-Dynamic data structures (pointers)
+Dynamic data structures (structs)
 ----------------------------------
 
 In this extension you will implement a simple form of dynamic data structures,
@@ -154,85 +154,71 @@ are the following:
         struct Node {
            int elem;
            list next;
-        };
+        }
         ````
-    2. *Pointer type definitions*, as examplified by
-        ```c
-        typedef struct Node *list;
-        ```
-        Note that this second form is intended to be very restricted. We can
-        only use it to introduce new types that represent pointers to
-        structures. Thus this form of definition is completely fixed except for
-        the names of the structure and the new type. Note also that, following
-        the spirit of Javalette, the order of definitions is arbitrary.
 * Three new forms of expression are introduced:
     1. *Heap object creation*, examplified by `new Node`,
         where `new` is a new reserved word.  A new block of heap
         memory is allocated and the expression returns a pointer to that
-        memory. The type of this expression is thus the type of pointers
-        to `Node`, i.e. `list`.
-    2. *Pointer dereferencing*,
-        examplified by `xs->next`. This returns the content of the
+        memory. The type of this expression is thus `Node`.
+    2. *Accessing a field*,
+        examplified by `xs.next`. This returns the content of the
         field `next` of the heap node pointed to by `xs`.
-    3. *Null pointers*, examplified by `(list)null`. Note that
+    3. *Null pointers*, examplified by `(Node)null`. Note that
         the pointer type must be explicitly mentioned here, using syntax
         similar to casts (remember that there are no casts in Javalette).
-* Finally, pointer dereferencing may also be used as L-values and thus occur to
+* Finally, fields may also be used as L-values and thus occur to
     the left of an assignment statement, as in
     ```c
-    xs->elem = 3;
+    xs.elem = 3;
     ```
 
 Here is an example of a complete program in the extended language:
 
 ```c
-typedef struct Node *list;
-
-struct Node {
+struct List {
   int elem;
-  list next;
-};
-
+  List next;
+}
 
 int main () {
-  printInt (length (fromTo (1, 100)));
+  printInt(length(fromTo(1, 100)));
   return 0;
 }
 
-list cons (int x, list xs) {
-  list n;
-  n = new Node;
-  n->elem = x;
-  n->next = xs;
+List cons(int x, List xs) {
+  List n = new List;
+  n.elem = x;
+  n.next = xs;
   return n;
 }
 
-list fromTo (int m, int n) {
+List fromTo(int m, int n) {
   if (m>n)
-    return (list)null;
+    return (List)null;
   else
-    return cons (m, fromTo (m + 1, n));
+    return cons(m, fromTo(m + 1, n));
 }
 
-int length (list xs) {
+int length(List xs) {
   int res = 0;
-  while (xs != (list)null) {
+  while (xs != (List)null) {
     res++;
-    xs = xs->next;
+    xs = xs.next;
   }
   return res;
 }
 ```
 
-This and a few other test programs can be found in the `extensions/pointers`
+This and a few other test programs can be found in the `extensions/structs`
 subdirectory of the test suite.
 
 Object-orientation (objects1)
 -----------------------------
 
-This extension adds classes and objects to basic Javalette. From a language
-design point of view, it is not clear that you would want both this and the
-previous extension in the same language, but here we disregard this.
+This extension adds classes and objects to basic Javalette. 
+Unlike with the structs, classes have methods and all fields in a class
+are private.
 
 Here is a first simple program in the proposed extension:
 
@@ -345,11 +331,18 @@ The source language extensions, from basic Javalette, are
         an object reference and the second to a call of a method of that object.
     3. `"(" Ident ") null"` is the null reference of the indicated class/type.
     4. `"self"` is, within the methods of a class, a reference to the current
-        object. All calls to other, sibling methods of the class must be
-        indicated as such using `self`, as in `self.isEmpty()` from one of the
-        test files. This requirement is natural, since the extended Javalette,
-        in contrast to Java, has free functions that are not methods of any
-        class.
+        object. `self.x` and `self.f()` are always refering to the instance variable
+        `x` and the call to the method `f` respectively. On the other hand,
+        when a plain variable `x` is used in the program, then it may refer
+        to either a local variable or an instance variable. Local variables
+        have priority. 
+        
+        Similarly, a function call `f()` may refer to either
+        a method or a global function. If you also implement
+        high-order function, then there is the third option that `f`
+        is a local function. You should check in the order -- local function,
+        method, global function.
+
 
 Object orientation with dynamic dispatch (objects2)
 ---------------------------------------------------
