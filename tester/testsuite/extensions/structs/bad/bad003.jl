@@ -1,14 +1,12 @@
 /* dereferencing an undeclared variable */
 
-typedef struct Point2 *Point;
-
-struct Point2 {
+struct Point {
 	int x;
 	int y;
 };
 
 int main() {
-	Point point = new Point2;
+	Point point = new Point;
 	point->z = 1;
 	return 0;
 }
