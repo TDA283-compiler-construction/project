@@ -396,6 +396,9 @@ It is recommended that this extension is done after the `structs` extension.
 The best way to implement function values is via closures, which are discussed
 in the later lectures.
 
+Exception Handling (exceptions)
+-------------------------------
+
 Native x86 code generation
 --------------------------
 
@@ -479,6 +482,5 @@ the lecturer in advance. Here are some possibilities:
   is available in Python.
 * A simple module system. Details on module systems will be provided in the
   lectures.
-* Implement exceptions, which can be thrown and caught.
 * Implement a backend for another architecture, such as RISC-V. It is important
   that you provide some way for the grader to test programs.
