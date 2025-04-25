@@ -165,7 +165,7 @@ are the following:
         examplified by `xs.next`. This returns the content of the
         field `next` of the heap node pointed to by `xs`.
     3. *Null pointers*, examplified by `(Node)null`. Note that
-        the pointer type must be explicitly mentioned here, using syntax
+        the type must be explicitly mentioned here, using syntax
         similar to casts (remember that there are no casts in Javalette).
 * Finally, fields may also be used as L-values and thus occur to
     the left of an assignment statement, as in
