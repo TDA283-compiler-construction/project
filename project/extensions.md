@@ -165,7 +165,7 @@ are the following:
         examplified by `xs.next`. This returns the content of the
         field `next` of the heap node pointed to by `xs`.
     3. *Null pointers*, examplified by `(Node)null`. Note that
-        the pointer type must be explicitly mentioned here, using syntax
+        the type must be explicitly mentioned here, using syntax
         similar to casts (remember that there are no casts in Javalette).
 * Finally, fields may also be used as L-values and thus occur to
     the left of an assignment statement, as in
@@ -392,9 +392,12 @@ This language extension adds:
 - function types e.g. `fn(int) -> int`
 - lambda expression e.g. `\(int x) -> int: x * 2`
 
-It is recommended that this extension is done after the `pointers` extension.
+It is recommended that this extension is done after the `structs` extension.
 The best way to implement function values is via closures, which are discussed
 in the later lectures.
+
+Exception Handling (exceptions)
+-------------------------------
 
 Native x86 code generation
 --------------------------
@@ -418,7 +421,7 @@ Garbage collection
 ------------------
 
 This extension gives you *two* credits, but for it to be useful you must have
-also implemented at least one of the extensions with dynamic data mangement, e.g. pointers or objects 1.
+also implemented at least one of the extensions with dynamic data mangement, e.g. structs or objects 1.
 The garbage collector must be accurate in order to claim the points. If you just use
 the conservative [Boehm Collector](https://en.wikipedia.org/wiki/Boehm_garbage_collector)
 then no points will be awarded.
@@ -479,6 +482,5 @@ the lecturer in advance. Here are some possibilities:
   is available in Python.
 * A simple module system. Details on module systems will be provided in the
   lectures.
-* Implement exceptions, which can be thrown and caught.
 * Implement a backend for another architecture, such as RISC-V. It is important
   that you provide some way for the grader to test programs.
