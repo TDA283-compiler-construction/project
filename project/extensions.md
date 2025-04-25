@@ -392,7 +392,7 @@ This language extension adds:
 - function types e.g. `fn(int) -> int`
 - lambda expression e.g. `\(int x) -> int: x * 2`
 
-It is recommended that this extension is done after the `pointers` extension.
+It is recommended that this extension is done after the `structs` extension.
 The best way to implement function values is via closures, which are discussed
 in the later lectures.
 
@@ -418,7 +418,7 @@ Garbage collection
 ------------------
 
 This extension gives you *two* credits, but for it to be useful you must have
-also implemented at least one of the extensions with dynamic data mangement, e.g. pointers or objects 1.
+also implemented at least one of the extensions with dynamic data mangement, e.g. structs or objects 1.
 The garbage collector must be accurate in order to claim the points. If you just use
 the conservative [Boehm Collector](https://en.wikipedia.org/wiki/Boehm_garbage_collector)
 then no points will be awarded.
