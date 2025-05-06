@@ -7,6 +7,15 @@ RUN curl https://sh.rustup.rs -sSf > rustup.sh && \
     $HOME/.cargo/bin/rustup default nightly && \
     rm rustup.sh
 
+USER root
+RUN apt update
+RUN apt install -y libtinfo-dev
+RUN apt install -y libffi-dev
+RUN apt install -y libzstd-dev
+RUN apt install -y libz-dev
+RUN apt install -y libxml2-dev
+USER user
+
 ENV PATH="/home/user/.cargo/bin:${PATH}"
 WORKDIR /home/user/project/tester
 CMD /bin/bash
