@@ -12,6 +12,8 @@ int main() {
         throw e;
     } catch (ExceptionEx e) {
         printInt(e.getValue());
+    } finally {
+        printString("clean up");
     }
     return 0;
 }
