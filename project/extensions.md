@@ -151,20 +151,20 @@ are the following:
     language there are only function definitions):
     1. *Structure definitions*, as examplified by
         ```c
-        struct Node {
+        struct List {
            int elem;
-           list next;
+           List next;
         }
         ````
 * Three new forms of expression are introduced:
-    1. *Heap object creation*, examplified by `new Node`,
+    1. *Heap object creation*, examplified by `new List`,
         where `new` is a new reserved word.  A new block of heap
         memory is allocated and the expression returns a pointer to that
-        memory. The type of this expression is thus `Node`.
+        memory. The type of this expression is thus `List`.
     2. *Accessing a field*,
         examplified by `xs.next`. This returns the content of the
         field `next` of the heap node pointed to by `xs`.
-    3. *Null pointers*, examplified by `(Node)null`. Note that
+    3. *Null pointers*, examplified by `(List)null`. Note that
         the type must be explicitly mentioned here, using syntax
         similar to casts (remember that there are no casts in Javalette).
 * Finally, fields may also be used as L-values and thus occur to
@@ -424,7 +424,7 @@ are released after the collection.
 Exception Handling (exceptions)
 -------------------------------
 
-Exceptions in Javalette are objects and therefore before you start with this extension, you need to first implement structs or objects 1.
+Exceptions in Javalette are objects and therefore before you start with this extension, you need to first implement structs or objects1.
 
 Native x86 code generation
 --------------------------
