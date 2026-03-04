@@ -10,8 +10,8 @@ implementation hints are given on a separate page for [extension
 hints](hints.md) and in the lecture notes.
 
 **Credits for extensions:** each of the standard extensions gives one
-credit point. Extensions that are non-standard in this sense are the
-_native x86 code generation_, the _garbage collector_ and some projects within the _further
+credit point. The only extension is the
+_native x86 code generation_ and possibly some of the projects within the _further
 possibilities_ section.  The _native x86 code generation_ is also special
 in that it gives two credits in itself and an extra credit for each
 of the standard extensions that are ported to the x86 code
@@ -140,7 +140,7 @@ array. For a two-dimensional rectangular array such as `matrix`, the number of
 elements in the two dimensions are `matrix.length` and `matrix[0].length`,
 respectively.
 
-Dynamic data structures (pointers)
+Dynamic data structures (structs)
 ----------------------------------
 
 In this extension you will implement a simple form of dynamic data structures,
@@ -151,88 +151,74 @@ are the following:
     language there are only function definitions):
     1. *Structure definitions*, as examplified by
         ```c
-        struct Node {
+        struct List {
            int elem;
-           list next;
-        };
+           List next;
+        }
         ````
-    2. *Pointer type definitions*, as examplified by
-        ```c
-        typedef struct Node *list;
-        ```
-        Note that this second form is intended to be very restricted. We can
-        only use it to introduce new types that represent pointers to
-        structures. Thus this form of definition is completely fixed except for
-        the names of the structure and the new type. Note also that, following
-        the spirit of Javalette, the order of definitions is arbitrary.
 * Three new forms of expression are introduced:
-    1. *Heap object creation*, examplified by `new Node`,
+    1. *Heap object creation*, examplified by `new List`,
         where `new` is a new reserved word.  A new block of heap
         memory is allocated and the expression returns a pointer to that
-        memory. The type of this expression is thus the type of pointers
-        to `Node`, i.e. `list`.
-    2. *Pointer dereferencing*,
-        examplified by `xs->next`. This returns the content of the
+        memory. The type of this expression is thus `List`.
+    2. *Accessing a field*,
+        examplified by `xs.next`. This returns the content of the
         field `next` of the heap node pointed to by `xs`.
-    3. *Null pointers*, examplified by `(list)null`. Note that
-        the pointer type must be explicitly mentioned here, using syntax
+    3. *Null pointers*, examplified by `(List)null`. Note that
+        the type must be explicitly mentioned here, using syntax
         similar to casts (remember that there are no casts in Javalette).
-* Finally, pointer dereferencing may also be used as L-values and thus occur to
+* Finally, fields may also be used as L-values and thus occur to
     the left of an assignment statement, as in
     ```c
-    xs->elem = 3;
+    xs.elem = 3;
     ```
 
 Here is an example of a complete program in the extended language:
 
 ```c
-typedef struct Node *list;
-
-struct Node {
+struct List {
   int elem;
-  list next;
-};
-
+  List next;
+}
 
 int main () {
-  printInt (length (fromTo (1, 100)));
+  printInt(length(fromTo(1, 100)));
   return 0;
 }
 
-list cons (int x, list xs) {
-  list n;
-  n = new Node;
-  n->elem = x;
-  n->next = xs;
+List cons(int x, List xs) {
+  List n = new List;
+  n.elem = x;
+  n.next = xs;
   return n;
 }
 
-list fromTo (int m, int n) {
+List fromTo(int m, int n) {
   if (m>n)
-    return (list)null;
+    return (List)null;
   else
-    return cons (m, fromTo (m + 1, n));
+    return cons(m, fromTo(m + 1, n));
 }
 
-int length (list xs) {
+int length(List xs) {
   int res = 0;
-  while (xs != (list)null) {
+  while (xs != (List)null) {
     res++;
-    xs = xs->next;
+    xs = xs.next;
   }
   return res;
 }
 ```
 
-This and a few other test programs can be found in the `extensions/pointers`
+This and a few other test programs can be found in the `extensions/structs`
 subdirectory of the test suite.
 
 Object-orientation (objects1)
 -----------------------------
 
-This extension adds classes and objects to basic Javalette. From a language
-design point of view, it is not clear that you would want both this and the
-previous extension in the same language, but here we disregard this.
+This extension adds classes and objects to basic Javalette. 
+Unlike with the structs, classes have methods and all fields in a class
+are private.
 
 Here is a first simple program in the proposed extension:
 
@@ -345,11 +331,18 @@ The source language extensions, from basic Javalette, are
         an object reference and the second to a call of a method of that object.
     3. `"(" Ident ") null"` is the null reference of the indicated class/type.
     4. `"self"` is, within the methods of a class, a reference to the current
-        object. All calls to other, sibling methods of the class must be
-        indicated as such using `self`, as in `self.isEmpty()` from one of the
-        test files. This requirement is natural, since the extended Javalette,
-        in contrast to Java, has free functions that are not methods of any
-        class.
+        object. `self.x` and `self.f()` are always refering to the instance variable
+        `x` and the call to the method `f` respectively. On the other hand,
+        when a plain variable `x` is used in the program, then it may refer
+        to either a local variable or an instance variable. Local variables
+        have priority. 
+        
+        Similarly, a function call `f()` may refer to either
+        a method or a global function. If you also implement
+        high-order function, then there is the third option that `f`
+        is a local function. You should check in the order -- local function,
+        method, global function.
+
 
 Object orientation with dynamic dispatch (objects2)
 ---------------------------------------------------
@@ -399,33 +392,15 @@ This language extension adds:
 - function types e.g. `fn(int) -> int`
 - lambda expression e.g. `\(int x) -> int: x * 2`
 
-It is recommended that this extension is done after the `pointers` extension.
+It is recommended that this extension is done after the `structs` extension.
 The best way to implement function values is via closures, which are discussed
 in the later lectures.
-
-Native x86 code generation
---------------------------
-
-This extension is to produce native assembler code for a real machine,
-preferrably x86. We may accept code generators for other architectures, but
-*you* need to think of how we can test your extension. Before you attempt to
-write a backend for another architecture, discuss your choice with the lecturer
-and explain the testing procedure.
-
-Note that this extension gives you *two* credits, but it is not enough to just
-implement a naïve code generator. You must also implement some sort of
-optimization, such as register allocation or peephole optimization. Talk to
-the lecturer about which optimization(s) to implement before attempting the x86
-code generator. The x86 code generation extension acts also as a kind of
-multiplier, that is, implementing another extension, for example arrays, will
-give you two credits instead of one. This fair because you need to generate
-code for both LLVM and x86.
 
 Garbage collection
 ------------------
 
-This extension gives you *two* credits, but for it to be useful you must have
-also implemented at least one of the extensions with dynamic data mangement, e.g. pointers or objects 1.
+This extension assumes that you must have
+also implemented at least one of the extensions with dynamic data mangement, e.g. structs or objects 1.
 The garbage collector must be accurate in order to claim the points. If you just use
 the conservative [Boehm Collector](https://en.wikipedia.org/wiki/Boehm_garbage_collector)
 then no points will be awarded.
@@ -445,6 +420,30 @@ It is less efficient but easier to implement.
 The minimal implementation should provide a function called performGC() which activates the garbage collector.
 The implementation should also have a debug mode which prints which objects are traversed and which objects
 are released after the collection.
+
+Exception Handling (exceptions)
+-------------------------------
+
+Exceptions in Javalette are objects and therefore before you start with this extension, you need to first implement structs or objects1.
+
+Native x86 code generation
+--------------------------
+
+This extension is to produce native assembler code for a real machine,
+preferrably x86. We may accept code generators for other architectures, but
+*you* need to think of how we can test your extension. Before you attempt to
+write a backend for another architecture, discuss your choice with the lecturer
+and explain the testing procedure.
+
+Note that this extension gives you *two* credits, but it is not enough to just
+implement a naïve code generator. You must also implement some sort of
+optimization, such as register allocation or peephole optimization. Talk to
+the lecturer about which optimization(s) to implement before attempting the x86
+code generator. The x86 code generation extension acts also as a kind of
+multiplier, that is, implementing another extension, for example arrays, will
+give you two credits instead of one. This fair because you need to generate
+code for both LLVM and x86.
+
 
 Study of LLVM optimization
 --------------------------
@@ -486,6 +485,5 @@ the lecturer in advance. Here are some possibilities:
   is available in Python.
 * A simple module system. Details on module systems will be provided in the
   lectures.
-* Implement exceptions, which can be thrown and caught.
 * Implement a backend for another architecture, such as RISC-V. It is important
   that you provide some way for the grader to test programs.
