@@ -430,6 +430,7 @@ This language extension adds:
 - a predefined base class for all exceptions, i.e. class `Exception`
 - a syntax for throwing exceptions i.e. `throw e` where e is an object of a class which inherits from Exception
 - a try - catch - finally block for catching exceptons
+- an extension to the runtime needed for exception handling
 
 The syntax and the semantics of exceptions in Javalette is pretty standard and follows the design in Java/C#. An exception class must inherit from a built-in class called `Exception`, this makes it possible to add private members in the base class needed for handling the exceptions.
 
