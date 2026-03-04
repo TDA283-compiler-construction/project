@@ -29,7 +29,7 @@ Pages
 * [Extensions](extensions.md)
   * [Arrays I](extensions.md#one-dimensional-arrays-and-for-loops-arrays1)
   * [Arrays II](extensions.md#multidimensional-arrays-arrays2)
-  * [Pointers](extensions.md#dynamic-data-structures-pointers)
+  * [Structures](extensions.md#dynamic-data-structures-pointers)
   * [OOP I](extensions.md#object-orientation-objects1)
   * [OOP II](extensions.md#object-orientation-with-dynamic-dispatch-objects2)
   * [Higher-order functions](extensions.md#higher-order-functions-functions)
