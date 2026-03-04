@@ -396,31 +396,10 @@ It is recommended that this extension is done after the `structs` extension.
 The best way to implement function values is via closures, which are discussed
 in the later lectures.
 
-Exception Handling (exceptions)
--------------------------------
-
-Native x86 code generation
---------------------------
-
-This extension is to produce native assembler code for a real machine,
-preferrably x86. We may accept code generators for other architectures, but
-*you* need to think of how we can test your extension. Before you attempt to
-write a backend for another architecture, discuss your choice with the lecturer
-and explain the testing procedure.
-
-Note that this extension gives you *two* credits, but it is not enough to just
-implement a naïve code generator. You must also implement some sort of
-optimization, such as register allocation or peephole optimization. Talk to
-the lecturer about which optimization(s) to implement before attempting the x86
-code generator. The x86 code generation extension acts also as a kind of
-multiplier, that is, implementing another extension, for example arrays, will
-give you two credits instead of one. This fair because you need to generate
-code for both LLVM and x86.
-
 Garbage collection
 ------------------
 
-This extension gives you *two* credits, but for it to be useful you must have
+This extension assumes that you must have
 also implemented at least one of the extensions with dynamic data mangement, e.g. structs or objects 1.
 The garbage collector must be accurate in order to claim the points. If you just use
 the conservative [Boehm Collector](https://en.wikipedia.org/wiki/Boehm_garbage_collector)
@@ -441,6 +420,30 @@ It is less efficient but easier to implement.
 The minimal implementation should provide a function called performGC() which activates the garbage collector.
 The implementation should also have a debug mode which prints which objects are traversed and which objects
 are released after the collection.
+
+Exception Handling (exceptions)
+-------------------------------
+
+Exceptions in Javalette are objects and therefore before you start with this extension, you need to first implement structs or objects 1.
+
+Native x86 code generation
+--------------------------
+
+This extension is to produce native assembler code for a real machine,
+preferrably x86. We may accept code generators for other architectures, but
+*you* need to think of how we can test your extension. Before you attempt to
+write a backend for another architecture, discuss your choice with the lecturer
+and explain the testing procedure.
+
+Note that this extension gives you *two* credits, but it is not enough to just
+implement a naïve code generator. You must also implement some sort of
+optimization, such as register allocation or peephole optimization. Talk to
+the lecturer about which optimization(s) to implement before attempting the x86
+code generator. The x86 code generation extension acts also as a kind of
+multiplier, that is, implementing another extension, for example arrays, will
+give you two credits instead of one. This fair because you need to generate
+code for both LLVM and x86.
+
 
 Study of LLVM optimization
 --------------------------
