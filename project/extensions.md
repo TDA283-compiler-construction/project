@@ -424,7 +424,30 @@ are released after the collection.
 Exception Handling (exceptions)
 -------------------------------
 
-Exceptions in Javalette are objects and therefore before you start with this extension, you need to first implement structs or objects1.
+Exceptions in Javalette are objects and therefore before you start with this extension, you need to first implement objects2. How exception are handled differ between operating systems. The instructions given on the corresponding lecture are about exception handling on Linux/Unix/macOS.
+
+This language extension adds:
+- a predefined base class for all exceptions, i.e. class `Exception`
+- a syntax for throwing exceptions i.e. `throw e` where e is an object of a class which inherits from Exception
+- a try - catch - finally block for catching exceptons
+
+The syntax and the semantics of exceptions in Javalette is pretty standard and follows the design in Java/C#. An exception class must inherit from a built-in class called `Exception`, this makes it possible to add private members in the base class needed for handling the exceptions.
+
+An exception can be called from any function by using a statement like:
+```java
+throw new Exception
+```
+Note that in the above `new Exception` is just an expression which allocates the exception object and not part of the new syntax. Once thrown the exception can be caught from any of the functions in the current call stack by using the block:
+```java
+try {
+   ...
+} catch (SomeException e) {
+   ...
+} finally {
+}
+```
+A `catch` block may catch any exception which is subclass of the type specified in the clause. Zero or more catch blocks are allowed. The optional `finally` block is always executed regardless of whether an exception occured.
+
 
 Native x86 code generation
 --------------------------
