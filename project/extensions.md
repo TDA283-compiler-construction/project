@@ -140,6 +140,41 @@ array. For a two-dimensional rectangular array such as `matrix`, the number of
 elements in the two dimensions are `matrix.length` and `matrix[0].length`,
 respectively.
 
+Generators
+----------
+
+This extension is to add Python style generators to Javalette. You need to add these features to the language:
+- a new type `generator<A>` which represents generators that yield values of type `A`
+- a generator is any function whose return type is a generator and contains at least one yield statement
+- the statement `yield e` computes the expression `e` and sends its value back to the caller.
+- the `for` loop is now generalized to work on both arrays and generators (if you have implemented arrays as well)
+
+Example:
+```c
+generator<int> range(int start, int end) {
+    int i = start;
+    while (i < end) {
+        yield i;
+        i++;
+    }
+}
+
+int main() {
+    for (int i : range(0,10)) {
+        printInt(i);
+    }
+    return 0;
+}
+```
+
+Note that the following:
+```c
+generator<int> range0(int end) {
+    return range(0,end);
+}
+```
+is not a generator, it is just an ordinary function which returns a generator. Regardless, it can still be used inside a for loop.
+
 Dynamic data structures (structs)
 ----------------------------------
 
@@ -164,9 +199,7 @@ are the following:
     2. *Accessing a field*,
         examplified by `xs.next`. This returns the content of the
         field `next` of the heap node pointed to by `xs`.
-    3. *Null pointers*, examplified by `(List)null`. Note that
-        the type must be explicitly mentioned here, using syntax
-        similar to casts (remember that there are no casts in Javalette).
+    3. *Null pointers*, examplified by `null`.
 * Finally, fields may also be used as L-values and thus occur to
     the left of an assignment statement, as in
     ```c
@@ -195,14 +228,14 @@ List cons(int x, List xs) {
 
 List fromTo(int m, int n) {
   if (m>n)
-    return (List)null;
+    return null;
   else
     return cons(m, fromTo(m + 1, n));
 }
 
 int length(List xs) {
   int res = 0;
-  while (xs != (List)null) {
+  while (xs != null) {
     res++;
     xs = xs.next;
   }
@@ -329,7 +362,7 @@ The source language extensions, from basic Javalette, are
         above.
     2. `Expr "." Expr`, is a method call; the first expression must evaluate to
         an object reference and the second to a call of a method of that object.
-    3. `"(" Ident ") null"` is the null reference of the indicated class/type.
+    3. `"null"` is the null reference of the indicated class/type.
     4. `"self"` is, within the methods of a class, a reference to the current
         object. `self.x` and `self.f()` are always refering to the instance variable
         `x` and the call to the method `f` respectively. On the other hand,
