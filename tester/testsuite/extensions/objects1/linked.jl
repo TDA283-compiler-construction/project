@@ -22,7 +22,7 @@ class Stack {
   }
 
   boolean isEmpty() {
-    return head==(Node)null;
+    return head==null;
   }
 
   int top() {

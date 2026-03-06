@@ -21,7 +21,7 @@ class Node {
 class Stack {
   Node head;
 
-  boolean isEmpty() { return head==(Node)null; }
+  boolean isEmpty() { return head==null; }
 
   void push(Animal a) {
     Node newHead = new Node;

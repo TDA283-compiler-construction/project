@@ -14,7 +14,7 @@ class IntQueue {
   Node front;
   Node rear;
 
-  boolean isEmpty () { return front == (Node)null; }
+  boolean isEmpty () { return front == null; }
 
   void insert (int x) {
     Node last = new Node;
@@ -35,7 +35,7 @@ class IntQueue {
   int size () {
       Node n = front;
       int res = 0;
-      while (n != (Node)null) {
+      while (n != null) {
         n = n.getNext();
         res++;
       }
