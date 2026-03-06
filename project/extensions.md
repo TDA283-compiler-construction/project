@@ -447,6 +447,41 @@ try {
 ```
 A `catch` block may catch any exception which is subclass of the type specified in the clause. Zero or more catch blocks are allowed. The optional `finally` block is always executed regardless of whether an exception occured.
 
+Generators
+----------
+
+This extension is to add Python style generators to Javalette. You need to add these features to the language:
+- a new type `generator<A>` which represents generators that yield values of type `A`
+- a generator is any function whose return type is a generator and contains at least one yield statement
+- the statement `yield e` computes the expression `e` and sends its value back to the caller.
+- the `for` loop is now generalized to work on both arrays and generators (if you have implemented arrays as well)
+
+Example:
+```c
+generator<int> range(int start, int end) {
+    int i = start;
+    while (i < end) {
+        yield i;
+        i++;
+    }
+}
+
+int main() {
+    for (int i : range(0,10)) {
+        printInt(i);
+    }
+    return 0;
+}
+```
+
+Note that the following:
+```c
+generator<int> range0(int end) {
+    return range(0,end);
+}
+```
+is not a generator, it is just an ordinary function which returns a generator. Regardless, it can still be used inside a for loop.
+
 
 Native x86 code generation
 --------------------------
