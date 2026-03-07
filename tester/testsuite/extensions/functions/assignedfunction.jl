@@ -1,5 +1,5 @@
 int main() {
-    fn() -> int obj = \() -> int : 0;
+    fn<int()> obj = \int() -> 0;
 
     int lol() {
         return 10;

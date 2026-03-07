@@ -399,19 +399,19 @@ become first class, i.e., functions can take functions as arguments and return
 functions as results. Javalette remains call-by-value.
 
 ```java
-int apply(fn(int) -> int f, int x) {
+int apply(fn<int(int)> f, int x) {
   return f(x);
 }
 
-fn(int) -> int compose(fn(int) -> int f, fn(int) -> int g) {
-  return \(int x) -> int: f(g(x));
+fn<int(int)> compose(fn<int(int)> f, fn<int(int)> g) {
+  return \int(int x) -> f(g(x));
 }
 
 int main() {
   int inc(int x) {
     return x + 1;
   }
-  fn(int) -> int times2 = \(int x) -> int: x * 2;
+  fn<int(int)> times2 = \int(int x) -> x * 2;
 
   printInt(apply(compose(inc, times2), 3));
   printInt(apply(compose(times2, inc), 3));
@@ -422,8 +422,8 @@ int main() {
 
 This language extension adds:
 - function definitions as non-top-level definitions e.g. `inc` above
-- function types e.g. `fn(int) -> int`
-- lambda expression e.g. `\(int x) -> int: x * 2`
+- function types e.g. `fn<int(int)>`
+- lambda expression e.g. `\int(int x) -> x * 2`
 
 It is recommended that this extension is done after the `structs` extension.
 The best way to implement function values is via closures, which are discussed
