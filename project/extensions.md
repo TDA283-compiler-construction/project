@@ -498,7 +498,7 @@ optimization, such as register allocation or peephole optimization. Talk to
 the lecturer about which optimization(s) to implement before attempting the x86
 code generator. The x86 code generation extension acts also as a kind of
 multiplier, that is, implementing another extension, for example arrays, will
-give you two credits instead of one. This fair because you need to generate
+give you two credits instead of one. This is fair because you need to generate
 code for both LLVM and x86.
 
 
