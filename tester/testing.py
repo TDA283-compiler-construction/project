@@ -29,6 +29,7 @@
 #         --x64               Test the 64-bit x86 backend
 #         --riscv             Test the RISC-V backend
 #         --wasm              Test the WASM JS backend
+#         --wasm-wasi         Test the WASM WASI backend
 #     -x <ext> [ext ...]      Test one or more extensions
 #         --noclean           Do not clean up temporary files
 #
@@ -245,6 +246,30 @@ def link_wasm(path, source_str):
         clean_files([tmp_wat])
 
 ##
+## Assemble and link files for WASM WASI.
+##
+def link_wasm_wasi(path, source_str):
+    fd_wat, tmp_wat = tempfile.mkstemp(
+            prefix='test_wasm', suffix='.wat', dir=os.getcwd())
+    fd_embedded, tmp_embedded = tempfile.mkstemp(
+            prefix='test_wasm', suffix='.wasm', dir=os.getcwd())
+    fd_cmp, tmp_cmp = tempfile.mkstemp(
+            prefix='test_wasm', suffix='.component.wasm', dir=os.getcwd())
+    wit = os.path.join(path, 'wit')
+    runtime = os.path.join(path, 'lib', 'runtime.wasm')
+    try:
+        with open(tmp_wat, 'w+') as f:
+            f.write(source_str)
+        run_command('wasm-tools', ['component', 'embed', wit, '--world', 'program', tmp_wat, '-o', tmp_embedded])
+        run_command('wasm-tools', ['component', 'new', tmp_embedded, '-o', tmp_cmp])
+        run_command('wac', ['plug', '--plug', runtime, tmp_cmp, '-o', 'a.out'])
+    finally:
+        os.close(fd_wat)
+        os.close(fd_embedded)
+        os.close(fd_cmp)
+        clean_files([tmp_wat, tmp_embedded, tmp_cmp])
+
+##
 ## Compile a Javalette source file with the Javalette compiler.
 ##   exe       is the compiler executable
 ##   src_file  is the Javalette source file (with extension .jl)
@@ -402,6 +427,10 @@ def init_argparser():
             "--wasm",
             action="store_true",
             help="test WASM JS backend")
+    parser.add_argument(
+            "--wasm-wasi",
+            action="store_true",
+            help="test WASM WASI backend")
     parser.add_argument(
             "-x",
             metavar="<ext>",
@@ -587,6 +616,9 @@ def run_tests(path, backends, prefix, exts):
             elif suffix == "wasm":
                 linker = lambda s: link_wasm(path, s)
                 runner = ['node', os.path.join(path, 'lib', 'runtime-wasm.js')]
+            elif suffix == "wasm_wasi":
+                linker = lambda s: link_wasm_wasi(path, s)
+                runner = ['wasmtime']
             elif suffix == "x86":
                 linker = lambda s: link_x86(path, s, False, link_macho)
                 runner = None
@@ -683,6 +715,8 @@ def main():
         backends.append("x86")
     if ns.wasm:
         backends.append("wasm")
+    if ns.wasm_wasi:
+        backends.append("wasm_wasi")
     if ns.x64:
         backends.append("x64")
     if ns.riscv:

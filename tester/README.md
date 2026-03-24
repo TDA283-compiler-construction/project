@@ -34,6 +34,7 @@ The following command line options are available:
 | `    --x64`                   | Test the 64-bit x86 backend           |
 | `    --riscv`                 | Test the RISC-V backend               |
 | `    --wasm`                  | Test the WASM JS backend              |
+| `    --wasm-wasi`             | Test the WASM WASI backend            |
 | `-x <ext> [ext ...]`          | Test one or more extensions           |
 | `    --noclean`               | Do not clean up temporary files       |
 
