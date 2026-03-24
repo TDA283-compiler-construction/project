@@ -13,7 +13,7 @@ The following are the dependencies between the different extensions.
 If more than one edge points to an extension, then you need at least
 one of these other extensions, for the new extension to make sense.
 
-![A dependency graph of the different extensions](dependencies.dot)
+![A dependency graph of the different extensions](dependencies.png)
 
 **Credits for extensions:** each of the standard extensions gives one
 credit point. The only extension is the
