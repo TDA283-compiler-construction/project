@@ -1,0 +1,12 @@
+digraph {
+    frontend -> "LLVM/x86 backend"
+    "LLVM/x86 backend" -> "Arrays 1" -> "Arrays 2"
+    "LLVM/x86 backend" -> "Structs"
+    "Structs" -> "Objects 1"
+    "LLVM/x86 backend" -> "Objects 1" -> "Objects 2"
+    "LLVM/x86 backend" -> "Generators"
+    "LLVM/x86 backend" -> "Functions"
+    "Structs" -> "Garbage collection"
+    "Objects 1" -> "Garbage collection"
+    "Objects 2" -> "Exceptions"
+}

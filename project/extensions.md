@@ -9,6 +9,12 @@ This page specifies the requirements on the extensions. Some
 implementation hints are given on a separate page for [extension
 hints](hints.md) and in the lecture notes.
 
+The following are the dependencies between the different extensions.
+If more than one edge points to an extension, then you need at least
+one of these other extensions, for the new extension to make sense.
+
+![A dependency graph of the different extensions](dependencies.dot)
+
 **Credits for extensions:** each of the standard extensions gives one
 credit point. The only extension is the
 _native x86 code generation_ and possibly some of the projects within the _further
