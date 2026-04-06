@@ -39,9 +39,9 @@ RUN tar -xf "clang+llvm-17.0.6-x86_64-linux-gnu-ubuntu-22.04.tar.xz"
 RUN rm "clang+llvm-17.0.6-x86_64-linux-gnu-ubuntu-22.04.tar.xz"
 ENV PATH="/home/user/clang+llvm-17.0.6-x86_64-linux-gnu-ubuntu-22.04/bin:$PATH"
 
-RUN ghcup install ghc
-RUN ghcup set ghc
-RUN ghcup install cabal
+RUN ghcup install ghc 9.14
+RUN ghcup set ghc 9.14
+RUN ghcup install cabal 3.16
 RUN ghcup install stack
 
 ENV PATH="/home/user/.ghcup/bin:$PATH"
