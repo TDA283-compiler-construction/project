@@ -123,6 +123,8 @@ echo "Running in container $name ($cont)"
 docker cp "$submission" "$cont:/home/user/subm/"
 docker exec -u root "$cont" chown -R user /home/user/subm
 
+docker exec -u user "$cont" git pull
+
 docker exec -u user "$cont" python3 testing.py /home/user/subm/$base \
                                                $backends \
                                                $exts \
