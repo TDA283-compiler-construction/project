@@ -1,4 +1,4 @@
-int foldLeft(int mempty, fn(int, int) -> int f, int[] xs) {
+int foldLeft(int mempty, fn<int(int, int)> f, int[] xs) {
   int go(int acc, int[] arr, int i) {
     if (i >= arr.length) {
       return acc;
@@ -17,7 +17,7 @@ int main() {
     j++;
   }
 
-  fn(int[]) -> int prod = \(int[] xs) -> int: foldLeft(1, \(int x, int y) -> int: x * y, xs);
+  fn<int(int[])> prod = \int(int[] xs) -> foldLeft(1, \(int x, int y) -> int: x * y, xs);
 
   int v = prod(xs);
   printInt(v);

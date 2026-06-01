@@ -1,4 +1,4 @@
-int[] map(int[] xs, fn(int) -> int f) {
+int[] map(int[] xs, fn<int(int)> f) {
   int[] ys = new int[xs.length];
   int j = 0;
   while (j < xs.length) {
@@ -22,7 +22,7 @@ int main() {
     j++;
   }
 
-  int[] ys = map(xs, \(int x) -> int: x * 2);
+  int[] ys = map(xs, \int(int x) -> x * 2);
   printArray(xs);
   printArray(ys);
 
