@@ -11,7 +11,7 @@ int main () {
     f.children[3].value = 1234;
     
     for(Node elem : f.children) {
-        if(elem == (Node)null) {
+        if(elem == null) {
             printString("null");
         } else {
             printString("not null");
