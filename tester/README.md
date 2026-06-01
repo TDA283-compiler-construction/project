@@ -54,10 +54,12 @@ Here is a list of the extensions supported:
 |----------------|-------------------------------------------------|
 | arrays1        | Single-dimensional arrays                       |
 | arrays2        | Multi-dimensional arrays                        |
-| pointers       | Structures and pointers                         |
+| structs        | Structures                                      |
 | objects1       | Objects, first extension                        |
 | objects2       | Objects, second extension (method overloading)  |
 | advstructs     | Optional struct tests                           |
+| exceptions     | Handling of exceptions                          |
+| generators     | Defining and interating over generators         |
 | functions      | Higher order functions                          |
 
 ## Submission format
@@ -69,10 +71,10 @@ level, and nothing else.
 
 | Item            | Description |
 |-----------------|-------------|
-| doc/ | All documentation for the submission (see course webpage). |
-| lib/ | The runtime.ll and/or runtime.s files required by your compiler backend(s). |
-| src/     | All source-code for your submission. |
-| Makefile | A makefile that builds your compiler. Running `make` or `make all` should be sufficient to build your project, and `make clean` should remove all build artefacts. |
+| doc/            | All documentation for the submission (see course webpage). |
+| lib/            | The runtime.ll and/or runtime.s files required by your compiler backend(s). |
+| src/            | All source-code for your submission. |
+| Makefile        | A makefile that builds your compiler. Running `make` or `make all` should be sufficient to build your project, and `make clean` should remove all build artefacts. |
 
 ## Compiler requirements
 
