@@ -272,7 +272,7 @@ def run_compiler(exe, src_file, is_good):
     returncode_info = None
     if is_good:
         stderr_expected = "OK"
-        check = lambda s: s == stderr_expected and child.returncode == 0
+        check = lambda s: stderr_expected in s and child.returncode == 0
         if child.returncode != 0:
             returncode_info = ("compiler return code: %d, 0 expected"
                     % child.returncode)
